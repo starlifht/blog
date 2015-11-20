@@ -11,6 +11,7 @@
     <mvc:view-controller path="/" view-name="index"></mvc:view-controller>
     <mvc:view-controller path="/home" view-name="home"></mvc:view-controller>
     <mvc:view-controller path="/hello" view-name="hello"></mvc:view-controller>
+    <mvc:view-controller path="/content" view-name="content"></mvc:view-controller>
     <!--<task:annotation-driven/>-->
     <mvc:resources location="/statics/" mapping="/statics/**" cache-period="36000"/>
 

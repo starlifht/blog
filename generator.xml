@@ -9,7 +9,7 @@
              <property name="suppressAllComments" value="true" />
          </commentGenerator>
          <!-- 数据库链接URL、用户名、密码 -->
-          <jdbcConnection driverClass="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql://172.27.2.26:3306/ptp" userId="star" password="asd123"> 
+          <jdbcConnection driverClass="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql://172.27.2.26:3306/movie" userId="star" password="asd123">
          <!--<jdbcConnection driverClass="oracle.jdbc.driver.OracleDriver" connectionURL="jdbc:oracle:thin:@localhost:1521:orcl" userId="msa" password="msa">-->
          </jdbcConnection>
          <javaTypeResolver>
@@ -29,6 +29,6 @@
              <property name="enableSubPackages" value="true" />
          </javaClientGenerator>
          <!-- 要生成那些表(更改tableName和domainObjectName就可以) -->
-         <table tableName="record" domainObjectName="UserInfo" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false" />
+         <table tableName="film" domainObjectName="FilmInfo" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false" />
      </context>
  </generatorConfiguration>
