@@ -48,8 +48,13 @@
 <div class="navbar" style="float: left; width: 17%;height: 100%; ">
     <ul class="nav nav-pills nav-stacked" >
 
-        <li class="active"><a target="home">首页</a></li>
-        <li><a target="hello">About</a></li>
+        <li ><a class="active" target="home">首页</a></li>
+        <li class="dropdown"><a  href="javascript:;" id="about">最新电影</a>
+      </li>
+            <ul class="nav  nav-pills nav-stacked" style="font-size: 11px;" id="ch">
+                <li ><a target="film_list" onclick="parent.label='xixi';">&nbsp;&nbsp;西西影视</a></li>
+                <li><a target="film_list" onclick="parent.label='gaoqing';">&nbsp;&nbsp;中国高清</a></li>
+            </ul>
         <li><a href="#">Projects</a></li>
         <li><a href="#">Contact</a></li>
     </ul>
@@ -65,20 +70,34 @@
     <script type="text/javascript" src="statics/js/bootstrap.min.js"></script>
 <script>
     var id=1;
+    var label='';
     $(document).ready(function() {
         $.get("home", function (data) { //初始將a.html include div#iframe
             $("#iframe").html(data);
         });
+        $('#about').click(function(){
+          //  alert('sdf');
+            if ($('#ch').css('display')=='none'){
+                $('#ch').css('display','');
+
+            }else{
+                $('#ch').css('display','none');
+            }
+        });
         $(function () {
             $('li').click(function () {
-                $(".navbar li").attr('class','');
+                $("li").attr('class','');
                 // 找出 li 中的超链接 href(#id)
                 $(this).attr('class','active');
                 var $this = $(this),
                         _clickTab = $this.find('a').attr('target'); // 找到链接a中的targer的值
-                $.get(_clickTab, function (data) {
-                    $("#iframe").html(data);
-                });
+                if (typeof(_clickTab)!='undefined'){
+                    $.get(_clickTab, function (data) {
+                        $("#iframe").html(data);
+                    });
+                }
+
+
             });
         });
     });

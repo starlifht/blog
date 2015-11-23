@@ -20,7 +20,9 @@ public interface FilmInfoMapper {
 
     int updateByPrimaryKey(FilmInfo record);
     int getAllCount();
+    int getCountByLabel(String label);
     List<FilmInfo> getAllByLimit(@Param("offset") int offset, @Param("limit") int limit);
+    List<FilmInfo> getAllByLimitByLabel(@Param("label")String label,@Param("offset") int offset, @Param("limit") int limit);
 
 
 }

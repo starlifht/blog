@@ -12,6 +12,7 @@
 </head>
 <body>
 <div >
+
     <div>
         <h1 id="title"></h1>
     </div>
@@ -21,21 +22,7 @@
 </body>
 <footer>
     <script>
-//        function GetUrl() {
-//
-//            var url = location.search; //获取url中"?"符后的字串
-//            var theRequest = new Object();
-//            if (url.indexOf("?") != -1) {
-//                var str = url.substr(1);
-//                var strs = str.split("&");
-//                for (var i = 0; i < strs.length; i++) {
-//                    theRequest[strs[i].split("=")[0]] = (strs[i].split("=")[1]);
-//                }
-//            }
-//            return theRequest;
-//        }
-//        var Request = GetUrl();
-//        var id = Request['id'];
+
         $(document).ready(function () {
            getContent(parent.id);
         });

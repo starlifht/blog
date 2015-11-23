@@ -16,6 +16,7 @@
     </style>
 </head>
 <body>
+
 <%--<h1>Prototype</h1>--%>
 
 <table class="table table-striped" id="film_list">
@@ -33,7 +34,7 @@
         getFilmList(this,0,MAX_LINE);
         $.ajax({
             type: 'GET',
-            url: "film/getAllCount",
+            url: "film/getCount/"+parent.label,
             async: false,
             success: function (data, status) {
                 this;
@@ -67,7 +68,7 @@
     function  getFilmList(obj,offset,limit){
         $.ajax({
             type: 'GET',
-            url: "film/getAllByLimit/"+offset+"/"+limit,
+            url: "film/getAllByLimit/"+parent.label+"/"+offset+"/"+limit,
             // data: params,
             async: false,
             success: function (data, status) {
