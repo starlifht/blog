@@ -8,6 +8,7 @@
     <result column="content" property="content" jdbcType="VARCHAR" />
     <result column="label" property="label" jdbcType="VARCHAR" />
     <result column="origin" property="origin" jdbcType="VARCHAR" />
+    <result column="rating" property="rating" jdbcType="DECIMAL" />
   </resultMap>
 
   <sql id="Base_Column_List" >
@@ -26,10 +27,10 @@
     SELECT count(*) FROM film WHERE label=#{label,jdbcType=VARCHAR}
   </select>
   <select id="getAllByLimit" resultType="pojo.FilmInfo">
-    SELECT id,datetime,title FROM film ORDER BY id DESC LIMIT #{offset},#{limit}
+    SELECT id,datetime,title,rating FROM film ORDER BY id DESC LIMIT #{offset},#{limit}
   </select>
   <select id="getAllByLimitByLabel" resultType="pojo.FilmInfo">
-    SELECT id,datetime,title FROM film WHERE label=#{label} ORDER BY id DESC LIMIT #{offset},#{limit}
+    SELECT id,datetime,title,rating FROM film WHERE label=#{label} ORDER BY id DESC LIMIT #{offset},#{limit}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from film

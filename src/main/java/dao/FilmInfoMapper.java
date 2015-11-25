@@ -3,9 +3,7 @@ package dao;
 import org.apache.ibatis.annotations.Param;
 import pojo.FilmInfo;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public interface FilmInfoMapper {
     int deleteByPrimaryKey(Integer id);

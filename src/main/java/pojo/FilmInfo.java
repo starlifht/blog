@@ -1,5 +1,6 @@
 package pojo;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 public class FilmInfo {
@@ -13,6 +14,7 @@ public class FilmInfo {
 
     private String label;
     private String origin;
+    private Float rating;
 
     public String getOrigin() {
         return origin;
@@ -62,5 +64,13 @@ public class FilmInfo {
 
     public void setLabel(String label) {
         this.label = label == null ? null : label.trim();
+    }
+
+    public Float getRating() {
+        return rating;
+    }
+
+    public void setRating(Float rating) {
+        this.rating = rating;
     }
 }

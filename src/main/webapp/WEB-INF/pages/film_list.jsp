@@ -13,6 +13,9 @@
         html,body{
             width: 100%;
         }
+        /*table tr:first-child{*/
+            /*font-weight: 600;*/
+        /*}*/
     </style>
 </head>
 <body>
@@ -75,11 +78,14 @@
                 this;
                 if (status == "success") {
                     var data_list=data.data;
+                   // var content='<tr><td>更新时间</td><td>豆瓣评分</td><td>电影名称</td></tr>';
                     var content='';
                     // alert(data.count);
                     for (var i=0;i<data_list.length;i++){
+                        var time= data_list[i].datetime;
                         content=content+"<tr onclick=toContent("+data_list[i].id+")>" +
-                                "<td>"+getLocalTime(data_list[i].datetime.time)+"</td>" +
+                                "<td>"+(time.year+1900)+"-"+(time.month+1)+"-"+time.date+" "+time.hours+":"+time.minutes+"</td>" +
+                                "<td>豆瓣"+(data_list[i].rating).toFixed(1)+"</td>" +
                                 "<td>"+data_list[i].title+"</td>" +
                                 "</tr>";
                     }

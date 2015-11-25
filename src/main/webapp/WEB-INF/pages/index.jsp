@@ -45,15 +45,15 @@
 </nav>
 
 
-<div class="navbar" style="float: left; width: 17%;height: 100%; ">
+<div class="navbar" style="float: left; width: 17%;height: 100%; font-size: 18px">
     <ul class="nav nav-pills nav-stacked" >
 
         <li ><a class="active" target="home">首页</a></li>
         <li class="dropdown"><a  href="javascript:;" id="about">最新电影</a>
       </li>
             <ul class="nav  nav-pills nav-stacked" style="font-size: 11px;" id="ch">
-                <li ><a target="film_list" onclick="parent.label='xixi';">&nbsp;&nbsp;西西影视</a></li>
-                <li><a target="film_list" onclick="parent.label='gaoqing';">&nbsp;&nbsp;中国高清</a></li>
+                <li ><a target="film_list" onclick="parent.label='xixi';">&nbsp;&nbsp;&nbsp;&nbsp;西西影视</a></li>
+                <li><a target="film_list" onclick="parent.label='gaoqing';">&nbsp;&nbsp;&nbsp;&nbsp;中国高清</a></li>
             </ul>
         <li><a href="#">Projects</a></li>
         <li><a href="#">Contact</a></li>
