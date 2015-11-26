@@ -1,6 +1,5 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-
        xmlns:mvc="http://www.springframework.org/schema/mvc"
        xmlns:context="http://www.springframework.org/schema/context"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
@@ -12,6 +11,7 @@
     <mvc:view-controller path="/film_list" view-name="film_list"></mvc:view-controller>
     <mvc:view-controller path="/hello" view-name="hello"></mvc:view-controller>
     <mvc:view-controller path="/content" view-name="content"></mvc:view-controller>
+    <mvc:view-controller path="/about" view-name="about"></mvc:view-controller>
     <!--<task:annotation-driven/>-->
     <mvc:resources location="/statics/" mapping="/statics/**" cache-period="36000"/>
 

@@ -11,39 +11,17 @@
     <title>内容</title>
 </head>
 <body>
-<div >
+<div>
 
     <div>
         <h1 id="title"></h1>
     </div>
 
     <div id="content"></div>
+
+
 </div>
+
+<script type="text/javascript" src="statics/js/content.js"></script>
 </body>
-<footer>
-    <script>
-
-        $(document).ready(function () {
-           getContent(parent.id);
-        });
-        function  getContent(id){
-            $.ajax({
-                type: 'GET',
-                url: "film/getByPriKey/"+id,
-                // data: params,
-                async: false,
-                success: function (data, status) {
-                    this;
-                    if (status == "success") {
-                        $('#title').html(data.data.title);
-                        $('#content').html(data.data.content);
-                    }
-                }
-            });
-        }
-
-
-
-    </script>
-</footer>
 </html>

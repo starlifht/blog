@@ -16,11 +16,10 @@
     <style>
 
        body{
-            height: 100%;
+
             width: 100%;
             min-width: 1200px;
-           /*min-height: 900px;*/
-           /*overflow:scroll*/
+
         }
         li span{
 
@@ -32,77 +31,47 @@
         tr{
             cursor: pointer;
         }
-        tr:hover{
-            color: darkorange;
-            /*color:  #337ab7;*/
-        }
+
+
     </style>
 </head>
-<body style="">
+<body>
 <nav class="navbar navbar-inverse" style="text-align: right">
     <span style="color: darkgray;font-weight: bold;font-size: 15px;line-height: 44px">
         Whatever is worth doing is worth doing well .</span>
 </nav>
 
 
-<div class="navbar" style="float: left; width: 17%;height: 100%; font-size: 18px">
+<div id="sidebar"  class="navbar" style="float: left; width: 17%;height: 100%; font-size: 18px">
     <ul class="nav nav-pills nav-stacked" >
 
         <li ><a class="active" target="home">首页</a></li>
         <li class="dropdown"><a  href="javascript:;" id="about">最新电影</a>
       </li>
             <ul class="nav  nav-pills nav-stacked" style="font-size: 11px;" id="ch">
-                <li ><a target="film_list" onclick="parent.label='xixi';">&nbsp;&nbsp;&nbsp;&nbsp;西西影视</a></li>
+                <li ><a target="film_list?sdfsd=878" onclick="parent.label='xixi';">&nbsp;&nbsp;&nbsp;&nbsp;西西影视</a></li>
                 <li><a target="film_list" onclick="parent.label='gaoqing';">&nbsp;&nbsp;&nbsp;&nbsp;中国高清</a></li>
             </ul>
-        <li><a href="#">Projects</a></li>
-        <li><a href="#">Contact</a></li>
+        <li><a target="about">留言</a></li>
     </ul>
 </div>
 
 
-<div  class="container" id="iframe" style="float: right;height: 100%;width: 81%" >
+<div  class="container" id="iframe" style="float: right;width: 81%;margin-bottom: 30px" >
 
 </div>
-</body>
-<footer>
-    <script type="text/javascript" src="statics/js/jquery-1.9.1.min.js"></script>
+
+<div style="clear: both;text-align: center">
+    <span>Copyright @ 2015  All Rights Reserved </span>
+</div>
+
+
+
+    <script type="text/javascript" src="statics/js/jquery-1.11.1.min.js"></script>
     <script type="text/javascript" src="statics/js/bootstrap.min.js"></script>
-<script>
-    var id=1;
-    var label='';
-    $(document).ready(function() {
-        $.get("home", function (data) { //初始將a.html include div#iframe
-            $("#iframe").html(data);
-        });
-        $('#about').click(function(){
-          //  alert('sdf');
-            if ($('#ch').css('display')=='none'){
-                $('#ch').css('display','');
-
-            }else{
-                $('#ch').css('display','none');
-            }
-        });
-        $(function () {
-            $('li').click(function () {
-                $("li").attr('class','');
-                // 找出 li 中的超链接 href(#id)
-                $(this).attr('class','active');
-                var $this = $(this),
-                        _clickTab = $this.find('a').attr('target'); // 找到链接a中的targer的值
-                if (typeof(_clickTab)!='undefined'){
-                    $.get(_clickTab, function (data) {
-                        $("#iframe").html(data);
-                    });
-                }
+    <script type="text/javascript" src="statics/js/jquery.goup.min.js"></script>
+    <script type="text/javascript" src="statics/js/index.js"></script>
 
 
-            });
-        });
-    });
-</script>
-
-
-</footer>
+</body>
 </html>
