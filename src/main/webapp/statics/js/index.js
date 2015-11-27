@@ -13,7 +13,7 @@ $(document).ready(function() {
         goupSpeed: 'fast',
         titleAsText: true
     });
-    $.get("home", function (data) { //初始將a.html include div#iframe
+    $.get("hello", function (data) { //初始將a.html include div#iframe
         $("#iframe").html(data);
     });
     $('#about').click(function(){

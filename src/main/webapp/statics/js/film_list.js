@@ -3,7 +3,7 @@
  */
 var MAX_LINE=18;
 $(document).ready(function() {
-    getFilmList(this,0,MAX_LINE);
+
     $.ajax({
         type: 'GET',
         url: "film/getCount/"+parent.label,
@@ -13,34 +13,49 @@ $(document).ready(function() {
             if (status == "success") {
                 // alert(data.count);
                 var counts=Math.ceil(data.count/15);
-                //var content="<li class='asd'> <a href='javascript:void(0)'  aria-label='Previous'' disabled> <span aria-hidden='true'>&laquo;</span> </a> </li>";
                 var content="";
                 var i=1;
-                while (i<=counts){
-                    content=content+"<li ><a  onclick=getFilmList(this,"+(i-1)*MAX_LINE+","+MAX_LINE+")>"+i+"</a></li>";
+                while (i<counts){
+                    content=content+"<li ><a name='"+i+"' onclick=getFilmList(this,"+i+")>"+i+"</a></li>";
                     i=i+1;
                 }
-                $('#pages').html(content);
+                if (counts>1){
+                    var content="<li> <a onclick='getPre()' >&laquo; </a> </li>"
+                        +content
+                        +"<li><a  onclick='getNext()'>&raquo;</a></li>";
+                    $('#pages').html(content);
+                }
 
-                $('li').click(function () {
-                    $("#pages li").attr('class','');
-                    // 找出 li 中的超链接 href(#id)
-                    $(this).attr('class','active');
-
-                });
+               // getFilmList(this,1);
+                if ( $("#pages li a[name=1]").length>0){
+                    $("#pages li a[name=1]").click();
+                }else{
+                    getFilmList(this,1);
+                }
 
             }
         }
     });
 });
+function  getPre(){
+    var page=$('#pages li[class=active]>a').attr('name');
+    page=page-1;
+    $("#pages li a[name="+page+"]").click();
+}
+function  getNext(){
 
+    var page=$('#pages li[class=active]>a').attr('name');
+    page=parseInt(page)+1;
+    $("#pages li a[name="+page+"]").click();
+}
 function getLocalTime(nS) {
     return new Date(parseInt(nS)).toLocaleString().replace(/:\d{1,2}$/,' ');
 }
-function  getFilmList(obj,offset,limit){
+function  getFilmList(obj,page){
+
     $.ajax({
         type: 'GET',
-        url: "film/getAllByLimit/"+parent.label+"/"+offset+"/"+limit,
+        url: "film/getAllByLimit/"+parent.label+"/"+(page-1)*MAX_LINE+"/"+MAX_LINE,
         // data: params,
         async: false,
         success: function (data, status) {
@@ -59,10 +74,13 @@ function  getFilmList(obj,offset,limit){
                         "</tr>";
                 }
                 $('#film_list').html(content);
-
+                $("#pages li ").attr('class','');
+                // 找出 li 中的超链接 href(#id)
+                $(obj).parent().attr('class','active');
             }
         }
     });
+
 }
 
 function toContent(id) {

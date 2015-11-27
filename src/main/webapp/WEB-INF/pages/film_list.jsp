@@ -10,9 +10,6 @@
 <head>
     <title>home</title>
     <style>
-        html,body{
-            width: 100%;
-        }
         /*table tr:first-child{*/
             /*font-weight: 600;*/
         /*}*/

@@ -1,0 +1,22 @@
+/*@font-face {*/
+    /*font-family: "glyphicons";*/
+    /*src:url('../fonts/YaHei.Consolas.1.11b.ttf');*/
+
+    /*font-weight: bold;*/
+    /*font-style: italic;*/
+/*}*/
+body{
+
+    width: 100%;
+    min-width: 1200px;
+    font-size: 16px;
+    font-family: Microsoft YaHei , Tahoma, Helvetica, Arial, sans-serif;
+}
+
+li a{
+    font-weight: bold;
+    cursor:pointer;
+}
+tr{
+    cursor: pointer;
+}
