@@ -2,16 +2,30 @@
  * Created by star on 15-11-26.
  */
 var MAX_LINE=18;
-$(document).ready(function() {
+var label;
+function GetUrl() {
 
+    var url = location.search; //获取url中"?"符后的字串
+    var theRequest = new Object();
+    if (url.indexOf("?") != -1) {
+        var str = url.substr(1);
+        var strs = str.split("&");
+        for (var i = 0; i < strs.length; i++) {
+            theRequest[strs[i].split("=")[0]] = (strs[i].split("=")[1]);
+        }
+    }
+    return theRequest;
+}
+$(document).ready(function() {
+    var request=GetUrl();
+     label= request['label'];
     $.ajax({
         type: 'GET',
-        url: "film/getCount/"+parent.label,
+        url: "film/getCount/"+label,
         async: false,
         success: function (data, status) {
             this;
             if (status == "success") {
-                // alert(data.count);
                 var counts=Math.ceil(data.count/15);
                 var content="";
                 var i=1;
@@ -26,13 +40,12 @@ $(document).ready(function() {
                     $('#pages').html(content);
                 }
 
-               // getFilmList(this,1);
                 if ( $("#pages li a[name=1]").length>0){
                     $("#pages li a[name=1]").click();
                 }else{
                     getFilmList(this,1);
                 }
-
+                selectLabel(label);//导航条颜色
             }
         }
     });
@@ -48,29 +61,28 @@ function  getNext(){
     page=parseInt(page)+1;
     $("#pages li a[name="+page+"]").click();
 }
-function getLocalTime(nS) {
-    return new Date(parseInt(nS)).toLocaleString().replace(/:\d{1,2}$/,' ');
-}
+
 function  getFilmList(obj,page){
 
     $.ajax({
         type: 'GET',
-        url: "film/getAllByLimit/"+parent.label+"/"+(page-1)*MAX_LINE+"/"+MAX_LINE,
+        url: "film/getAllByLimit/"+label+"/"+(page-1)*MAX_LINE+"/"+MAX_LINE,
         // data: params,
         async: false,
         success: function (data, status) {
             this;
             if (status == "success") {
                 var data_list=data.data;
-                // var content='<tr><td>更新时间</td><td>豆瓣评分</td><td>电影名称</td></tr>';
                 var content='';
                 // alert(data.count);
                 for (var i=0;i<data_list.length;i++){
-                    var time= data_list[i].datetime;
-                    content=content+"<tr onclick=toContent("+data_list[i].id+")>" +
-                        "<td>"+(time.year+1900)+"-"+(time.month+1)+"-"+time.date+" "+time.hours+":"+time.minutes+"</td>" +
-                        "<td>豆瓣"+(data_list[i].rating).toFixed(1)+"</td>" +
-                        "<td>"+data_list[i].title+"</td>" +
+                    var data=data_list[i];
+                    var time=data.datetime.time;
+                    var   d=new   Date(time);
+                    content=content+"<tr>" +
+                        "<td><small>"+formatDate(d)+"</small></td>" +
+                        "<td><a target='_blank' href='"+data.douban.url+"'><small>豆瓣"+(data.douban.rating).toFixed(1)+"</small></a></td>" +
+                        "<td><a target='_blank' href='content?id="+data.id+"&label="+label+"'>"+data.title+"</a></td>" +
                         "</tr>";
                 }
                 $('#film_list').html(content);
@@ -83,9 +95,5 @@ function  getFilmList(obj,page){
 
 }
 
-function toContent(id) {
-    parent.id = id;
-    $.get('content', function (data) {
-        $('#iframe', window.parent.document).html(data);
-    });
-}
+
+

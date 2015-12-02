@@ -1,49 +1,41 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="dao.FilmInfoMapper" >
-  <resultMap id="BaseResultMap" type="pojo.FilmInfo" >
+<mapper namespace="dao.ArticleInfoMapper" >
+  <resultMap id="BaseResultMap" type="pojo.ArticleInfo" >
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="datetime" property="datetime" jdbcType="TIMESTAMP" />
     <result column="title" property="title" jdbcType="VARCHAR" />
-    <result column="content" property="content" jdbcType="VARCHAR" />
     <result column="label" property="label" jdbcType="VARCHAR" />
-    <result column="origin" property="origin" jdbcType="VARCHAR" />
-    <result column="douban" property="douban" jdbcType="VARCHAR" />
   </resultMap>
-
+  <resultMap id="ResultMapWithBLOBs" type="pojo.ArticleInfo" extends="BaseResultMap" >
+    <result column="content" property="content" jdbcType="LONGVARCHAR" />
+  </resultMap>
   <sql id="Base_Column_List" >
-    id, datetime, title, content, label,douban
+    id, datetime, title,label
   </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+  <sql id="Blob_Column_List" >
+    content
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
-    from film
+    ,
+    <include refid="Blob_Column_List" />
+    from article
     where id = #{id,jdbcType=INTEGER}
-  </select>
-  <select id="getAllCount" resultType="java.lang.Integer">
-    SELECT count(*) FROM film
-  </select>
-  <select id="getCountByLabel" resultType="java.lang.Integer">
-    SELECT count(*) FROM film WHERE label=#{label,jdbcType=VARCHAR}
-  </select>
-  <select id="getAllByLimit" resultType="pojo.FilmInfo">
-    SELECT id,datetime,title,douban FROM film ORDER BY id DESC LIMIT #{offset},#{limit}
-  </select>
-  <select id="getAllByLimitByLabel" resultType="pojo.FilmInfo">
-    SELECT id,datetime,title,douban FROM film WHERE label=#{label} ORDER BY id DESC LIMIT #{offset},#{limit}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
-    delete from film
+    delete from article
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="pojo.FilmInfo" >
-    insert into film (id, datetime, title, 
-      content, label)
+  <insert id="insert" parameterType="pojo.ArticleInfo" >
+    insert into article (id, datetime, title, 
+      content)
     values (#{id,jdbcType=INTEGER}, #{datetime,jdbcType=TIMESTAMP}, #{title,jdbcType=VARCHAR}, 
-      #{content,jdbcType=VARCHAR}, #{label,jdbcType=VARCHAR})
+      #{content,jdbcType=LONGVARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="pojo.FilmInfo" >
-    insert into film
+  <insert id="insertSelective" parameterType="pojo.ArticleInfo" >
+    insert into article
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
         id,
@@ -72,15 +64,15 @@
         #{title,jdbcType=VARCHAR},
       </if>
       <if test="content != null" >
-        #{content,jdbcType=VARCHAR},
+        #{content,jdbcType=LONGVARCHAR},
       </if>
       <if test="label != null" >
         #{label,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="pojo.FilmInfo" >
-    update film
+  <update id="updateByPrimaryKeySelective" parameterType="pojo.ArticleInfo" >
+    update article
     <set >
       <if test="datetime != null" >
         datetime = #{datetime,jdbcType=TIMESTAMP},
@@ -89,20 +81,22 @@
         title = #{title,jdbcType=VARCHAR},
       </if>
       <if test="content != null" >
-        content = #{content,jdbcType=VARCHAR},
-      </if>
-      <if test="label != null" >
-        label = #{label,jdbcType=VARCHAR},
+        content = #{content,jdbcType=LONGVARCHAR},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="pojo.FilmInfo" >
-    update film
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="pojo.ArticleInfo" >
+    update article
     set datetime = #{datetime,jdbcType=TIMESTAMP},
       title = #{title,jdbcType=VARCHAR},
-      content = #{content,jdbcType=VARCHAR},
-      label = #{label,jdbcType=VARCHAR}
+      content = #{content,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="pojo.ArticleInfo" >
+    update article
+    set datetime = #{datetime,jdbcType=TIMESTAMP},
+      title = #{title,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

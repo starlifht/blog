@@ -2,9 +2,13 @@
  * Created by star on 15-11-26.
  */
 
-
+var id;
 $(document).ready(function () {
-    getContent(parent.id);
+    var request=GetUrl();
+    id=request['id'];
+    label=request['label'];
+    getContent(id);
+    selectLabel(label);
 
 });
 function getContent(id) {
@@ -18,18 +22,18 @@ function getContent(id) {
             if (status == "success") {
                 $('#title').html(data.data.title);
                 $('#content').html(data.data.content);
-                //$('#SOHUCS').attr('sid', id);
-                //getSohuc();
+               // alert(window.location.href);
+                toggleDuoshuoComments('#comment-box',id,window.location.href);
             }
         }
     });
 }
 
-function toggleDuoshuoComments(container){
+function toggleDuoshuoComments(container,id,url){
     var el = document.createElement('div');//该div不需要设置class="ds-thread"
-    el.setAttribute('data-thread-key', 'sdfs');//必选参数
-    el.setAttribute('data-url', 'qw');//必选参数
-    el.setAttribute('data-author-key', 'ds');//可选参数
+    el.setAttribute('data-thread-key', id);//必选参数
+    el.setAttribute('data-url', url);//必选参数
+    el.setAttribute('data-author-key', 'star');//可选参数
     DUOSHUO.EmbedThread(el);
     jQuery(container).append(el);
 }

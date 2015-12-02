@@ -11,17 +11,18 @@
     <title>内容</title>
 </head>
 <body>
-<div>
+<jsp:include page="/nav"></jsp:include>
+    <div class="iframe">
+        <div>
+            <h1 id="title"></h1>
+        </div>
 
-    <div>
-        <h1 id="title"></h1>
+        <div id="content"></div>
+        <div id="comment-box"></div>
     </div>
-
-    <div id="content"></div>
-
-
-</div>
-
+<script>var duoshuoQuery = {short_name:"wxgasd"};</script>
+<script src="http://static.duoshuo.com/embed.js"></script>
 <script type="text/javascript" src="statics/js/content.js"></script>
+
 </body>
 </html>

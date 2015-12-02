@@ -9,17 +9,12 @@
 <html>
 <head>
     <title>About</title>
+
 </head>
 <body>
-<!-- 多说评论框 start -->
 
-<!-- 多说评论框 end -->
-<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
-<div >
 
-    <script></script>
-</div>
 
-<!-- 多说公共JS代码 end -->
+
 </body>
 </html>

@@ -1,9 +1,8 @@
 package pojo;
 
-import java.math.BigDecimal;
 import java.util.Date;
 
-public class FilmInfo {
+public class ArticleInfo {
     private Integer id;
 
     private Date datetime;
@@ -11,29 +10,7 @@ public class FilmInfo {
     private String title;
 
     private String content;
-
     private String label;
-    private String origin;
-
-    public Object getDouban() {
-        return douban;
-    }
-
-    public void setDouban(Object douban) {
-        this.douban = douban;
-    }
-
-    private Object douban;
-
-    public String getOrigin() {
-        return origin;
-    }
-
-    public void setOrigin(String origin) {
-        this.origin = origin;
-    }
-
-
 
     public Integer getId() {
         return id;
@@ -72,8 +49,6 @@ public class FilmInfo {
     }
 
     public void setLabel(String label) {
-        this.label = label == null ? null : label.trim();
+        this.label = label;
     }
-
-
 }

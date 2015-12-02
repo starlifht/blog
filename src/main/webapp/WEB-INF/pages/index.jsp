@@ -28,8 +28,8 @@
         <li class="dropdown"><a  href="javascript:;" id="about">最新电影</a>
       </li>
             <ul class="nav  nav-pills nav-stacked" style="font-size: 11px;" id="ch">
-                <li ><a target="film_list?sdfsd=878" onclick="parent.label='xixi';">&nbsp;&nbsp;&nbsp;&nbsp;西西影视</a></li>
-                <li><a target="film_list" onclick="parent.label='gaoqing';">&nbsp;&nbsp;&nbsp;&nbsp;中国高清</a></li>
+                <li ><a href="/film_list?label=xixi" >&nbsp;&nbsp;&nbsp;&nbsp;西西影视</a></li>
+                <li><a href="/film_list?label=gaoqing">&nbsp;&nbsp;&nbsp;&nbsp;中国高清</a></li>
             </ul>
         <li><a target="about">留言</a></li>
     </ul>
