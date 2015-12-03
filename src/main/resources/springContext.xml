@@ -9,11 +9,10 @@
     <context:component-scan base-package="handler"/>
     <mvc:view-controller path="/" view-name="index"></mvc:view-controller>
     <mvc:view-controller path="/film_list" view-name="film_list"></mvc:view-controller>
-    <mvc:view-controller path="/hello" view-name="hello"></mvc:view-controller>
     <mvc:view-controller path="/content" view-name="content"></mvc:view-controller>
-    <mvc:view-controller path="/about" view-name="about"></mvc:view-controller>
     <mvc:view-controller path="/nav" view-name="nav"></mvc:view-controller>
     <mvc:view-controller path="/editor" view-name="editor"></mvc:view-controller>
+    <mvc:view-controller path="/article" view-name="article"></mvc:view-controller>
     <!--<task:annotation-driven/>-->
     <mvc:resources location="/statics/" mapping="/statics/**" cache-period="36000"/>
 

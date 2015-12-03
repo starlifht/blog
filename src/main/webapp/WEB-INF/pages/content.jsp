@@ -9,12 +9,22 @@
 <html>
 <head>
     <title>内容</title>
+    <style>
+        .title{
+            margin-bottom: 30px;
+        }
+        .title p{
+            font-size: 30px;
+        }
+
+    </style>
 </head>
 <body>
 <jsp:include page="/nav"></jsp:include>
-    <div class="iframe">
-        <div>
-            <h1 id="title"></h1>
+    <div class="iframe" >
+        <div class="title">
+            <p id="title"></p>
+            <small id="publish_time"></small>
         </div>
 
         <div id="content"></div>

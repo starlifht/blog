@@ -2,28 +2,30 @@
  * Created by star on 15-11-26.
  */
 
-var id;
 $(document).ready(function () {
     var request=GetUrl();
-    id=request['id'];
-    label=request['label'];
-    getContent(id);
+    var id=request['id'];
+    var label=request['l'];
+    var type=request['t'];
+    getContent(type,id);
     selectLabel(label);
 
 });
-function getContent(id) {
+function getContent(type,id) {
     $.ajax({
         type: 'GET',
-        url: "film/getByPriKey/" + id,
+        url: type+"/getByPriKey/" + id,
         // data: params,
         async: false,
         success: function (data, status) {
             this;
             if (status == "success") {
+                $('title').text(data.data.title);
                 $('#title').html(data.data.title);
+                $('#publish_time').text(formatDate(new  Date(data.data.datetime.time)));
                 $('#content').html(data.data.content);
                // alert(window.location.href);
-                toggleDuoshuoComments('#comment-box',id,window.location.href);
+                toggleDuoshuoComments('#comment-box',type+id,window.location.href);
             }
         }
     });

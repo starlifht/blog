@@ -13,7 +13,7 @@
 <body>
 <jsp:include page="/nav" flush="true"></jsp:include>
 <div class="iframe">
-    <table class="table table-striped" id="film_list">
+    <table class="table table-striped" id="article_list">
 
 
     </table>
@@ -23,5 +23,7 @@
         </ul>
     </nav>
 </div>
+<script type="text/javascript" src="statics/js/article.js"></script>
+
 </body>
 </html>

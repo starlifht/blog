@@ -24,25 +24,28 @@
             /*font-weight: 600;*/
             /*color:  #337ab7;*/
         }
+        .kkpager{
+            width: 800px;
+            margin: auto;
+        }
     </style>
+    <link href="statics/css/kkpager_blue.css" rel="stylesheet" type="text/css" />
 
 </head>
 <body>
 
 <jsp:include page="/nav" flush="true"></jsp:include>
-<div class="iframe">
+<div class="iframe" id="iframe">
     <table class="table table-striped" id="film_list">
 
 
     </table>
-    <nav style="text-align: center;margin: auto">
-        <ul class="pagination" id="pages">
-
-        </ul>
-    </nav>
+    <div class="kkpager">
+        <div id="kkpager"></div>
+    </div>
 </div>
 
-
+<script type="text/javascript" src="statics/js/kkpager.min.js"></script>
 <script type="text/javascript" src="statics/js/film_list.js"></script>
 
 </body>
