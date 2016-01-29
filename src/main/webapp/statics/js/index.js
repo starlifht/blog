@@ -77,7 +77,6 @@ function getkkpager(pno,counts){
             //这里可以做自已的处理
             // getRecord((n-1)*18,18);
             getFilmList(n);
-            //...
             //处理完后可以手动条用selectPage进行页码选中切换
             this.selectPage(n);
         },
@@ -85,12 +84,8 @@ function getkkpager(pno,counts){
         getHref : function(n){
             return 'javascript:';
         }
-
-
     });
-
     kkpager.generPageHtml({
-
     });
 }
 

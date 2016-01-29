@@ -18,6 +18,14 @@ body{
 li{
     cursor:pointer;
 }
+table thead{
+    font-weight: 600;
+}
+table a:hover{
+    color: darkorange;
+}
+
+
 #navbar{
     background: url('../images/ym.png')    no-repeat fixed;
     text-align: right;

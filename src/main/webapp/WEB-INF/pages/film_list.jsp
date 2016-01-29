@@ -15,15 +15,7 @@
         /*}*/
 
 
-        table tr td:last-child{
-            cursor: pointer;
-        }
-       table tr td:last-child:hover{
-            color: darkorange;
 
-            /*font-weight: 600;*/
-            /*color:  #337ab7;*/
-        }
         .kkpager{
             width: 800px;
             margin: auto;

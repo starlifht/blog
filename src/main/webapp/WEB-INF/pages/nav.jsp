@@ -16,24 +16,24 @@
 </nav>
 <div id="sidebar"  class="sidebar">
     <ul>
-        <li class="drdown">
-            <a href="#" data-toggle="drdown">文章列表<i class="icon-arrow"></i></a>
-            <ul class="drdown-menu">
-                <li><a href="">Home</a></li>
-                <li ><a  href="#">About Us</a></li>
-                <li><a href="#">Services</a></li>
-                <li><a href="#">Contact</a></li>
-            </ul>
-        </li>
         <li class="drdown" >
             <a href="#" data-toggle="drdown">最新电影<i class="icon-arrow"></i></a>
             <ul class="drdown-menu show">
                 <li>
                 </li>
-                <li><a name="gaoqing" href="/film_list?label=gaoqing">中国高清网</a></li>
-                <li><a name="xixi" href="/film_list?label=xixi">西西高清影视网</a></li>
+                <li><a name="gaoqing" href="/film_list?label=gaoqing">720P/1080P</a></li>
             </ul>
         </li>
+        <li class="drdown">
+            <a href="/article" data-toggle="drdown">文章列表<i class="icon-arrow"></i></a>
+            <ul class="drdown-menu">
+                <li><a href="/article">Home</a></li>
+                <li ><a  href="#">About Us</a></li>
+                <li><a href="#">Services</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+        </li>
+
 
     </ul>
     <div class="input-group" >

@@ -31,7 +31,7 @@ function  getFilmList(page){
             this;
             if (status == "success") {
                 var data_list=data.data;
-                var content='';
+                var content='<';
                 // alert(data.count);
                 for (var i=0;i<data_list.length;i++){
                     var data=data_list[i];
