@@ -32,6 +32,9 @@
   <select id="getAllByLimitByLabel" resultType="pojo.FilmInfo">
     SELECT id,datetime,title,douban FROM film WHERE label=#{label} ORDER BY id DESC LIMIT #{offset},#{limit}
   </select>
+  <select id="getAllByLimitByLabelRating" resultType="pojo.FilmInfo">
+    SELECT id,datetime,title,douban FROM film WHERE label=#{label} ORDER BY douban_rating DESC LIMIT #{offset},#{limit}
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from film
     where id = #{id,jdbcType=INTEGER}
@@ -60,6 +63,16 @@
       <if test="label != null" >
         label,
       </if>
+      <if test="origin != null" >
+        origin,
+      </if>
+      <if test="douban != null" >
+        douban,
+      </if>
+      <if test="douban_rating != null" >
+        douban_rating,
+      </if>
+
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -77,7 +90,20 @@
       <if test="label != null" >
         #{label,jdbcType=VARCHAR},
       </if>
+      <if test="origin != null" >
+        #{origin},
+      </if>
+      <if test="douban != null" >
+        #{douban},
+      </if>
+      <if test="douban_rating != null" >
+        #{douban_rating},
+      </if>
     </trim>
+    ON DUPLICATE KEY UPDATE
+    <if test="content != null" >
+     content= #{content,jdbcType=VARCHAR}
+    </if>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="pojo.FilmInfo" >
     update film

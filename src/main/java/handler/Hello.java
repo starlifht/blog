@@ -1,6 +1,7 @@
 package handler;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
@@ -15,7 +16,8 @@ public class Hello {
 //    }
 
     @RequestMapping("/hello")
-    public String index() {
+    public String index(ModelMap modelMap) {
+        modelMap.addAttribute("username","mmmmmmmmmmmm");
         return "hello";
     }
 }

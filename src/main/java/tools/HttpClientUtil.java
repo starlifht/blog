@@ -32,7 +32,51 @@ import java.util.List;
 
 
 public class HttpClientUtil {
+    public static String get(String url){
+        CloseableHttpClient client =  null;
+        CloseableHttpResponse httpresponse=null;
+        String body = null;
+        try {
+            client =  HttpClients.createDefault();
+            // Get请求
+            HttpGet httpget = new HttpGet(url);
+            httpget.addHeader("User-Agent","Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:44.0) Gecko/20100101 Firefox/44.0");
+            RequestConfig requestConfig = RequestConfig.custom()
+                    .setSocketTimeout(5000)
+                    .setConnectTimeout(5000)
+                    .build();//设置请求和传输超时时间
 
+            httpget.setConfig(requestConfig);
+            // 设置参数
+//            if (params!=null) {
+//                String str = EntityUtils.toString(new UrlEncodedFormEntity(params));
+//                System.out.println(httpget.getURI().toString() + "?" + str);
+//                httpget.setURI(new URI(httpget.getURI().toString() + "?" + str));
+//            }
+            // 发送请求
+            httpresponse = client.execute(httpget);
+
+            // 获取返回数据
+            HttpEntity entity = httpresponse.getEntity();
+            if(entity!=null) {
+                body = EntityUtils.toString(entity);
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                httpresponse.close();
+                client.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return body;
+    }
 
     /**
      * 发送Get请求
@@ -48,11 +92,12 @@ public class HttpClientUtil {
             client =  HttpClients.createDefault();
             // Get请求
             HttpGet httpget = new HttpGet(url);
-            RequestConfig requestConfig = RequestConfig.custom().setSocketTimeout(3000).setConnectTimeout(3000).build();//设置请求和传输超时时间
+            RequestConfig requestConfig = RequestConfig.custom().setSocketTimeout(5000).setConnectTimeout(5000).build();//设置请求和传输超时时间
             httpget.setConfig(requestConfig);
             // 设置参数
             if (params!=null) {
                 String str = EntityUtils.toString(new UrlEncodedFormEntity(params));
+                System.out.println(httpget.getURI().toString() + "?" + str);
                 httpget.setURI(new URI(httpget.getURI().toString() + "?" + str));
             }
             // 发送请求
