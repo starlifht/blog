@@ -27,6 +27,9 @@ table a:hover{
 tr td{
     color: gray;
 }
+table tr td:nth-child(2){
+font-weight: bolder;
+}
 table thead td{
     cursor: pointer;
     color: #0f0f0f;

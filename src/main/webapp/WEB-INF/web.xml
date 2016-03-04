@@ -10,20 +10,30 @@
   <listener>
     <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
   </listener>
-  <!--<listener>-->
-    <!--<listener-class>org.springframework.web.util.Log4jConfigListener</listener-class>-->
-  <!--</listener>-->
 
-  <!--<context-param>-->
-    <!--<param-name>log4jConfigLocation</param-name>-->
-    <!--<param-value>classPalog4j.properties</param-value>-->
-  <!--</context-param>-->
   <context-param>
     <param-name>contextConfigLocation</param-name>
     <param-value>
      classpath:applicationContext.xml
     </param-value>
   </context-param>
+  <!--&lt;!&ndash; log4j2-begin &ndash;&gt;-->
+  <!--<listener>-->
+    <!--<listener-class>org.apache.logging.log4j.web.Log4jServletContextListener</listener-class>-->
+  <!--</listener>-->
+  <!--<filter>-->
+    <!--<filter-name>log4jServletFilter</filter-name>-->
+    <!--<filter-class>org.apache.logging.log4j.web.Log4jServletFilter</filter-class>-->
+  <!--</filter>-->
+  <!--<filter-mapping>-->
+    <!--<filter-name>log4jServletFilter</filter-name>-->
+    <!--<url-pattern>/*</url-pattern>-->
+    <!--<dispatcher>REQUEST</dispatcher>-->
+    <!--<dispatcher>FORWARD</dispatcher>-->
+    <!--<dispatcher>INCLUDE</dispatcher>-->
+    <!--<dispatcher>ERROR</dispatcher>-->
+  <!--</filter-mapping>-->
+  <!-- log4j2-end -->
   <filter>
     <filter-name>CharacterFilter</filter-name>
     <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>

@@ -20,6 +20,8 @@ import org.apache.http.impl.client.HttpClients;
 import org.apache.http.impl.cookie.BasicClientCookie;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -32,6 +34,7 @@ import java.util.List;
 
 
 public class HttpClientUtil {
+    private  static Logger logger= LogManager.getLogger(HttpClientUtil.class.getName());
     public static String get(String url){
         CloseableHttpClient client =  null;
         CloseableHttpResponse httpresponse=null;
@@ -47,13 +50,6 @@ public class HttpClientUtil {
                     .build();//设置请求和传输超时时间
 
             httpget.setConfig(requestConfig);
-            // 设置参数
-//            if (params!=null) {
-//                String str = EntityUtils.toString(new UrlEncodedFormEntity(params));
-//                System.out.println(httpget.getURI().toString() + "?" + str);
-//                httpget.setURI(new URI(httpget.getURI().toString() + "?" + str));
-//            }
-            // 发送请求
             httpresponse = client.execute(httpget);
 
             // 获取返回数据
@@ -61,12 +57,9 @@ public class HttpClientUtil {
             if(entity!=null) {
                 body = EntityUtils.toString(entity);
             }
-        } catch (ParseException e) {
+        } catch (Exception e){
             e.printStackTrace();
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
         } finally {
             try {
                 httpresponse.close();

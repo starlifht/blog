@@ -28,30 +28,7 @@ $(document).ready(function() {
         titleAsText: true,
 
    });
-    //
-    //var documentHeight = 0;
-    //var topPadding = 15;
-    //$(function() {
-    //    var offset = $("#sidebar").offset();
-    //    documentHeight = $(document).height();
-    //    $(window).scroll(function() {
-    //        var sideBarHeight = $("#sidebar").height();
-    //        if ($(window).scrollTop() > offset.top) {
-    //            var newPosition = ($(window).scrollTop()-sideBarHeight) + topPadding;
-    //            var maxPosition = documentHeight - (sideBarHeight + 368);
-    //            if (newPosition > maxPosition) {
-    //                newPosition = maxPosition;
-    //            }
-    //            $("#sidebar").stop().animate({
-    //                marginTop: newPosition
-    //            });
-    //        } else {
-    //            $("#sidebar").stop().animate({
-    //                marginTop: 0
-    //            });
-    //        };
-    //    });
-    //});
+
 });
 function formatDate(d) {
     var D=['00','01','02','03','04','05','06','07','08','09']
@@ -65,7 +42,7 @@ function selectLabel(label){
         .css("color","#2c89c6")
         .text('>>'+ $("a[name='"+label+"']").text());
 }
-function getkkpager(pno,counts){
+function getkkpager(pno,counts,label){
     kkpager.init({
         pno : pno,
         //总页码
@@ -76,7 +53,7 @@ function getkkpager(pno,counts){
         click : function(n){
             //这里可以做自已的处理
             // getRecord((n-1)*18,18);
-            getFilmList(n,"getAllByLimit");
+            getFilmList(n,label);
             //处理完后可以手动条用selectPage进行页码选中切换
             this.selectPage(n);
         },
@@ -88,7 +65,11 @@ function getkkpager(pno,counts){
     kkpager.generPageHtml({
     });
 }
+function search(){
+    var key=document.getElementById("search").value;
 
+    location.href="/film_list?label=all&type=date&title="+key;
+}
 var dropdown = document.querySelectorAll('.drdown');
 var dropdownArray = Array.prototype.slice.call(dropdown,0);
 dropdownArray.forEach(function(el){

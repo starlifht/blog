@@ -20,19 +20,29 @@
     from film
     where id = #{id,jdbcType=INTEGER}
   </select>
+  <select id="getAllDateByTitle"  resultType="pojo.FilmInfo" parameterType="java.lang.String" >
+      select
+    id,datetime,title,douban
+      from film
+      where title like  CONCAT('%',#{title},'%')
+  </select>
   <select id="getAllCount" resultType="java.lang.Integer">
     SELECT count(*) FROM film
+  </select>
+  <select id="getCountByTitle" resultType="java.lang.Integer" parameterType="java.lang.String">
+    SELECT count(*) FROM film  where title like  CONCAT('%',#{title},'%')
+
   </select>
   <select id="getCountByLabel" resultType="java.lang.Integer">
     SELECT count(*) FROM film WHERE label=#{label,jdbcType=VARCHAR}
   </select>
-  <select id="getAllByLimit" resultType="pojo.FilmInfo">
-    SELECT id,datetime,title,douban FROM film ORDER BY id DESC LIMIT #{offset},#{limit}
+  <select id="getAllDate" resultType="pojo.FilmInfo">
+    SELECT id,datetime,title,douban FROM film ORDER BY datetime DESC LIMIT #{offset},#{limit}
   </select>
-  <select id="getAllByLimitByLabel" resultType="pojo.FilmInfo">
-    SELECT id,datetime,title,douban FROM film WHERE label=#{label} ORDER BY id DESC LIMIT #{offset},#{limit}
+  <select id="getAllDateByLabel" resultType="pojo.FilmInfo">
+    SELECT id,datetime,title,douban FROM film WHERE label=#{label} ORDER BY datetime DESC LIMIT #{offset},#{limit}
   </select>
-  <select id="getAllByLimitByLabelRating" resultType="pojo.FilmInfo">
+  <select id="getALLRatingByLabel" resultType="pojo.FilmInfo">
     SELECT id,datetime,title,douban FROM film WHERE label=#{label} ORDER BY douban_rating DESC LIMIT #{offset},#{limit}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >

@@ -3,12 +3,19 @@ package tools;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
+import net.sf.json.JSONObject;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
+import pojo.FilmInfo;
 
 import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by star on 16-2-1.
@@ -56,41 +63,11 @@ public class Test {
         //System.out.println("---------------------------");
     }
     public static void main(String[] args){
-        try {
-            List<Map<String, Object>> list1 = new ArrayList<Map<String, Object>>();
-            Map<String,Object> map=new HashMap<String, Object>();
-            map.put("username","star");
-            map.put("age","324");
-            map.put("date","198-02-34");
-            list1.add(map);
-            Map<String,Object> map2=new HashMap<String, Object>();
-            map2.put("username","stargggg");
-            map2.put("age","32777774");
-            map2.put("date","19899999-02-34");
-            list1.add(map2);
-            Map<String,Object> map3=new HashMap<String, Object>();
-            map3.put("userlist",list1);
-            new Test().createDoc(map3,"/home/star/cc.doc");
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
-//        try {
-//            FileInputStream fileInputStream=new FileInputStream("/home/star/test");
-//            FileChannel fileChannel=fileInputStream.getChannel();
-//            ByteBuffer byteBuffer=ByteBuffer.allocate(1024);
-//           int a= fileChannel.read(byteBuffer,43);
-//            System.out.println(a);
-//            if (a!=-1){
-//                byteBuffer.flip();
-//                while (byteBuffer.hasRemaining()){
-//                    System.out.print((char)byteBuffer.get());
-//                }
-//            }
-//
-//
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
+
+        String s="sdfsstar324234eSTARe";
+        s=s.replaceAll("(star|STAR)","999");
+        System.out.println(s);
+
 
     }
 }

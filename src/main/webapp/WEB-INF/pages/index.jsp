@@ -15,26 +15,6 @@
 </head>
 <body>
 <jsp:include page="/nav"></jsp:include>
-<%--<%--%>
-<%--Cookie cookie=new Cookie("usename","starlifht");--%>
-    <%--cookie.setPath("/");--%>
-    <%--cookie.setDomain("127.0.0.1");--%>
-    <%--Cookie cookie2=new Cookie("token","16f2cfb8a08b2810cdef8d4781309da6");--%>
-    <%--cookie2.setPath("/");--%>
-    <%--cookie2.setDomain(".xixihd.com");--%>
-    <%--Cookie cookie3=new Cookie("uid","5893");--%>
-    <%--cookie3.setPath("/");--%>
-    <%--cookie3.setDomain(".xixihd.com");--%>
-    <%--response.addCookie(cookie);--%>
-<%--%>--%>
 
-<form id="ajaxform" name="ajaxform" action="http://www.xixihd.com/?downloads=content&id=31592" method="post">
-    <input id="ajaxcode" name="code" value="mjmc">
-    <input id="ajaxdowid" name="dowid" value="0">
-    <input type="submit" value="OK">
-</form>
-<script>
-    document.cookie="usename=starlifht;token=16f2cfb8a08b2810cdef8d4781309da6;uid=5893"
-</script>
 </body>
 </html>
