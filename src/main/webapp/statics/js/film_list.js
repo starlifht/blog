@@ -71,7 +71,7 @@ function  getFilmList(page){
                     content=content+"<tr>" +
                         "<td><small>"+formatDate(d)+"</small></td>" +
                         //"<td style='display: none'><img  src="+data.douban.image+"></td>" +
-                        "<td><a target='_blank' href='"+data.douban.url+"'><small>"+(data.douban.rating).toFixed(1)+"</small></a></td>" +
+                        "<td><a target='_blank' href='"+data.douban.url+"'>"+(data.douban.rating)+"</></a></td>" +
                             "<td><small>["+country+"]</small><br><small>"+genres+"</small></td>"+
                             //"<td><small>"+genres+"</small></td>"+
                         //"<td><img src='"+data.douban.images.small+"'></td>"+
