@@ -3,12 +3,12 @@
 <mapper namespace="dao.FilmInfoMapper" >
   <resultMap id="BaseResultMap" type="pojo.FilmInfo" >
     <id column="id" property="id" jdbcType="INTEGER" />
+    <id column="douban_id" property="douban_id" jdbcType="INTEGER" />
     <result column="datetime" property="datetime" jdbcType="TIMESTAMP" />
     <result column="title" property="title" jdbcType="VARCHAR" />
     <result column="content" property="content" jdbcType="VARCHAR" />
     <result column="label" property="label" jdbcType="VARCHAR" />
     <result column="origin" property="origin" jdbcType="VARCHAR" />
-    <result column="douban" property="douban" jdbcType="VARCHAR" />
   </resultMap>
 
   <sql id="Base_Column_List" >
@@ -19,6 +19,9 @@
     <include refid="Base_Column_List" />
     from film
     where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="getAllByDate" resultMap="BaseResultMap">
+    select * from film ORDER BY datetime DESC
   </select>
   <select id="getAllDateByTitle"  resultType="pojo.FilmInfo" parameterType="java.lang.String" >
       select
@@ -76,12 +79,7 @@
       <if test="origin != null" >
         origin,
       </if>
-      <if test="douban != null" >
-        douban,
-      </if>
-      <if test="douban_rating != null" >
-        douban_rating,
-      </if>
+
 
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
@@ -103,12 +101,7 @@
       <if test="origin != null" >
         #{origin},
       </if>
-      <if test="douban != null" >
-        #{douban},
-      </if>
-      <if test="douban_rating != null" >
-        #{douban_rating},
-      </if>
+
     </trim>
     ON DUPLICATE KEY UPDATE
     <if test="content != null" >

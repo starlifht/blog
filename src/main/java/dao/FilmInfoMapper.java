@@ -13,6 +13,8 @@ public interface FilmInfoMapper {
     int insertSelective(FilmInfo record);
 
     FilmInfo selectByPrimaryKey(Integer id);
+    List<FilmInfo> getAllByDate();
+    List<FilmInfo> getAllByRating();
     int updateByPrimaryKeySelective(FilmInfo record);
 
     int updateByPrimaryKey(FilmInfo record);

@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="dao.DouBanInfoMapper" >
+  <resultMap id="BaseResultMap" type="pojo.DouBanInfo" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="url" property="url" jdbcType="VARCHAR" />
+    <result column="rating" property="rating" jdbcType="REAL" />
+    <result column="country" property="country" jdbcType="VARCHAR" />
+    <result column="genres" property="genres" jdbcType="VARCHAR" />
+    <result column="year" property="year" jdbcType="INTEGER" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="aka" property="aka" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, url, rating, country, genres, year, title, aka
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from douban
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from douban
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="pojo.DouBanInfo" >
+    insert into douban (id, url, rating, 
+      country, genres, year, 
+      title, aka)
+    values (#{id,jdbcType=INTEGER}, #{url,jdbcType=VARCHAR}, #{rating,jdbcType=REAL}, 
+      #{country,jdbcType=VARCHAR}, #{genres,jdbcType=VARCHAR}, #{year,jdbcType=INTEGER}, 
+      #{title,jdbcType=VARCHAR}, #{aka,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="pojo.DouBanInfo" >
+    insert into douban
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="url != null" >
+        url,
+      </if>
+      <if test="rating != null" >
+        rating,
+      </if>
+      <if test="country != null" >
+        country,
+      </if>
+      <if test="genres != null" >
+        genres,
+      </if>
+      <if test="year != null" >
+        year,
+      </if>
+      <if test="title != null" >
+        title,
+      </if>
+      <if test="aka != null" >
+        aka,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="url != null" >
+        #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="rating != null" >
+        #{rating,jdbcType=REAL},
+      </if>
+      <if test="country != null" >
+        #{country,jdbcType=VARCHAR},
+      </if>
+      <if test="genres != null" >
+        #{genres,jdbcType=VARCHAR},
+      </if>
+      <if test="year != null" >
+        #{year,jdbcType=INTEGER},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="aka != null" >
+        #{aka,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="pojo.DouBanInfo" >
+    update douban
+    <set >
+      <if test="url != null" >
+        url = #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="rating != null" >
+        rating = #{rating,jdbcType=REAL},
+      </if>
+      <if test="country != null" >
+        country = #{country,jdbcType=VARCHAR},
+      </if>
+      <if test="genres != null" >
+        genres = #{genres,jdbcType=VARCHAR},
+      </if>
+      <if test="year != null" >
+        year = #{year,jdbcType=INTEGER},
+      </if>
+      <if test="title != null" >
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="aka != null" >
+        aka = #{aka,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="pojo.DouBanInfo" >
+    update douban
+    set url = #{url,jdbcType=VARCHAR},
+      rating = #{rating,jdbcType=REAL},
+      country = #{country,jdbcType=VARCHAR},
+      genres = #{genres,jdbcType=VARCHAR},
+      year = #{year,jdbcType=INTEGER},
+      title = #{title,jdbcType=VARCHAR},
+      aka = #{aka,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -40,7 +40,10 @@ table thead td{
     background: url('../images/ym.png')    no-repeat fixed;
     text-align: right;
 }
-
+.page{
+    width: 550px;
+    margin:auto;
+}
 .iframe{
     float: left;
     width: 80%;

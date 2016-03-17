@@ -10,8 +10,10 @@ import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import pojo.FilmInfo;
+import service.FilmService;
 import tools.DoubanUtil;
 
 import java.io.IOException;
@@ -29,6 +31,19 @@ import java.util.concurrent.TimeUnit;
 public class FilmHandler {
     @Autowired
     private FilmInfoMapper filmInfoMapper;
+    @Autowired
+    private FilmService filmService;
+    @RequestMapping(value = "/{pagesize}/{pageno}",method = RequestMethod.GET)
+    public String getAll(ModelMap modelMap,
+                         @PathVariable(value = "pagesize")Integer pagesize,
+                         @PathVariable(value = "pageno")Integer pageno){
+        HashMap hashMap=filmService.getFlimList(pageno,pagesize);
+        modelMap.addAttribute("totalpage",hashMap.get("totalpage"));
+        modelMap.addAttribute("pageNo",hashMap.get("pageNo"));
+        modelMap.addAttribute("pageSize",hashMap.get("pageSize"));
+        modelMap.addAttribute("list",hashMap.get("list"));
+        return "film_list";
+    }
 
     @RequestMapping(value = "/getCount/{label}",method = {RequestMethod.GET,RequestMethod.POST},produces = "application/json;charset=utf-8")
     @ResponseBody

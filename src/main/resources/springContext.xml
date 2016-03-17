@@ -9,11 +9,13 @@
     <mvc:annotation-driven/>
     <task:annotation-driven/>
     <context:component-scan base-package="handler"/>
+    <context:component-scan base-package="service"/>
     <context:component-scan base-package="task"/>
     <mvc:view-controller path="/" view-name="film_list"></mvc:view-controller>
     <mvc:view-controller path="/film_list" view-name="film_list"></mvc:view-controller>
     <mvc:view-controller path="/content" view-name="content"></mvc:view-controller>
     <mvc:view-controller path="/nav" view-name="nav"></mvc:view-controller>
+    <mvc:view-controller path="/tail" view-name="tail"></mvc:view-controller>
     <mvc:view-controller path="/editor" view-name="editor"></mvc:view-controller>
     <mvc:view-controller path="/article" view-name="article"></mvc:view-controller>
     <!--<task:annotation-driven/>-->
@@ -22,7 +24,7 @@
     <bean id="freemarkerConfigurer"
     class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
     <property name="templateLoaderPath" value="/WEB-INF/view/" />
-    <property name="defaultEncoding" value="GBK" />
+    <property name="defaultEncoding" value="UTF-8" />
     <property name="freemarkerSettings">
     <props>
     <prop key="template_update_delay">10</prop>

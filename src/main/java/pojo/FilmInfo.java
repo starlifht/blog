@@ -10,17 +10,17 @@ public class FilmInfo {
     private String content;
     private String label;
     private String origin;
-    private double douban_rating;
-    private Object douban;
-
-
-    public Object getDouban() {
-        return douban;
+    public Integer getDouban_id() {
+        return douban_id;
     }
 
-    public void setDouban(Object douban) {
-        this.douban = douban;
+    public void setDouban_id(Integer douban_id) {
+        this.douban_id = douban_id;
     }
+
+    private Integer douban_id;
+
+
 
     public String getOrigin() {
         return origin;
@@ -71,11 +71,5 @@ public class FilmInfo {
     }
 
 
-    public double getDouban_rating() {
-        return douban_rating;
-    }
 
-    public void setDouban_rating(double douban_rating) {
-        this.douban_rating = douban_rating;
-    }
 }

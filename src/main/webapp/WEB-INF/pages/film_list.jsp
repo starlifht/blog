@@ -8,20 +8,18 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>home</title>
+    <title>CoolLily.com</title>
     <style>
         /*table tr:first-child{*/
-            /*font-weight: 600;*/
+        /*font-weight: 600;*/
         /*}*/
 
-
-
-        .kkpager{
+        .kkpager {
             width: 800px;
             margin: auto;
         }
     </style>
-    <link href="statics/css/kkpager_blue.css" rel="stylesheet" type="text/css" />
+    <link href="statics/css/kkpager_blue.css" rel="stylesheet" type="text/css"/>
 
 </head>
 <body>
@@ -41,5 +39,4 @@
 <script type="text/javascript" src="statics/js/film_list.js"></script>
 
 </body>
-
 </html>
