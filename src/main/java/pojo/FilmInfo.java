@@ -5,11 +5,17 @@ import java.util.Date;
 
 public class FilmInfo {
     private Integer id;
+    private Integer douban_id;
     private Date datetime;
     private String title;
     private String content;
     private String label;
     private String origin;
+    private DouBanInfo douBanInfo;
+
+
+
+
     public Integer getDouban_id() {
         return douban_id;
     }
@@ -17,11 +23,6 @@ public class FilmInfo {
     public void setDouban_id(Integer douban_id) {
         this.douban_id = douban_id;
     }
-
-    private Integer douban_id;
-
-
-
     public String getOrigin() {
         return origin;
     }
@@ -71,5 +72,11 @@ public class FilmInfo {
     }
 
 
+    public DouBanInfo getDouBanInfo() {
+        return douBanInfo;
+    }
 
+    public void setDouBanInfo(DouBanInfo douBanInfo) {
+        this.douBanInfo = douBanInfo;
+    }
 }

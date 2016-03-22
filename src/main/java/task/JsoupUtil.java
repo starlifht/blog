@@ -104,7 +104,7 @@ public class JsoupUtil {
 //            }
 //        }
 //    }
-    @Scheduled(cron = "0 * * * * *")
+    @Scheduled(cron = "0 33 10 * * *")
     public  void getGaoQing(){
         // 从 URL 直接加载 HTML 文档
         Document doc = null;
@@ -132,25 +132,30 @@ public class JsoupUtil {
                         .timeout(5000).get();
                 title = document.select(".article_container > h1").text();
                 String content = document.select("#post_content").html();
-                hashMap = DoubanUtil.getMovieInfo(title.split(" ")[1]);
+                hashMap = DoubanUtil.getMovieInfo(title.split(" ")[1]);//豆瓣数据
                 if (!hashMap.isEmpty()){
-                    DouBanInfo douBanInfo=new DouBanInfo();
-                    douBanInfo.setId((Integer) hashMap.get("id"));
-                    douBanInfo.setTitle((String) hashMap.get("title"));
-                    douBanInfo.setCountry((String) hashMap.get("countries"));
-                    douBanInfo.setGenres((String) hashMap.get("genres"));
-                    douBanInfo.setRating((Double) hashMap.get("rating"));
-                    douBanInfo.setAka((String) hashMap.get("aka"));
-                    douBanInfo.setUrl((String) hashMap.get("url"));
-                    douBanInfo.setYear((Integer) hashMap.get("year"));
-                    douBanInfoMapper.insertSelective(douBanInfo);
-
                     FilmInfo filmInfo = new FilmInfo();
                     filmInfo.setOrigin(url);
                     filmInfo.setTitle(title);
                     filmInfo.setLabel("gq");
                     filmInfo.setContent(content);
-                    filmInfoMapper.insertSelective(filmInfo);
+                    filmInfo.setDouban_id((Integer) hashMap.get("id"));
+                   if(filmInfoMapper.insertSelective(filmInfo)==1){
+                       DouBanInfo douBanInfo=new DouBanInfo();
+                       douBanInfo.setId((Integer) hashMap.get("id"));
+                       douBanInfo.setTitle((String) hashMap.get("title"));
+                       douBanInfo.setCountry((String) hashMap.get("countries"));
+                       douBanInfo.setGenres((String) hashMap.get("genres"));
+                       douBanInfo.setRating((Double) hashMap.get("rating"));
+                       douBanInfo.setAka((String) hashMap.get("aka"));
+                       douBanInfo.setUrl((String) hashMap.get("url"));
+                       douBanInfo.setYear((Integer) hashMap.get("year"));
+                       douBanInfoMapper.insertSelective(douBanInfo);
+                   };
+
+
+
+
                 }
 
 
@@ -158,6 +163,8 @@ public class JsoupUtil {
             }catch(Exception e){
                 e.printStackTrace();
             }
+
+
         }
     }
 

@@ -33,4 +33,10 @@ public class FilmService {
             hashMap.put("pageSize",pageSize);
             return hashMap;
     }
+    public FilmInfo getContent(Integer id){
+
+
+        return filmInfoMapper.selectByPrimaryKey(id);
+
+    }
 }

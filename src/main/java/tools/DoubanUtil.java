@@ -2,7 +2,9 @@ package tools;
 
 import net.sf.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.regex.Pattern;
 
 
 /**
@@ -36,9 +38,9 @@ public class DoubanUtil {
             if (jsonObject!=null&&jsonObject.containsKey("rating")){
                 hashMap.put("rating",jsonObject.getJSONObject("rating").getDouble("average"));
                 hashMap.put("url",jsonObject.getString("alt"));
-                hashMap.put("countries",jsonObject.getJSONArray("countries"));
-                hashMap.put("genres",jsonObject.getJSONArray("genres"));
-                hashMap.put("aka",jsonObject.getJSONArray("aka"));
+                hashMap.put("countries",jsonObject.getString("countries").replaceAll("[\\[\\]\"]",""));
+                hashMap.put("genres",jsonObject.getString("genres").replaceAll("[\\[\\]\"]",""));
+                hashMap.put("aka",jsonObject.getString("aka").replaceAll("[\\[\\]\"]",""));
                 hashMap.put("images",jsonObject.getJSONObject("images"));
                 hashMap.put("title",jsonObject.getString("title"));
                 hashMap.put("year",jsonObject.getInt("year"));
@@ -51,8 +53,15 @@ public class DoubanUtil {
     }
 
     public static void main(String[] args){
+//           JSONObject jsonObject=new JSONObject();
+//        ArrayList arrayList=new ArrayList();
+//        arrayList.add("册四");
+//        arrayList.add("册5");
+//        jsonObject.put("star",0);
+//        jsonObject.put("list",arrayList);
 
-        System.out.println(getMovieInfo("love"));
-
+     //   System.out.println(jsonObject.getString("list"));
+        String s="[\"sdfsd\",sdfsd]";
+        System.out.println(s.replaceAll("[\\[\\]\"]",""));
     }
 }

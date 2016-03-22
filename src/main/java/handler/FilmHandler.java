@@ -1,27 +1,16 @@
 package handler;
 
 import dao.FilmInfoMapper;
-
 import net.sf.json.JSONObject;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import pojo.FilmInfo;
 import service.FilmService;
-import tools.DoubanUtil;
-
-import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
-import java.net.URLEncoder;
 import java.util.*;
-import java.util.concurrent.TimeUnit;
 
 /**
  * Created by star on 15-11-19.
@@ -44,7 +33,19 @@ public class FilmHandler {
         modelMap.addAttribute("list",hashMap.get("list"));
         return "film_list";
     }
-
+    @RequestMapping(value = "/content/{id}",method = RequestMethod.GET)
+    public String getContent(ModelMap modelMap,
+                         @PathVariable(value = "id")Integer id){
+        FilmInfo filmInfo=filmService.getContent(id);
+        if (filmInfo==null){
+            return "";
+        }
+        modelMap.addAttribute("title",filmInfo.getTitle());
+        modelMap.addAttribute("title",filmInfo.getId());
+        modelMap.addAttribute("datetime",filmInfo.getDatetime());
+        modelMap.addAttribute("content",filmInfo.getContent());
+        return "film_content";
+    }
     @RequestMapping(value = "/getCount/{label}",method = {RequestMethod.GET,RequestMethod.POST},produces = "application/json;charset=utf-8")
     @ResponseBody
     public JSONObject getCountByLabel(@PathVariable("label")String label,
