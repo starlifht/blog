@@ -7,25 +7,31 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import pojo.DouBanInfo;
+import org.springframework.test.context.web.WebAppConfiguration;
 import pojo.FilmInfo;
+import service.DoubanService;
+import service.FilmService;
 
 /**
  * Created by star on 16-3-17.
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {"classpath:applicationContext.xml"})
+@WebAppConfiguration
+@ContextConfiguration({"classpath:applicationContext.xml",
+"classpath:springContext.xml"})
 public class DoubanTest {
     @Autowired
     private DouBanInfoMapper douBanInfoMapper;
     @Autowired
     private FilmInfoMapper filmInfoMapper;
+
+    @Autowired
+    private DoubanService doubanService;
+    @Autowired
+    private FilmService filmService;
     @Test
     public void  addDoubanInfo(){
-        DouBanInfo douBanInfo=new DouBanInfo();
-        douBanInfo.setId(777);
-        douBanInfo.setTitle("dsfsdfsdf");
-        douBanInfoMapper.insertSelective(douBanInfo);
+        System.out.println(doubanService.getDoubanId("背对背"));
     }
     @Test
     public void addFilmInfo(){
@@ -40,5 +46,10 @@ public class DoubanTest {
     @Test
     public void getFilm(){
         System.out.println(filmInfoMapper.getAllByDate());
+    }
+    @Test
+    public void getContet(){
+        FilmInfo filmInfo=filmService.getContent(1);
+        System.out.println("");
     }
 }

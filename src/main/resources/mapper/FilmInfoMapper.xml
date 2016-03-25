@@ -6,63 +6,61 @@
     <result column="douban_id" property="douban_id" jdbcType="INTEGER" />
     <result column="datetime" property="datetime" jdbcType="TIMESTAMP" />
     <result column="title" property="title" jdbcType="VARCHAR" />
-    <!--<result column="content" property="content" jdbcType="VARCHAR" />-->
     <result column="label" property="label" jdbcType="VARCHAR" />
     <result column="origin" property="origin" jdbcType="VARCHAR" />
-    <association property="douBanInfo" javaType="pojo.DouBanInfo">
+    <result column="content" property="content" jdbcType="VARCHAR" />
+    <association property="douBanInfo" javaType="pojo.DouBanInfo" >
+      <id column="id" property="id" jdbcType="INTEGER" />
       <result column="url" property="url" jdbcType="VARCHAR" />
+      <result column="rating" property="rating" jdbcType="DECIMAL" />
+      <result column="ratings_count" property="ratings_count" jdbcType="REAL" />
       <result column="country" property="country" jdbcType="VARCHAR" />
       <result column="genres" property="genres" jdbcType="VARCHAR" />
-
-      <result column="rating" property="rating" jdbcType="FLOAT" />
+      <result column="year" property="year" jdbcType="INTEGER" />
+      <result column="subject" property="subject" jdbcType="VARCHAR" />
+      <result column="aka" property="aka" jdbcType="VARCHAR" />
+      <result column="datetime" property="datetime" jdbcType="TIMESTAMP" />
+      <result column="summary" property="summary" jdbcType="VARCHAR" />
+      <result column="images" property="images" jdbcType="VARCHAR" />
+      <result column="casts" property="casts" jdbcType="VARCHAR" />
+      <result column="directors" property="directors" jdbcType="VARCHAR" />
     </association>
   </resultMap>
 
   <sql id="Base_Column_List" >
     id, datetime, title, content, label,douban
   </sql>
-  <select id="selectByPrimaryKey" resultType="pojo.FilmInfo" parameterType="java.lang.Integer" >
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     *
-    from film
-    where id = #{id,jdbcType=INTEGER}
+    from film JOIN  douban on film.douban_id=douban.id where film.id = #{id,jdbcType=INTEGER}
   </select>
   <select id="getAllByDate" resultMap="BaseResultMap">
     select * from film JOIN  douban on film.douban_id=douban.id ORDER BY film.datetime DESC
   </select>
-  <select id="getAllDateByTitle"  resultType="pojo.FilmInfo" parameterType="java.lang.String" >
-      select
-    id,datetime,title,douban
-      from film
-      where title like  CONCAT('%',#{title},'%')
+  <select id="getAllByRating" resultMap="BaseResultMap">
+    select * from film JOIN  douban on film.douban_id=douban.id ORDER BY douban.rating DESC
+  </select>
+  <select id="getAllDateByTitle"  resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select * from film JOIN  douban on film.douban_id=douban.id
+      where douban.subject like  CONCAT('%',#{title},'%') OR douban.aka like  CONCAT('%',#{title},'%') ORDER BY film.datetime DESC
   </select>
   <select id="getAllCount" resultType="java.lang.Integer">
     SELECT count(*) FROM film
   </select>
-  <select id="getCountByTitle" resultType="java.lang.Integer" parameterType="java.lang.String">
-    SELECT count(*) FROM film  where title like  CONCAT('%',#{title},'%')
 
-  </select>
   <select id="getCountByLabel" resultType="java.lang.Integer">
     SELECT count(*) FROM film WHERE label=#{label,jdbcType=VARCHAR}
   </select>
-  <select id="getAllDate" resultType="pojo.FilmInfo">
-    SELECT id,datetime,title,douban FROM film ORDER BY datetime DESC LIMIT #{offset},#{limit}
-  </select>
-  <select id="getAllDateByLabel" resultType="pojo.FilmInfo">
-    SELECT id,datetime,title,douban FROM film WHERE label=#{label} ORDER BY datetime DESC LIMIT #{offset},#{limit}
-  </select>
-  <select id="getALLRatingByLabel" resultType="pojo.FilmInfo">
-    SELECT id,datetime,title,douban FROM film WHERE label=#{label} ORDER BY douban_rating DESC LIMIT #{offset},#{limit}
-  </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from film
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="pojo.FilmInfo" >
-    insert into film (id, datetime, title, 
+    insert into film (id, datetime, title,
       content, label)
-    values (#{id,jdbcType=INTEGER}, #{datetime,jdbcType=TIMESTAMP}, #{title,jdbcType=VARCHAR}, 
+    values (#{id,jdbcType=INTEGER}, #{datetime,jdbcType=TIMESTAMP}, #{title,jdbcType=VARCHAR},
       #{content,jdbcType=VARCHAR}, #{label,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="pojo.FilmInfo" >
@@ -128,7 +126,7 @@
         datetime = #{datetime,jdbcType=TIMESTAMP},
       </if>
       <if test="title != null" >
-        title = #{title,jdbcType=VARCHAR},
+        title  = #{title,jdbcType=VARCHAR},
       </if>
       <if test="content != null" >
         content = #{content,jdbcType=VARCHAR},

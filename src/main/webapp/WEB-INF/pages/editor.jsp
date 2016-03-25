@@ -8,7 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Editor</title>
+    <alt>Editor</alt>
     <link href="statics/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
 
 
@@ -27,7 +27,7 @@
 </head>
 <body>
 <div>
-    <input type="text" class="form-control" id="title" >
+    <input type="text" class="form-control" id="alt" >
 </div>
 <div id="editor">
     输入内容&hellip;
@@ -44,7 +44,7 @@
              url: "article/add",
              contentType: "application/json", //必须有
              dataType: "json", //表示返回值类型，不必须
-             data: JSON.stringify({ 'title': $('#title').val(), 'content': $(".panel-body").html() }),
+             data: JSON.stringify({ 'alt': $('#alt').val(), 'content': $(".panel-body").html() }),
              async: false,
              success: function (jsonResult) {
 

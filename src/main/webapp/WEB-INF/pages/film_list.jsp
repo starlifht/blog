@@ -8,7 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>CoolLily.com</title>
+    <alt>CoolLily.com</alt>
     <style>
         /*table tr:first-child{*/
         /*font-weight: 600;*/

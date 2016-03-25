@@ -13,19 +13,10 @@ public interface FilmInfoMapper {
     int insertSelective(FilmInfo record);
 
     FilmInfo selectByPrimaryKey(Integer id);
-    List getAllByDate();
+    List<FilmInfo> getAllByDate();
     List<FilmInfo> getAllByRating();
-    int updateByPrimaryKeySelective(FilmInfo record);
+    List<FilmInfo> getAllDateByTitle(String title);
 
-    int updateByPrimaryKey(FilmInfo record);
-    int getAllCount();
-    int getCountByTitle(String title);
-    int getCountByLabel(String label);
-
-    List<FilmInfo> getAllDateByTitle(@Param("title") String title,@Param("offset") int offset, @Param("limit") int limit);
-    List<FilmInfo> getAllDate(@Param("offset") int offset, @Param("limit") int limit);
-    List<FilmInfo> getAllDateByLabel(@Param("label")String label,@Param("offset") int offset, @Param("limit") int limit);
-    List<FilmInfo> getALLRatingByLabel(@Param("label")String label,@Param("offset") int offset, @Param("limit") int limit);
 
 
 }

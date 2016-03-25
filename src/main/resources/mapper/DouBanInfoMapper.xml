@@ -3,16 +3,23 @@
 <mapper namespace="dao.DouBanInfoMapper" >
   <resultMap id="BaseResultMap" type="pojo.DouBanInfo" >
     <id column="id" property="id" jdbcType="INTEGER" />
+    <id column="ratings_count" property="ratings_count" jdbcType="INTEGER" />
     <result column="url" property="url" jdbcType="VARCHAR" />
     <result column="rating" property="rating" jdbcType="REAL" />
     <result column="country" property="country" jdbcType="VARCHAR" />
     <result column="genres" property="genres" jdbcType="VARCHAR" />
     <result column="year" property="year" jdbcType="INTEGER" />
-    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="subject" property="subject" jdbcType="VARCHAR" />
     <result column="aka" property="aka" jdbcType="VARCHAR" />
+    <result column="datetime" property="datetime" jdbcType="TIMESTAMP" />
+    <result column="summary" property="summary" jdbcType="VARCHAR" />
+    <result column="images" property="images" jdbcType="VARCHAR" />
+    <result column="casts" property="casts" jdbcType="VARCHAR" />
+    <result column="directors" property="directors" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, url, rating, country, genres, year, title, aka
+    id, url, rating, country, genres, year, subject, aka, datetime, summary, images, 
+    casts, directors,ratings_count
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
@@ -27,10 +34,14 @@
   <insert id="insert" parameterType="pojo.DouBanInfo" >
     insert into douban (id, url, rating, 
       country, genres, year, 
-      title, aka)
+      subject, aka, datetime, 
+      summary, images, casts, 
+      directors)
     values (#{id,jdbcType=INTEGER}, #{url,jdbcType=VARCHAR}, #{rating,jdbcType=REAL}, 
       #{country,jdbcType=VARCHAR}, #{genres,jdbcType=VARCHAR}, #{year,jdbcType=INTEGER}, 
-      #{title,jdbcType=VARCHAR}, #{aka,jdbcType=VARCHAR})
+      #{subject,jdbcType=VARCHAR}, #{aka,jdbcType=VARCHAR}, #{datetime,jdbcType=TIMESTAMP}, 
+      #{summary,jdbcType=VARCHAR}, #{images,jdbcType=VARCHAR}, #{casts,jdbcType=VARCHAR}, 
+      #{directors,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="pojo.DouBanInfo" >
     insert into douban
@@ -53,11 +64,29 @@
       <if test="year != null" >
         year,
       </if>
-      <if test="title != null" >
-        title,
+      <if test="subject != null" >
+        subject,
       </if>
       <if test="aka != null" >
         aka,
+      </if>
+      <if test="datetime != null" >
+        datetime,
+      </if>
+      <if test="summary != null" >
+        summary,
+      </if>
+      <if test="images != null" >
+        images,
+      </if>
+      <if test="casts != null" >
+        casts,
+      </if>
+      <if test="directors != null" >
+        directors,
+      </if>
+      <if test="ratings_count != null" >
+        ratings_count,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
@@ -79,11 +108,29 @@
       <if test="year != null" >
         #{year,jdbcType=INTEGER},
       </if>
-      <if test="title != null" >
-        #{title,jdbcType=VARCHAR},
+      <if test="subject != null" >
+        #{subject,jdbcType=VARCHAR},
       </if>
       <if test="aka != null" >
         #{aka,jdbcType=VARCHAR},
+      </if>
+      <if test="datetime != null" >
+        #{datetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="summary != null" >
+        #{summary,jdbcType=VARCHAR},
+      </if>
+      <if test="images != null" >
+        #{images,jdbcType=VARCHAR},
+      </if>
+      <if test="casts != null" >
+        #{casts,jdbcType=VARCHAR},
+      </if>
+      <if test="directors != null" >
+        #{directors,jdbcType=VARCHAR},
+      </if>
+      <if test="ratings_count != null" >
+        #{ratings_count,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -105,11 +152,26 @@
       <if test="year != null" >
         year = #{year,jdbcType=INTEGER},
       </if>
-      <if test="title != null" >
-        title = #{title,jdbcType=VARCHAR},
+      <if test="subject != null" >
+        subject = #{subject,jdbcType=VARCHAR},
       </if>
       <if test="aka != null" >
         aka = #{aka,jdbcType=VARCHAR},
+      </if>
+      <if test="datetime != null" >
+        datetime = #{datetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="summary != null" >
+        summary = #{summary,jdbcType=VARCHAR},
+      </if>
+      <if test="images != null" >
+        images = #{images,jdbcType=VARCHAR},
+      </if>
+      <if test="casts != null" >
+        casts = #{casts,jdbcType=VARCHAR},
+      </if>
+      <if test="directors != null" >
+        directors = #{directors,jdbcType=VARCHAR},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
@@ -121,8 +183,13 @@
       country = #{country,jdbcType=VARCHAR},
       genres = #{genres,jdbcType=VARCHAR},
       year = #{year,jdbcType=INTEGER},
-      title = #{title,jdbcType=VARCHAR},
-      aka = #{aka,jdbcType=VARCHAR}
+      subject = #{subject,jdbcType=VARCHAR},
+      aka = #{aka,jdbcType=VARCHAR},
+      datetime = #{datetime,jdbcType=TIMESTAMP},
+      summary = #{summary,jdbcType=VARCHAR},
+      images = #{images,jdbcType=VARCHAR},
+      casts = #{casts,jdbcType=VARCHAR},
+      directors = #{directors,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

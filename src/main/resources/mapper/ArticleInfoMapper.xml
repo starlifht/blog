@@ -4,14 +4,14 @@
   <resultMap id="BaseResultMap" type="pojo.ArticleInfo" >
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="datetime" property="datetime" jdbcType="TIMESTAMP" />
-    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="alt" property="alt" jdbcType="VARCHAR" />
     <result column="label" property="label" jdbcType="VARCHAR" />
   </resultMap>
   <resultMap id="ResultMapWithBLOBs" type="pojo.ArticleInfo" extends="BaseResultMap" >
     <result column="content" property="content" jdbcType="LONGVARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, datetime, title,label
+    id, datetime, alt,label
   </sql>
   <sql id="Blob_Column_List" >
     content
@@ -25,10 +25,10 @@
     where id = #{id,jdbcType=INTEGER}
   </select>
   <select id="getAll" resultType="pojo.ArticleInfo">
-    SELECT id,datetime,title FROM article ORDER BY id DESC LIMIT #{offset},#{limit}
+    SELECT id,datetime,alt FROM article ORDER BY id DESC LIMIT #{offset},#{limit}
   </select>
   <select id="getByLabel" resultType="pojo.ArticleInfo">
-    SELECT id,datetime,title FROM article WHERE label=#{label} ORDER BY id DESC LIMIT #{offset},#{limit}
+    SELECT id,datetime,alt FROM article WHERE label=#{label} ORDER BY id DESC LIMIT #{offset},#{limit}
   </select>
   <select id="getCount" resultType="java.lang.Integer" >
     SELECT COUNT(*) FROM article
@@ -43,9 +43,9 @@
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="pojo.ArticleInfo" >
-    insert into article (id, datetime, title, 
+    insert into article (id, datetime, alt,
       content)
-    values (#{id,jdbcType=INTEGER}, #{datetime,jdbcType=TIMESTAMP}, #{title,jdbcType=VARCHAR}, 
+    values (#{id,jdbcType=INTEGER}, #{datetime,jdbcType=TIMESTAMP}, #{alt,jdbcType=VARCHAR},
       #{content,jdbcType=LONGVARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="pojo.ArticleInfo" >
@@ -57,8 +57,8 @@
       <if test="datetime != null" >
         datetime,
       </if>
-      <if test="title != null" >
-        title,
+      <if test="alt != null" >
+        alt,
       </if>
       <if test="content != null" >
         content,
@@ -74,8 +74,8 @@
       <if test="datetime != null" >
         #{datetime,jdbcType=TIMESTAMP},
       </if>
-      <if test="title != null" >
-        #{title,jdbcType=VARCHAR},
+      <if test="alt != null" >
+        #{alt,jdbcType=VARCHAR},
       </if>
       <if test="content != null" >
         #{content,jdbcType=LONGVARCHAR},
@@ -91,8 +91,8 @@
       <if test="datetime != null" >
         datetime = #{datetime,jdbcType=TIMESTAMP},
       </if>
-      <if test="title != null" >
-        title = #{title,jdbcType=VARCHAR},
+      <if test="alt != null" >
+        alt = #{alt,jdbcType=VARCHAR},
       </if>
       <if test="content != null" >
         content = #{content,jdbcType=LONGVARCHAR},
@@ -103,14 +103,14 @@
   <update id="updateByPrimaryKeyWithBLOBs" parameterType="pojo.ArticleInfo" >
     update article
     set datetime = #{datetime,jdbcType=TIMESTAMP},
-      title = #{title,jdbcType=VARCHAR},
+      alt = #{alt,jdbcType=VARCHAR},
       content = #{content,jdbcType=LONGVARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="pojo.ArticleInfo" >
     update article
     set datetime = #{datetime,jdbcType=TIMESTAMP},
-      title = #{title,jdbcType=VARCHAR}
+      alt = #{alt,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

@@ -8,7 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>文章列表</title>
+    <alt>文章列表</alt>
 </head>
 <body>
 <jsp:include page="/nav" flush="true"></jsp:include>

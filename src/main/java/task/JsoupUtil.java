@@ -2,7 +2,6 @@ package task;
 
 import dao.DouBanInfoMapper;
 import dao.FilmInfoMapper;
-import net.sf.json.JSONObject;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.jsoup.Jsoup;
@@ -12,9 +11,8 @@ import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
-import pojo.DouBanInfo;
 import pojo.FilmInfo;
-import tools.DoubanUtil;
+import service.DoubanService;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -30,6 +28,9 @@ import java.util.concurrent.TimeUnit;
 public class JsoupUtil {
     @Autowired
     private FilmInfoMapper filmInfoMapper;
+
+    @Autowired
+    private DoubanService doubanService;
 
     @Autowired
     private DouBanInfoMapper douBanInfoMapper;
@@ -90,7 +91,7 @@ public class JsoupUtil {
 //
 //                    FilmInfo filmInfo = new FilmInfo();
 //                    filmInfo.setOrigin(url_child);
-//                    filmInfo.setTitle(title);
+//                    filmInfo.setAlt(title);
 //                    filmInfo.setDouban_rating(rating);
 //                    filmInfo.setDouban(moveiInfo.toString());
 //                    filmInfo.setLabel("ai");
@@ -104,7 +105,7 @@ public class JsoupUtil {
 //            }
 //        }
 //    }
-    @Scheduled(cron = "0 33 10 * * *")
+    @Scheduled(cron = "0 42 17 * * *")
     public  void getGaoQing(){
         // 从 URL 直接加载 HTML 文档
         Document doc = null;
@@ -131,40 +132,31 @@ public class JsoupUtil {
                 Document document = Jsoup.connect(url).header("User-Agent",USER_AGENT)
                         .timeout(5000).get();
                 title = document.select(".article_container > h1").text();
-                String content = document.select("#post_content").html();
-                hashMap = DoubanUtil.getMovieInfo(title.split(" ")[1]);//豆瓣数据
-                if (!hashMap.isEmpty()){
+                Elements elements = document.select("#post_content a[href~=magnet(.+?)]");
+                String content="";
+                for (Element element:elements){
+                    content=content+"<p>"+element.outerHtml()+"</p>";
+                }
+                int id =doubanService.getDoubanId(title.split(" ")[1]);
                     FilmInfo filmInfo = new FilmInfo();
                     filmInfo.setOrigin(url);
                     filmInfo.setTitle(title);
                     filmInfo.setLabel("gq");
                     filmInfo.setContent(content);
-                    filmInfo.setDouban_id((Integer) hashMap.get("id"));
-                   if(filmInfoMapper.insertSelective(filmInfo)==1){
-                       DouBanInfo douBanInfo=new DouBanInfo();
-                       douBanInfo.setId((Integer) hashMap.get("id"));
-                       douBanInfo.setTitle((String) hashMap.get("title"));
-                       douBanInfo.setCountry((String) hashMap.get("countries"));
-                       douBanInfo.setGenres((String) hashMap.get("genres"));
-                       douBanInfo.setRating((Double) hashMap.get("rating"));
-                       douBanInfo.setAka((String) hashMap.get("aka"));
-                       douBanInfo.setUrl((String) hashMap.get("url"));
-                       douBanInfo.setYear((Integer) hashMap.get("year"));
-                       douBanInfoMapper.insertSelective(douBanInfo);
-                   };
+                    filmInfo.setDouban_id(id);
+//                    filmInfo.setDouBanInfo(null);
+                   if(filmInfoMapper.insertSelective(filmInfo)!=1) {
+                       logger.error("film 入库失败");
+                   }
 
 
-
-
-                }
 
 
                 TimeUnit.MILLISECONDS.sleep(5000);
             }catch(Exception e){
                 e.printStackTrace();
             }
-
-
+                    break;
         }
     }
 

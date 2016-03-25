@@ -208,7 +208,7 @@
         <artifactId>tomcat-maven-plugin</artifactId>
         <version>1.1</version>
         <configuration>
-          <url>http://www.coollily.com/manager/text</url>
+          <url>http://www.coollily.com:7070/manager/text</url>
           <!--<url>http://172.27.2.26:8888/manager/text</url>-->
           <server>myserver</server>
           <path>/ROOT</path>

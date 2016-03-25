@@ -8,12 +8,12 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>CoolLily.com</title>
+    <alt>CoolLily.com</alt>
     <style>
-        .title{
+        .alt{
             margin-bottom: 30px;
         }
-        .title p{
+        .alt p{
             font-size: 30px;
         }
 
@@ -31,8 +31,8 @@
 <body>
 <jsp:include page="/nav"></jsp:include>
     <div class="iframe" >
-        <div class="title">
-            <p id="title"></p>
+        <div class="alt">
+            <p id="alt"></p>
             <small id="publish_time"></small>
         </div>
 
