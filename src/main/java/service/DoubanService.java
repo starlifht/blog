@@ -21,21 +21,24 @@ public class DoubanService {
     private   final  String DOUBAN_SEARCH="https://api.douban.com/v2/movie/search";
     private  final  String DOUBAN_MOVIE="https://api.douban.com/v2/movie/subject/";
 
+public int getDoubanID(String key){
+    int id = 0;
 
-    public int  getDoubanId(String key){
-        int id = 0;
+    String response= HttpClientUtil.get(DOUBAN_SEARCH+"?q="+key);// 基于关键字搜索电影，获取id
+    if (response!=null&&response.indexOf("{")!=-1){
+        JSONObject jsonObject=JSONObject.fromObject(response);
+        if (jsonObject!=null&&jsonObject.containsKey("subjects")){
+            id= jsonObject.getJSONArray("subjects").getJSONObject(0).getInt("id");
+        }
+
+    }
+
+        return id;
+}
+
+    public boolean  setDoubanInfo(int id){
+        boolean flag=false;
         String info=null;
-        String response= HttpClientUtil.get(DOUBAN_SEARCH+"?q="+key);// 基于关键字搜索电影，获取id
-        if (response!=null&&response.indexOf("{")!=-1){
-            JSONObject jsonObject=JSONObject.fromObject(response);
-            if (jsonObject!=null&&jsonObject.containsKey("subjects")){
-                id= jsonObject.getJSONArray("subjects").getJSONObject(0).getInt("id");
-            }
-
-        }
-        if (id==0){
-            return id;
-        }
         info=HttpClientUtil.get(DOUBAN_MOVIE+id); //获取电影的详细信息
         if (info!=null&&info.indexOf("{")!=-1){
             JSONObject jsonObject=JSONObject.fromObject(info);
@@ -53,16 +56,19 @@ public class DoubanService {
                 douBanInfo.setId(id);
                 douBanInfo.setRatings_count(jsonObject.getInt("ratings_count"));
                 douBanInfo.setSummary(jsonObject.getString("summary").replace("©豆瓣",""));
-
                 douBanInfo.setCasts(getNameFromJson(jsonObject.getJSONArray("casts")));
-
                 douBanInfo.setDirectors(getNameFromJson(jsonObject.getJSONArray("directors")));
-                douBanInfoMapper.insertSelective(douBanInfo);
+
+                  if (douBanInfoMapper.insertSelective(douBanInfo)>0){
+                        flag=true;
+                  }
                 }
 
 
         }
-        return id;
+
+
+        return flag;
     }
     private String getName(JSONArray jsonArray) {
         Iterator iterator=jsonArray.iterator();

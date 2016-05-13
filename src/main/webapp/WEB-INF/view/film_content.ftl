@@ -2,7 +2,10 @@
 <html lang="zh">
 <head>
 <#include "*/nav.ftl">
+<#import "*/side.ftl" as side>
 <#assign douban=filminfo.douBanInfo/>
+    <meta name="description" content="${douban.subject}/${douban.aka}" />
+    <meta name="keywords" content="${douban.genres}" />
     <title>${douban.subject}</title>
     <style>
         .label{
@@ -25,25 +28,32 @@
         </div>
         <div style="float: left;margin-left: 50px; max-width: 64%">
 
-            <p><span class="label label-danger">片名</span><span style="font-weight: bolder;font-size: 20px">${douban.subject}</span></p>
+            <p><span class="label label-danger">片名</span><span style="font-weight: bolder;font-size: 25px">${douban.subject}</span></p>
             <p><span class="label label-success">豆瓣</span>
-                <a href="${douban.url}" target="_blank" style="font-weight: bolder;font-size: 19px">${douban.rating}</a>
+                <a href="${douban.url}" target="_blank" style="font-weight: bolder;font-size: 23px">${douban.rating?string("0.0")}</a>
                 （${douban.ratings_count}人评价）
             </p>
 
             <p><span class="label label-warning">导演</span>${douban.directors} </p>
-            <p> <span class="label label-primary">演员</span>${douban.casts}</p>
+            <p> <span class="label label-default">演员</span>${douban.casts}</p>
             <p><span class="label label-default">年份</span>${douban.year}</p>
             <p><span class="label label-default">国家</span>${douban.country}</p>
             <p><span class="label label-default">类型</span>${douban.genres}</p>
-            <p><span class="label label-default">别名</span>${douban.aka}</p>
+            <p><span class="label label-info">别名</span>${douban.aka}</p>
 
-            <p><span class="label label-info">简介</span>${douban.summary}</p>
+
         </div>
         <div style="clear: both;padding-top:30px">
+            <p><span class="label label-danger">内容简介</span></p>
+       <p style="text-indent:2em ">
+       ${douban.summary}
+       </p>
+        </div>
+        <div style="padding-top:30px">
             <p  >
                 <span class="label label-primary" style="margin-bottom: 30px">下载地址</span></p>
-        ${filminfo.content}
+            <span style="text-indent:2em">${filminfo.content}</span>
+
 
         </div>
     </div>
@@ -51,6 +61,8 @@
 
     <#--<div>${filminfo.content}</div>-->
     <div class="ds-thread" data-thread-key="${filminfo.id}" data-alt="${douban.subject}" data-url="/film/content/${filminfo.id}"></div></div>
+<@side.p flag="sdfs"></@side.p>
+
 </body>
 <#include "*/foot.ftl">
 

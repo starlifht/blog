@@ -44,7 +44,7 @@
       #{directors,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="pojo.DouBanInfo" >
-    insert into douban
+    insert IGNORE into douban
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
         id,

@@ -1,11 +1,13 @@
 package handler;
 
+import dao.BillboardMapper;
 import dao.FilmInfoMapper;
 import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
+import pojo.Billboard;
 import pojo.FilmInfo;
 import service.DoubanService;
 import service.FilmService;
@@ -22,8 +24,7 @@ public class FilmHandler {
 
     @Autowired
     private FilmService filmService;
-    @Autowired
-    private DoubanService doubanService;
+
 
     @RequestMapping(value = "/{label}/{pagesize}/{pageno}",method = RequestMethod.GET)
     public String getAll(ModelMap modelMap,
@@ -37,6 +38,7 @@ public class FilmHandler {
         modelMap.addAttribute("pageSize",hashMap.get("pageSize"));
         modelMap.addAttribute("list",hashMap.get("list"));
         modelMap.addAttribute("label",label);
+        modelMap.addAttribute("flag","all");
         return "film_list";
     }
     @RequestMapping(value = "/content/{id}",method = RequestMethod.GET)

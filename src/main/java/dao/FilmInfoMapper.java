@@ -13,6 +13,7 @@ public interface FilmInfoMapper {
     int insertSelective(FilmInfo record);
 
     FilmInfo selectByPrimaryKey(Integer id);
+    Integer getIDByDoubanID(Integer douban_id);
     List<FilmInfo> getAllByDate();
     List<FilmInfo> getAllByRating();
     List<FilmInfo> getAllDateByTitle(String title);

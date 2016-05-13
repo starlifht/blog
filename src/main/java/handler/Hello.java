@@ -3,6 +3,8 @@ package handler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  * Created by star on 15-11-12.
@@ -15,9 +17,10 @@ public class Hello {
 //        return "hello";
 //    }
 
-    @RequestMapping("/hello")
-    public String index(ModelMap modelMap) {
-        modelMap.addAttribute("username","mmmmmmmmmmmm");
-        return "hello";
+    @RequestMapping(value = "/hello",method = {RequestMethod.POST,RequestMethod.GET})
+    @ResponseBody
+    public String index() {
+
+        return "starcoollily";
     }
 }

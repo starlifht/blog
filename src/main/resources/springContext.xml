@@ -11,7 +11,7 @@
     <context:component-scan base-package="handler"/>
     <context:component-scan base-package="service"/>
     <context:component-scan base-package="task"/>
-    <mvc:view-controller path="/" view-name="redirect:/film/date/17/1"></mvc:view-controller>
+    <mvc:view-controller path="/" view-name="redirect:/film/date/18/1"></mvc:view-controller>
 
     <!--<task:annotation-driven/>-->
     <mvc:resources location="/statics/" mapping="/statics/**" cache-period="36000"/>

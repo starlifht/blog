@@ -4,6 +4,19 @@ import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
 import net.sf.json.JSONObject;
+import org.apache.http.HttpEntity;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.config.CookieSpecs;
+import org.apache.http.client.config.RequestConfig;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.params.CookiePolicy;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.util.EntityUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -11,6 +24,8 @@ import org.jsoup.select.Elements;
 import pojo.FilmInfo;
 
 import java.io.*;
+import java.nio.ByteBuffer;
+import java.nio.channels.FileChannel;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -62,12 +77,71 @@ public class Test {
 
         //System.out.println("---------------------------");
     }
-    public static void main(String[] args){
+    public int kuaipai(int left,int right,int[] x){
+        int base=x[left];
+        while (left<right){
 
-        String s="sdfsstar324234eSTARe";
-        s=s.replaceAll("(star|STAR)","999");
-        System.out.println(s);
+            while (left<right&&x[right]>base){
+                right--;
+            }
+            x[left]=x[right];
+            while (left<right&&x[left]<base){
+                left++;
+            }
+            x[right]=x[left];
 
+        }
+        x[left]=base;
+        return left;
 
     }
-}
+    public void sort(int left,int right,int[] x){
+        if (left<right){
+            int base= kuaipai(left,right,x);
+            sort(left,base,x);
+            sort(base+1,right,x);
+        }
+
+    }
+    public static void main(String[] args){
+
+               int[] a={2,5,3,9,7,1};
+//        for (int i=0;i<a.length;i++){
+//
+//            for (int j=a.length-1;j>i;j--){
+//                if (a[j]<a[j-1]){
+//                    int temp=a[j];
+//                    a[j]=a[j-1];
+//                    a[j-1]=temp;
+//                }
+//
+//            }
+//        }
+//        new Test().sort(0,a.length-1,a);
+//        for (int i =1;i<a.length;i++){
+//            int temp=a[i];
+//            int j;
+//            for (j=i-1;j>=0&&temp<a[j];j--){
+//
+//                  a[j+1]=a[j];
+//
+//            }
+//            a[j+1]=temp;
+//        }
+        for (int i=0;i<a.length-1;i++) {
+            int index = i;
+
+            for (int j = i + 1; j < a.length; j++) {
+                if (a[index] > a[j]) {
+                    index = j;
+                }
+            }
+            int temp=a[i];
+            a[i]=a[index];
+            a[index]=temp;
+        }
+            for (int b : a) {
+                System.out.println(b);
+            }
+        }}
+

@@ -39,6 +39,7 @@ public class HttpClientUtil {
         CloseableHttpClient client =  null;
         CloseableHttpResponse httpresponse=null;
         String body = null;
+        HttpEntity entity = null;
         try {
             client =  HttpClients.createDefault();
             // Get请求
@@ -53,7 +54,7 @@ public class HttpClientUtil {
             httpresponse = client.execute(httpget);
 
             // 获取返回数据
-            HttpEntity entity = httpresponse.getEntity();
+             entity = httpresponse.getEntity();
             if(entity!=null) {
                 body = EntityUtils.toString(entity);
             }
@@ -62,6 +63,7 @@ public class HttpClientUtil {
             logger.error(e.getMessage());
         } finally {
             try {
+                EntityUtils.consume(entity);
                 httpresponse.close();
                 client.close();
             } catch (IOException e) {
@@ -81,6 +83,8 @@ public class HttpClientUtil {
         CloseableHttpClient client =  null;
         CloseableHttpResponse httpresponse=null;
         String body = null;
+        HttpEntity entity = null;
+
         try {
             client =  HttpClients.createDefault();
             // Get请求
@@ -97,7 +101,7 @@ public class HttpClientUtil {
              httpresponse = client.execute(httpget);
 
             // 获取返回数据
-            HttpEntity entity = httpresponse.getEntity();
+             entity = httpresponse.getEntity();
             if(entity!=null) {
                 body = EntityUtils.toString(entity);
             }
@@ -112,6 +116,7 @@ public class HttpClientUtil {
             e.printStackTrace();
         }finally {
             try {
+                EntityUtils.consume(entity);
                 httpresponse.close();
                 client.close();
             } catch (IOException e) {

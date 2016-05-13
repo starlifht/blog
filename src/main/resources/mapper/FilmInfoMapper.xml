@@ -35,6 +35,11 @@
     *
     from film JOIN  douban on film.douban_id=douban.id where film.id = #{id,jdbcType=INTEGER}
   </select>
+  <select id="getIDByDoubanID" resultType="java.lang.Integer" parameterType="java.lang.Integer" >
+    select
+    id
+    from film WHERE douban_id= #{douban_id,jdbcType=INTEGER}
+  </select>
   <select id="getAllByDate" resultMap="BaseResultMap">
     select * from film JOIN  douban on film.douban_id=douban.id ORDER BY film.datetime DESC
   </select>

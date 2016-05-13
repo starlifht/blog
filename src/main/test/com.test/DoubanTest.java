@@ -29,10 +29,7 @@ public class DoubanTest {
     private DoubanService doubanService;
     @Autowired
     private FilmService filmService;
-    @Test
-    public void  addDoubanInfo(){
-        System.out.println(doubanService.getDoubanId("背对背"));
-    }
+
     @Test
     public void addFilmInfo(){
         FilmInfo filmInfo=new FilmInfo();
@@ -45,11 +42,12 @@ public class DoubanTest {
     }
     @Test
     public void getFilm(){
-        System.out.println(filmInfoMapper.getAllByDate());
+        System.out.println(filmInfoMapper.getIDByDoubanID(25757187));
     }
     @Test
     public void getContet(){
         FilmInfo filmInfo=filmService.getContent(1);
         System.out.println("");
     }
+
 }

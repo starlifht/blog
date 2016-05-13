@@ -1,5 +1,6 @@
 package task;
 
+import dao.BillboardMapper;
 import dao.DouBanInfoMapper;
 import dao.FilmInfoMapper;
 import org.apache.logging.log4j.LogManager;
@@ -11,14 +12,15 @@ import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
+import pojo.Billboard;
 import pojo.FilmInfo;
 import service.DoubanService;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 /**
@@ -33,84 +35,49 @@ public class JsoupUtil {
     private DoubanService doubanService;
 
     @Autowired
-    private DouBanInfoMapper douBanInfoMapper;
+    private BillboardMapper billboardMapper;
 
     private final String AIDABAN_URL="http://www.aidaban.net/dianying";
     private final String GAOQING_URL="http://gaoqing.la/";
     private  final String USER_AGENT="Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:44.0) Gecko/20100101 Firefox/44.0";
 
     Logger logger= LogManager.getLogger(JsoupUtil.class.getName());
-//
-//    @Scheduled(cron = "0 0 * * * *")
-//    public void getAidaban(){
-//
-//        Document document = null;
-//        Document doc = null;
-//        String url_child;
-//        JSONObject moveiInfo;
-//        try {
-//            document = Jsoup.connect(AIDABAN_URL)
-//                    .header("User-Agent",USER_AGENT)
-//                    .timeout(5000).get();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//
-//        Elements elements = document.select("a.focus");
-//        for (Element element : elements) {
-//            url_child = element.attr("href");
-//            logger.info(url_child);
-//            try {
-//                doc = Jsoup.connect(url_child)
-//                        .header("User-Agent",USER_AGENT)
-//                        .timeout(5000).get();
-//                String title = doc.select(".article-title>a").text();
-//                if (title.indexOf("r级")!=-1||title.indexOf("三级")!=-1){
-//                    continue;
-//                }
-//                //  title = title.replaceAll("[\\[\\]/\\.]", " ");
-//                String title_simple = null;
-//                for (String x : title.replaceAll("[\\[\\]/\\.]", " ").split(" ")) {
-//                    if (!"".equals(x)) {
-//                        title_simple = x;
-//                        break;
-//                    }
-//                }
-//                doc.select(".wumii-hook").remove();
-//                doc.select(".asb-post-footer").remove();
-//                doc.select(".post-copyright").remove();
-//                doc.select("p>.wp-image-5832").remove();
-//                doc.select("strong").remove();
-//                //  doc.select("blockquote").get(1).remove();
-//                doc.select(".wp_keywordlink_affiliate a").attr("href","");
-//                String content = doc.select(".article-content").html();
-//                // content=content.replaceAll("(BT|bt)种子","");
-//                moveiInfo = DoubanUtil.getMovieInfo(title_simple);
-//                if (moveiInfo!=null&&moveiInfo.containsKey("rating")){
-//                    Double rating = moveiInfo.getDouble("rating");
-//
-//                    FilmInfo filmInfo = new FilmInfo();
-//                    filmInfo.setOrigin(url_child);
-//                    filmInfo.setAlt(title);
-//                    filmInfo.setDouban_rating(rating);
-//                    filmInfo.setDouban(moveiInfo.toString());
-//                    filmInfo.setLabel("ai");
-//                    filmInfo.setContent(content);
-//                    filmInfoMapper.insertSelective(filmInfo);
-//                }
-//
-//                TimeUnit.MILLISECONDS.sleep(5000);
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//            }
-//        }
-//    }
-    @Scheduled(cron = "0 42 17 * * *")
+    @Scheduled(cron = "0 46 9 * * *")
+    public void updateBillboard(){
+        try {
+            Document  doc= Jsoup.connect("http://movie.douban.com")
+                    .header("User-Agent",USER_AGENT)
+                    .timeout(5000).get();
+            Elements element=doc.select(".billboard-bd tr td a");
+            Pattern pattern=Pattern.compile("[0-9]+");
+            Matcher matcher;
+            int i=1;
+            int weeks=Calendar.getInstance().get(Calendar.WEEK_OF_YEAR);
+            for (Element element1:element){
+                matcher=pattern.matcher(element1.attr("href"));
+                if (matcher.find()){
+                    Billboard billboard=new Billboard();
+                    billboard.setDoubanId(Integer.valueOf(matcher.group()));
+                    billboard.setTitle(element1.text());
+                    billboard.setOrders(i);
+                    billboard.setWeeks(weeks);
+                    billboardMapper.insertSelective(billboard);
+                    i++;
+
+                }
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+   // @Scheduled(cron = "0 0 */2 * * *")
+    @Scheduled(cron = "0 22 15 * * *")
     public  void getGaoQing(){
         // 从 URL 直接加载 HTML 文档
         Document doc = null;
         String title=null;
-      HashMap<String,Object> hashMap;
+
         String url=null;
         try {
             doc= Jsoup.connect(GAOQING_URL).header("User-Agent",USER_AGENT)
@@ -134,33 +101,40 @@ public class JsoupUtil {
                 title = document.select(".article_container > h1").text();
                 Elements elements = document.select("#post_content a[href~=magnet(.+?)]");
                 String content="";
+                if (elements.isEmpty()){
+                    continue;
+                }
                 for (Element element:elements){
                     content=content+"<p>"+element.outerHtml()+"</p>";
                 }
-                int id =doubanService.getDoubanId(title.split(" ")[1]);
+                int id =doubanService.getDoubanID(title.split(" ")[1]);
+                if (id!=0&&doubanService.setDoubanInfo(id)){
+
                     FilmInfo filmInfo = new FilmInfo();
                     filmInfo.setOrigin(url);
                     filmInfo.setTitle(title);
                     filmInfo.setLabel("gq");
                     filmInfo.setContent(content);
                     filmInfo.setDouban_id(id);
-//                    filmInfo.setDouBanInfo(null);
-                   if(filmInfoMapper.insertSelective(filmInfo)!=1) {
-                       logger.error("film 入库失败");
-                   }
-
-
-
-
+                    if(filmInfoMapper.insertSelective(filmInfo)!=1) {
+                        logger.error("film入库失败"+title+url);
+                    }
+                }else {
+                    logger.error("[豆瓣无信息]"+title+url);
+                }
                 TimeUnit.MILLISECONDS.sleep(5000);
             }catch(Exception e){
                 e.printStackTrace();
             }
-                    break;
+
         }
     }
 
 
     public static void main(String[] args) {
+
+        Date date=new Date();
+        Calendar calendar=Calendar.getInstance();
+        System.out.println(calendar.get(Calendar.WEEK_OF_YEAR));
 
     }}
