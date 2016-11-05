@@ -1,5 +1,7 @@
 package pojo;
 
+import org.jsoup.select.Elements;
+
 import java.util.Date;
 
 public class DouBanInfo {
@@ -141,4 +143,6 @@ public class DouBanInfo {
     public void setDirectors(String directors) {
         this.directors = directors == null ? null : directors.trim();
     }
+
+
 }

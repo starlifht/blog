@@ -15,6 +15,7 @@ import org.springframework.stereotype.Component;
 import pojo.Billboard;
 import pojo.FilmInfo;
 import service.DoubanService;
+import tools.Params;
 
 import java.io.IOException;
 import java.util.*;
@@ -56,13 +57,28 @@ public class JsoupUtil {
             for (Element element1:element){
                 matcher=pattern.matcher(element1.attr("href"));
                 if (matcher.find()){
+                    int douban_ID=Integer.valueOf(matcher.group());
                     Billboard billboard=new Billboard();
-                    billboard.setDoubanId(Integer.valueOf(matcher.group()));
+                    billboard.setDoubanId(douban_ID);
                     billboard.setTitle(element1.text());
                     billboard.setOrders(i);
                     billboard.setWeeks(weeks);
                     billboardMapper.insertSelective(billboard);
+
+                    doubanService.setDoubanInfo(douban_ID);
+
+                    FilmInfo filmInfo = new FilmInfo();
+                    filmInfo.setOrigin(String.valueOf(douban_ID));
+                    filmInfo.setTitle(element1.text());
+                    filmInfo.setLabel("");
+                    filmInfo.setContent("暂无");
+                    filmInfo.setDouban_id(douban_ID);
+                    if(filmInfoMapper.insertSelective(filmInfo)!=1) {
+                        logger.error(element1.text()+"|入库失败");
+                    }
+                    logger.info(element1.text());
                     i++;
+                    TimeUnit.MILLISECONDS.sleep(5000);
 
                 }
 
@@ -86,7 +102,7 @@ public class JsoupUtil {
             e.printStackTrace();
         }
 
-        Elements links = doc.select("#post_container a[href~=http://gaoqing.la/(.+?).html]");
+        Elements links = doc.select(".mainleft #post_container a[href~=http://gaoqing.la/(.+?).html]");
         HashSet<String> hashSet=new HashSet<String>();
         for (Element element:links){
             hashSet.add(element.attr("href"));
@@ -100,6 +116,10 @@ public class JsoupUtil {
                         .timeout(5000).get();
                 title = document.select(".article_container > h1").text();
                 Elements elements = document.select("#post_content a[href~=magnet(.+?)]");
+                Matcher matcher= Params.DoubanIdPattern.matcher(document.getElementById("post_content").text());
+                if (matcher.find()){
+                    matcher.group(1);
+                }
                 String content="";
                 if (elements.isEmpty()){
                     continue;
@@ -107,7 +127,7 @@ public class JsoupUtil {
                 for (Element element:elements){
                     content=content+"<p>"+element.outerHtml()+"</p>";
                 }
-                int id =doubanService.getDoubanID(title.split(" ")[1]);
+                int id =doubanService.getDoubanID_web(title.split(" ")[1]);
                 if (id!=0&&doubanService.setDoubanInfo(id)){
 
                     FilmInfo filmInfo = new FilmInfo();
@@ -117,10 +137,10 @@ public class JsoupUtil {
                     filmInfo.setContent(content);
                     filmInfo.setDouban_id(id);
                     if(filmInfoMapper.insertSelective(filmInfo)!=1) {
-                        logger.error("film入库失败"+title+url);
+                        logger.error("film入库失败"+title.split(" ")[1]+url);
                     }
                 }else {
-                    logger.error("[豆瓣无信息]"+title+url);
+                    logger.error("[豆瓣无信息]"+title.split(" ")[1]+url);
                 }
                 TimeUnit.MILLISECONDS.sleep(5000);
             }catch(Exception e){

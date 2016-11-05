@@ -121,7 +121,10 @@
     </trim>
     ON DUPLICATE KEY UPDATE
     <if test="content != null" >
-     content= #{content,jdbcType=VARCHAR}
+     content= #{content,jdbcType=VARCHAR},
+    </if>
+    <if test="origin != null" >
+      origin= #{origin,jdbcType=VARCHAR}
     </if>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="pojo.FilmInfo" >

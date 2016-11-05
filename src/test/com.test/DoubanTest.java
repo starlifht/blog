@@ -11,6 +11,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import pojo.FilmInfo;
 import service.DoubanService;
 import service.FilmService;
+import task.JsoupUtil;
 
 /**
  * Created by star on 16-3-17.
@@ -30,6 +31,9 @@ public class DoubanTest {
     @Autowired
     private FilmService filmService;
 
+    @Autowired
+    private JsoupUtil jsoupUtil;
+
     @Test
     public void addFilmInfo(){
         FilmInfo filmInfo=new FilmInfo();
@@ -42,12 +46,11 @@ public class DoubanTest {
     }
     @Test
     public void getFilm(){
-        System.out.println(filmInfoMapper.getIDByDoubanID(25757187));
+        jsoupUtil.getGaoQing();
     }
     @Test
     public void getContet(){
-        FilmInfo filmInfo=filmService.getContent(1);
-        System.out.println("");
+        jsoupUtil.updateBillboard();
     }
 
 }
