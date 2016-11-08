@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import pojo.Billboard;
+import pojo.DouBanInfo;
 import pojo.FilmInfo;
 import service.DoubanService;
 import tools.Params;
@@ -31,6 +32,8 @@ import java.util.regex.Pattern;
 public class JsoupUtil {
     @Autowired
     private FilmInfoMapper filmInfoMapper;
+    @Autowired
+    private DouBanInfoMapper douBanInfoMapper;
 
     @Autowired
     private DoubanService doubanService;
@@ -64,18 +67,13 @@ public class JsoupUtil {
                     billboard.setOrders(i);
                     billboard.setWeeks(weeks);
                     billboardMapper.insertSelective(billboard);
+                    DouBanInfo douBanInfo=doubanService.getDoubanInfo(douban_ID);
+                        if (douBanInfo!=null){
+                            if (douBanInfoMapper.insertSelective(douBanInfo)!=1){
+                                logger.error("Fail to insert  Douban Info "+douban_ID);
+                            }
+                        }
 
-                    doubanService.setDoubanInfo(douban_ID);
-
-                    FilmInfo filmInfo = new FilmInfo();
-                    filmInfo.setOrigin(String.valueOf(douban_ID));
-                    filmInfo.setTitle(element1.text());
-                    filmInfo.setLabel("");
-                    filmInfo.setContent("暂无");
-                    filmInfo.setDouban_id(douban_ID);
-                    if(filmInfoMapper.insertSelective(filmInfo)!=1) {
-                        logger.error(element1.text()+"|入库失败");
-                    }
                     logger.info(element1.text());
                     i++;
                     TimeUnit.MILLISECONDS.sleep(5000);
@@ -84,6 +82,7 @@ public class JsoupUtil {
 
             }
         } catch (Exception e) {
+            logger.error(e.getMessage());
             e.printStackTrace();
         }
     }
@@ -95,17 +94,20 @@ public class JsoupUtil {
         String title=null;
 
         String url=null;
+        int doubanID = 0;
         try {
             doc= Jsoup.connect(GAOQING_URL).header("User-Agent",USER_AGENT)
-                    .timeout(5000).get();
+                    .timeout(8000).get();
         } catch (IOException e) {
             e.printStackTrace();
         }
 
         Elements links = doc.select(".mainleft #post_container a[href~=http://gaoqing.la/(.+?).html]");
-        HashSet<String> hashSet=new HashSet<String>();
-        for (Element element:links){
-            hashSet.add(element.attr("href"));
+        LinkedHashSet<String> hashSet=new LinkedHashSet<String>();
+        for (int i=links.size();i>0;i--){
+
+            hashSet.add(links.get(i-1).attr("href"));
+
         }
         Iterator<String> iterator=hashSet.iterator();
         while (iterator.hasNext()){
@@ -117,9 +119,7 @@ public class JsoupUtil {
                 title = document.select(".article_container > h1").text();
                 Elements elements = document.select("#post_content a[href~=magnet(.+?)]");
                 Matcher matcher= Params.DoubanIdPattern.matcher(document.getElementById("post_content").text());
-                if (matcher.find()){
-                    matcher.group(1);
-                }
+
                 String content="";
                 if (elements.isEmpty()){
                     continue;
@@ -127,23 +127,42 @@ public class JsoupUtil {
                 for (Element element:elements){
                     content=content+"<p>"+element.outerHtml()+"</p>";
                 }
-                int id =doubanService.getDoubanID_web(title.split(" ")[1]);
-                if (id!=0&&doubanService.setDoubanInfo(id)){
+                if (matcher.find()){
+                    doubanID= Integer.parseInt(matcher.group(1));
+                }
 
+                boolean isDouban=false;
+                if (!doubanService.checkDouban(doubanID)){
+                    DouBanInfo douBanInfo=doubanService.getDoubanInfo(doubanID);
+                    if (douBanInfo!=null){
+                        if (douBanInfoMapper.insertSelective(douBanInfo)!=1){
+                            logger.error("Fail to insert  Douban Info "+doubanID);
+                        }else {
+                            isDouban=true;
+                        }
+                    }else {
+                        logger.error("Can not find  Douban Info "+doubanID);
+
+                    }
+                }else {
+                    isDouban=true;
+                }
+                if (isDouban){
                     FilmInfo filmInfo = new FilmInfo();
                     filmInfo.setOrigin(url);
                     filmInfo.setTitle(title);
                     filmInfo.setLabel("gq");
                     filmInfo.setContent(content);
-                    filmInfo.setDouban_id(id);
+                    filmInfo.setDouban_id(doubanID);
                     if(filmInfoMapper.insertSelective(filmInfo)!=1) {
                         logger.error("film入库失败"+title.split(" ")[1]+url);
                     }
-                }else {
-                    logger.error("[豆瓣无信息]"+title.split(" ")[1]+url);
                 }
+
+
                 TimeUnit.MILLISECONDS.sleep(5000);
             }catch(Exception e){
+                logger.error("GaoQing|"+url +"|"+e.getMessage());
                 e.printStackTrace();
             }
 

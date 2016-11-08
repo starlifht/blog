@@ -14,7 +14,7 @@
     <script src="http://www.xixihd.com/?file=js&path=page_download_0_newtpl_0_0_0" type="text/javascript"></script>
 </head>
 <body>
-<jsp:include page="/nav"></jsp:include>
+아가씨
 
 </body>
 </html>

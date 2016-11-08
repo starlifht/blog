@@ -38,8 +38,7 @@
     -webkit-border-radius: 5px;
     border-radius:5px;">
             <span >豆瓣电影周排行榜</span></div>
-        <table class="table table-hover" id="billboard">
-        </table>
+        <table class="table table-hover" id="billboard"></table>
 
     </div>
 </div>

@@ -44,10 +44,16 @@ li{
 }
 
 .foot{
-    clear: both;
-    text-align: center;
-    margin:auto;
+    /*clear: both;*/
+    /*text-align: center;*/
+    /*margin:auto;*/
     color: #cdcdcd;
+
+    margin-top:30px;
+    text-align: center;
+    color: gray;
+    font-size: smaller;
+    clear: both;
 }
 
 .navbar{
@@ -73,20 +79,21 @@ li{
 .billboard{
     font-size: smaller;
 }
-/*.billboard td{*/
-    /*cursor: pointer;*/
-/*}*/
+.billboard span{
+    font-family: Georgia, serif;
+    margin-left: 5px;
+}
 .page{
     clear: both;
     margin:auto;
 }
 .iframe{
     float: left;
-    width: 80%;
+    width: 75%;
     right: 0;
     height: 100%;
-    padding-right: 20px;
-    padding-left: 20px;
+    max-right: 40px;
+    margin-left: 40px;
 }
 *, *:before, *:after {
     -webkit-border-sizing: border-box;
@@ -98,7 +105,7 @@ li{
     float: right;
     width: 15%;
     height: 100%;
-    /*margin-right: 20px;*/
+    margin-right: 40px;
 }
 
 

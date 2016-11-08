@@ -1,7 +1,5 @@
 package pojo;
 
-import org.jsoup.select.Elements;
-
 import java.util.Date;
 
 public class DouBanInfo {
@@ -9,7 +7,7 @@ public class DouBanInfo {
 
     private String url;
 
-    private Double rating;
+    private Float rating;
 
     private String country;
 
@@ -30,15 +28,14 @@ public class DouBanInfo {
     private String casts;
 
     private String directors;
-    private Integer ratings_count;
 
-    public Integer getRatings_count() {
-        return ratings_count;
-    }
+    private Integer ratingcount;
 
-    public void setRatings_count(Integer ratings_count) {
-        this.ratings_count = ratings_count;
-    }
+    private String releasedate;
+
+    private String runtime;
+
+    private String imdb;
 
     public Integer getId() {
         return id;
@@ -53,14 +50,14 @@ public class DouBanInfo {
     }
 
     public void setUrl(String url) {
-        this.url = url == null ? null : url.trim();
+        this.url = url;
     }
 
-    public Double getRating() {
+    public Float getRating() {
         return rating;
     }
 
-    public void setRating(Double rating) {
+    public void setRating(Float rating) {
         this.rating = rating;
     }
 
@@ -69,7 +66,7 @@ public class DouBanInfo {
     }
 
     public void setCountry(String country) {
-        this.country = country == null ? null : country.trim();
+        this.country = country;
     }
 
     public String getGenres() {
@@ -77,7 +74,7 @@ public class DouBanInfo {
     }
 
     public void setGenres(String genres) {
-        this.genres = genres == null ? null : genres.trim();
+        this.genres = genres;
     }
 
     public Integer getYear() {
@@ -93,7 +90,7 @@ public class DouBanInfo {
     }
 
     public void setSubject(String subject) {
-        this.subject = subject == null ? null : subject.trim();
+        this.subject = subject;
     }
 
     public String getAka() {
@@ -101,7 +98,7 @@ public class DouBanInfo {
     }
 
     public void setAka(String aka) {
-        this.aka = aka == null ? null : aka.trim();
+        this.aka = aka;
     }
 
     public Date getDatetime() {
@@ -117,7 +114,7 @@ public class DouBanInfo {
     }
 
     public void setSummary(String summary) {
-        this.summary = summary == null ? null : summary.trim();
+        this.summary = summary;
     }
 
     public String getImages() {
@@ -125,7 +122,7 @@ public class DouBanInfo {
     }
 
     public void setImages(String images) {
-        this.images = images == null ? null : images.trim();
+        this.images = images;
     }
 
     public String getCasts() {
@@ -133,7 +130,7 @@ public class DouBanInfo {
     }
 
     public void setCasts(String casts) {
-        this.casts = casts == null ? null : casts.trim();
+        this.casts = casts;
     }
 
     public String getDirectors() {
@@ -141,8 +138,38 @@ public class DouBanInfo {
     }
 
     public void setDirectors(String directors) {
-        this.directors = directors == null ? null : directors.trim();
+        this.directors = directors;
     }
 
+    public Integer getRatingcount() {
+        return ratingcount;
+    }
 
+    public void setRatingcount(Integer ratingcount) {
+        this.ratingcount = ratingcount;
+    }
+
+    public String getReleasedate() {
+        return releasedate;
+    }
+
+    public void setReleasedate(String releasedate) {
+        this.releasedate = releasedate;
+    }
+
+    public String getRuntime() {
+        return runtime;
+    }
+
+    public void setRuntime(String runtime) {
+        this.runtime = runtime;
+    }
+
+    public String getImdb() {
+        return imdb;
+    }
+
+    public void setImdb(String imdb) {
+        this.imdb = imdb;
+    }
 }

@@ -1,6 +1,5 @@
 package com.test;
 
-import dao.DouBanInfoMapper;
 import dao.FilmInfoMapper;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -10,7 +9,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import pojo.FilmInfo;
 import service.DoubanService;
-import service.FilmService;
 import task.JsoupUtil;
 
 /**
@@ -21,15 +19,12 @@ import task.JsoupUtil;
 @ContextConfiguration({"classpath:applicationContext.xml",
 "classpath:springContext.xml"})
 public class DoubanTest {
-    @Autowired
-    private DouBanInfoMapper douBanInfoMapper;
+
     @Autowired
     private FilmInfoMapper filmInfoMapper;
 
     @Autowired
     private DoubanService doubanService;
-    @Autowired
-    private FilmService filmService;
 
     @Autowired
     private JsoupUtil jsoupUtil;
@@ -51,6 +46,11 @@ public class DoubanTest {
     @Test
     public void getContet(){
         jsoupUtil.updateBillboard();
+    }
+
+    @Test
+    public void check(){
+        System.out.println(doubanService.checkDouban(26857715));
     }
 
 }

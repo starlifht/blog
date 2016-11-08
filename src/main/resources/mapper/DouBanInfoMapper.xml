@@ -1,182 +1,265 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="dao.DouBanInfoMapper" >
-  <resultMap id="BaseResultMap" type="pojo.DouBanInfo" >
-    <id column="id" property="id" jdbcType="INTEGER" />
-    <id column="ratings_count" property="ratings_count" jdbcType="INTEGER" />
-    <result column="url" property="url" jdbcType="VARCHAR" />
-    <result column="rating" property="rating" jdbcType="REAL" />
-    <result column="country" property="country" jdbcType="VARCHAR" />
-    <result column="genres" property="genres" jdbcType="VARCHAR" />
-    <result column="year" property="year" jdbcType="INTEGER" />
-    <result column="subject" property="subject" jdbcType="VARCHAR" />
-    <result column="aka" property="aka" jdbcType="VARCHAR" />
-    <result column="datetime" property="datetime" jdbcType="TIMESTAMP" />
-    <result column="summary" property="summary" jdbcType="VARCHAR" />
-    <result column="images" property="images" jdbcType="VARCHAR" />
-    <result column="casts" property="casts" jdbcType="VARCHAR" />
-    <result column="directors" property="directors" jdbcType="VARCHAR" />
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dao.DouBanInfoMapper">
+  <resultMap id="BaseResultMap" type="pojo.DouBanInfo">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="url" jdbcType="VARCHAR" property="url" />
+    <result column="rating" jdbcType="REAL" property="rating" />
+    <result column="country" jdbcType="VARCHAR" property="country" />
+    <result column="genres" jdbcType="VARCHAR" property="genres" />
+    <result column="year" jdbcType="INTEGER" property="year" />
+    <result column="subject" jdbcType="VARCHAR" property="subject" />
+    <result column="aka" jdbcType="VARCHAR" property="aka" />
+    <result column="datetime" jdbcType="TIMESTAMP" property="datetime" />
+    <result column="summary" jdbcType="VARCHAR" property="summary" />
+    <result column="images" jdbcType="VARCHAR" property="images" />
+    <result column="casts" jdbcType="VARCHAR" property="casts" />
+    <result column="directors" jdbcType="VARCHAR" property="directors" />
+    <result column="ratingcount" jdbcType="INTEGER" property="ratingcount" />
+    <result column="releasedate" jdbcType="VARCHAR" property="releasedate" />
+    <result column="runtime" jdbcType="VARCHAR" property="runtime" />
+    <result column="imdb" jdbcType="VARCHAR" property="imdb" />
   </resultMap>
-  <sql id="Base_Column_List" >
+  <sql id="Base_Column_List">
     id, url, rating, country, genres, year, subject, aka, datetime, summary, images, 
-    casts, directors,ratings_count
+    casts, directors, ratingcount, releasedate, runtime, imdb
   </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from douban
     where id = #{id,jdbcType=INTEGER}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from douban
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="pojo.DouBanInfo" >
+  <insert id="insert" parameterType="pojo.DouBanInfo">
     insert into douban (id, url, rating, 
       country, genres, year, 
       subject, aka, datetime, 
       summary, images, casts, 
-      directors)
+      directors, ratingcount, releasedate, 
+      runtime, imdb)
     values (#{id,jdbcType=INTEGER}, #{url,jdbcType=VARCHAR}, #{rating,jdbcType=REAL}, 
       #{country,jdbcType=VARCHAR}, #{genres,jdbcType=VARCHAR}, #{year,jdbcType=INTEGER}, 
       #{subject,jdbcType=VARCHAR}, #{aka,jdbcType=VARCHAR}, #{datetime,jdbcType=TIMESTAMP}, 
       #{summary,jdbcType=VARCHAR}, #{images,jdbcType=VARCHAR}, #{casts,jdbcType=VARCHAR}, 
-      #{directors,jdbcType=VARCHAR})
+      #{directors,jdbcType=VARCHAR}, #{ratingcount,jdbcType=INTEGER}, #{releasedate,jdbcType=VARCHAR}, 
+      #{runtime,jdbcType=VARCHAR}, #{imdb,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="pojo.DouBanInfo" >
-    insert IGNORE into douban
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
+  <insert id="insertSelective" parameterType="pojo.DouBanInfo">
+    insert into douban
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
         id,
       </if>
-      <if test="url != null" >
+      <if test="url != null">
         url,
       </if>
-      <if test="rating != null" >
+      <if test="rating != null">
         rating,
       </if>
-      <if test="country != null" >
+      <if test="country != null">
         country,
       </if>
-      <if test="genres != null" >
+      <if test="genres != null">
         genres,
       </if>
-      <if test="year != null" >
+      <if test="year != null">
         year,
       </if>
-      <if test="subject != null" >
+      <if test="subject != null">
         subject,
       </if>
-      <if test="aka != null" >
+      <if test="aka != null">
         aka,
       </if>
-      <if test="datetime != null" >
+      <if test="datetime != null">
         datetime,
       </if>
-      <if test="summary != null" >
+      <if test="summary != null">
         summary,
       </if>
-      <if test="images != null" >
+      <if test="images != null">
         images,
       </if>
-      <if test="casts != null" >
+      <if test="casts != null">
         casts,
       </if>
-      <if test="directors != null" >
+      <if test="directors != null">
         directors,
       </if>
-      <if test="ratings_count != null" >
-        ratings_count,
+      <if test="ratingcount != null">
+        ratingcount,
+      </if>
+      <if test="releasedate != null">
+        releasedate,
+      </if>
+      <if test="runtime != null">
+        runtime,
+      </if>
+      <if test="imdb != null">
+        imdb,
       </if>
     </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
         #{id,jdbcType=INTEGER},
       </if>
-      <if test="url != null" >
+      <if test="url != null">
         #{url,jdbcType=VARCHAR},
       </if>
-      <if test="rating != null" >
+      <if test="rating != null">
         #{rating,jdbcType=REAL},
       </if>
-      <if test="country != null" >
+      <if test="country != null">
         #{country,jdbcType=VARCHAR},
       </if>
-      <if test="genres != null" >
+      <if test="genres != null">
         #{genres,jdbcType=VARCHAR},
       </if>
-      <if test="year != null" >
+      <if test="year != null">
         #{year,jdbcType=INTEGER},
       </if>
-      <if test="subject != null" >
+      <if test="subject != null">
         #{subject,jdbcType=VARCHAR},
       </if>
-      <if test="aka != null" >
+      <if test="aka != null">
         #{aka,jdbcType=VARCHAR},
       </if>
-      <if test="datetime != null" >
+      <if test="datetime != null">
         #{datetime,jdbcType=TIMESTAMP},
       </if>
-      <if test="summary != null" >
+      <if test="summary != null">
         #{summary,jdbcType=VARCHAR},
       </if>
-      <if test="images != null" >
+      <if test="images != null">
         #{images,jdbcType=VARCHAR},
       </if>
-      <if test="casts != null" >
+      <if test="casts != null">
         #{casts,jdbcType=VARCHAR},
       </if>
-      <if test="directors != null" >
+      <if test="directors != null">
         #{directors,jdbcType=VARCHAR},
       </if>
-      <if test="ratings_count != null" >
-        #{ratings_count,jdbcType=VARCHAR},
+      <if test="ratingcount != null">
+        #{ratingcount,jdbcType=INTEGER},
+      </if>
+      <if test="releasedate != null">
+        #{releasedate,jdbcType=VARCHAR},
+      </if>
+      <if test="runtime != null">
+        #{runtime,jdbcType=VARCHAR},
+      </if>
+      <if test="imdb != null">
+        #{imdb,jdbcType=VARCHAR},
       </if>
     </trim>
+    ON DUPLICATE KEY UPDATE
+    <trim suffixOverrides=",">
+    <if test="url != null">
+      url = #{url,jdbcType=VARCHAR},
+    </if>
+    <if test="rating != null">
+      rating = #{rating,jdbcType=REAL},
+    </if>
+    <if test="country != null">
+      country = #{country,jdbcType=VARCHAR},
+    </if>
+    <if test="genres != null">
+      genres = #{genres,jdbcType=VARCHAR},
+    </if>
+    <if test="year != null">
+      year = #{year,jdbcType=INTEGER},
+    </if>
+    <if test="subject != null">
+      subject = #{subject,jdbcType=VARCHAR},
+    </if>
+    <if test="aka != null">
+      aka = #{aka,jdbcType=VARCHAR},
+    </if>
+    <if test="summary != null">
+      summary = #{summary,jdbcType=VARCHAR},
+    </if>
+    <if test="images != null">
+      images = #{images,jdbcType=VARCHAR},
+    </if>
+    <if test="casts != null">
+      casts = #{casts,jdbcType=VARCHAR},
+    </if>
+    <if test="directors != null">
+      directors = #{directors,jdbcType=VARCHAR},
+    </if>
+    <if test="ratingcount != null">
+      ratingcount = #{ratingcount,jdbcType=INTEGER},
+    </if>
+    <if test="releasedate != null">
+      releasedate = #{releasedate,jdbcType=VARCHAR},
+    </if>
+    <if test="runtime != null">
+      runtime = #{runtime,jdbcType=VARCHAR},
+    </if>
+    <if test="imdb != null">
+      imdb = #{imdb,jdbcType=VARCHAR},
+    </if>
+    </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="pojo.DouBanInfo" >
+  <update id="updateByPrimaryKeySelective" parameterType="pojo.DouBanInfo">
     update douban
-    <set >
-      <if test="url != null" >
+    <set>
+      <if test="url != null">
         url = #{url,jdbcType=VARCHAR},
       </if>
-      <if test="rating != null" >
+      <if test="rating != null">
         rating = #{rating,jdbcType=REAL},
       </if>
-      <if test="country != null" >
+      <if test="country != null">
         country = #{country,jdbcType=VARCHAR},
       </if>
-      <if test="genres != null" >
+      <if test="genres != null">
         genres = #{genres,jdbcType=VARCHAR},
       </if>
-      <if test="year != null" >
+      <if test="year != null">
         year = #{year,jdbcType=INTEGER},
       </if>
-      <if test="subject != null" >
+      <if test="subject != null">
         subject = #{subject,jdbcType=VARCHAR},
       </if>
-      <if test="aka != null" >
+      <if test="aka != null">
         aka = #{aka,jdbcType=VARCHAR},
       </if>
-      <if test="datetime != null" >
+      <if test="datetime != null">
         datetime = #{datetime,jdbcType=TIMESTAMP},
       </if>
-      <if test="summary != null" >
+      <if test="summary != null">
         summary = #{summary,jdbcType=VARCHAR},
       </if>
-      <if test="images != null" >
+      <if test="images != null">
         images = #{images,jdbcType=VARCHAR},
       </if>
-      <if test="casts != null" >
+      <if test="casts != null">
         casts = #{casts,jdbcType=VARCHAR},
       </if>
-      <if test="directors != null" >
+      <if test="directors != null">
         directors = #{directors,jdbcType=VARCHAR},
+      </if>
+      <if test="ratingcount != null">
+        ratingcount = #{ratingcount,jdbcType=INTEGER},
+      </if>
+      <if test="releasedate != null">
+        releasedate = #{releasedate,jdbcType=VARCHAR},
+      </if>
+      <if test="runtime != null">
+        runtime = #{runtime,jdbcType=VARCHAR},
+      </if>
+      <if test="imdb != null">
+        imdb = #{imdb,jdbcType=VARCHAR},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="pojo.DouBanInfo" >
+  <update id="updateByPrimaryKey" parameterType="pojo.DouBanInfo">
     update douban
     set url = #{url,jdbcType=VARCHAR},
       rating = #{rating,jdbcType=REAL},
@@ -189,7 +272,11 @@
       summary = #{summary,jdbcType=VARCHAR},
       images = #{images,jdbcType=VARCHAR},
       casts = #{casts,jdbcType=VARCHAR},
-      directors = #{directors,jdbcType=VARCHAR}
+      directors = #{directors,jdbcType=VARCHAR},
+      ratingcount = #{ratingcount,jdbcType=INTEGER},
+      releasedate = #{releasedate,jdbcType=VARCHAR},
+      runtime = #{runtime,jdbcType=VARCHAR},
+      imdb = #{imdb,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

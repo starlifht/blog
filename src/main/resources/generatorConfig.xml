@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+        <!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd" >
+<generatorConfiguration>
+    <classPathEntry
+            location="/Users/STAR/.m2/repository/mysql/mysql-connector-java/5.1.32/mysql-connector-java-5.1.32.jar" />
+    <context id="context1" targetRuntime="MyBatis3">
+        <commentGenerator>
+            <property name="suppressAllComments" value="true" />
+        </commentGenerator>
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+                        connectionURL="jdbc:mysql://172.27.29.22:3306/movie?useUnicode=true&amp;characterEncoding=UTF-8"
+                        userId="star" password="asd123" />
+        <javaModelGenerator targetPackage="pojo"
+                            targetProject="/Users/STAR/IdeaProjects/blog/src/main/java" />
+        <sqlMapGenerator targetPackage="mapper"
+                         targetProject="/Users/STAR/IdeaProjects/blog/src/main/resources" />
+        <javaClientGenerator targetPackage="dao"
+            targetProject="/Users/STAR/IdeaProjects/blog/src/main/java" type="XMLMAPPER" />
+        <table  tableName="douban" domainObjectName="DouBanInfo" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"/>
+        <!--<table schema="CL_DEMO" tableName="tb_role" />-->
+        <!--<table schema="CL_DEMO" tableName="tb_permission" />-->
+        <!--<table schema="CL_DEMO" tableName="tb_role_user" />-->
+        <!--<table schema="CL_DEMO" tableName="tb_permission_role" />-->
+    </context>
+</generatorConfiguration>

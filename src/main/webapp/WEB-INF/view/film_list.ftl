@@ -34,7 +34,7 @@
                 <div class="media" onclick="location.href='/film/content/${filmlist.id}'" >
                     <div class="media-left">
                         <a href="#">
-                            <img class="media-object img-rounded"" src="${douban.images?eval.medium}" alt="...">
+                            <img class="media-object img-rounded" src="${douban.images?replace('lpst','spst')}" alt="...">
                         </a>
                     </div>
                     <div class="media-body">

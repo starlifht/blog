@@ -13,7 +13,6 @@
       <id column="id" property="id" jdbcType="INTEGER" />
       <result column="url" property="url" jdbcType="VARCHAR" />
       <result column="rating" property="rating" jdbcType="DECIMAL" />
-      <result column="ratings_count" property="ratings_count" jdbcType="REAL" />
       <result column="country" property="country" jdbcType="VARCHAR" />
       <result column="genres" property="genres" jdbcType="VARCHAR" />
       <result column="year" property="year" jdbcType="INTEGER" />
@@ -24,6 +23,10 @@
       <result column="images" property="images" jdbcType="VARCHAR" />
       <result column="casts" property="casts" jdbcType="VARCHAR" />
       <result column="directors" property="directors" jdbcType="VARCHAR" />
+      <result column="ratingcount" jdbcType="INTEGER" property="ratingcount" />
+      <result column="releasedate" jdbcType="VARCHAR" property="releasedate" />
+      <result column="runtime" jdbcType="VARCHAR" property="runtime" />
+      <result column="imdb" jdbcType="VARCHAR" property="imdb" />
     </association>
   </resultMap>
 

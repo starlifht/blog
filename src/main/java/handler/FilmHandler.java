@@ -3,6 +3,8 @@ package handler;
 import dao.BillboardMapper;
 import dao.FilmInfoMapper;
 import net.sf.json.JSONObject;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -21,7 +23,7 @@ import java.util.*;
 @Controller
 @RequestMapping("/film")
 public class FilmHandler {
-
+    private Logger logger= LogManager.getLogger(FilmHandler.class.getName());
     @Autowired
     private FilmService filmService;
 
@@ -44,7 +46,9 @@ public class FilmHandler {
     @RequestMapping(value = "/content/{id}",method = RequestMethod.GET)
     public String getContent(ModelMap modelMap,
                          @PathVariable(value = "id")Integer id){
+
         FilmInfo filmInfo=filmService.getContent(id);
+
         if (filmInfo==null){
             modelMap.addAttribute("error","获取电影信息失败");
             return "error";

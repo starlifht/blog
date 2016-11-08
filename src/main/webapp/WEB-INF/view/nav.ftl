@@ -1,5 +1,4 @@
-
-<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <script>
     var _hmt = _hmt || [];
     (function() {

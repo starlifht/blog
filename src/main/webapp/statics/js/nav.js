@@ -6,7 +6,7 @@ function search(){
     location.href="/film/date/18/1?title="+encodeURI(key);
 }
 $(document).ready(function() {
-  $('#search_img').bind('click',function(event){
+    $('#search_img').bind('click',function(event){
       if(!$('#search_input').hasClass('show')) {
           $('#search_input').addClass('show');
           $('#search_input').removeClass('hidden');
@@ -24,7 +24,6 @@ $(document).ready(function() {
 
 function getBillboard(){
 
-
     $.ajax({
         type: 'GET',
         url: "/billboard/get",
@@ -33,18 +32,21 @@ function getBillboard(){
         success: function (data, status) {
             this;
             if (status == "success") {
-                var list=data.data;
+                 var list=data.data;
                 var innerhtml="";
                 for (var i=1;i<=list.length;i++){
+                    var filmtitle='';
                     if (list[i-1].id!=0){
-                        innerhtml=innerhtml+"<tr><td>"+i+"</td><td><a href='/film/content/"+list[i-1].id+"'>"+list[i-1].title+"</a></td></tr>";
+                            filmtitle=   "<td><b><a target='_blank' href='/film/content/"+list[i-1].id+"'>"+list[i-1].title+"</a></b>" ;
                     }else{
-                        innerhtml=innerhtml+"<tr><td>"+i+"</td><td>"+list[i-1].title+"</td></tr>";
+                            filmtitle=  "<td><a href='https://movie.douban.com/subject/"+list[i-1].doubanid+"' target='_blank'>"+list[i-1].title+"</a>";
                     }
+                    innerhtml=innerhtml+"<tr><td><small>"+i+"</small></td>" +filmtitle
+                        + "<span>"+list[i-1].rating.toFixed(1)+"</span></td></tr>";
+
 
                 }
                 $('#billboard').html(innerhtml);
-                //document.getElementById('billboard').innerHTML=innerhtml;
             }}
     });
 }
