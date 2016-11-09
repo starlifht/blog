@@ -205,7 +205,7 @@
         <version>1.1</version>
         <configuration>
           <!--<url>http://www.coollily.com:7070/manager/text</url>-->
-          <url>http://114.246.179.186:7070/manager/text</url>
+          <url>http://127.0.0.1:8080/manager/text</url>
           <server>myserver</server>
           <path>/blog</path>
 
