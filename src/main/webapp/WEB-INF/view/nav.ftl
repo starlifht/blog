@@ -1,4 +1,5 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<#assign base=request.contextPath />
 <script>
     var _hmt = _hmt || [];
     (function() {
@@ -9,14 +10,14 @@
     })();
 </script>
 
-<link href="/statics/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-<link href="/statics/css/bootstrap-theme.min.css" rel="stylesheet" type="text/css" />
-<link href="/statics/css/nav.css" rel="stylesheet" type="text/css" />
-<link rel="shortcut icon" href="/statics/images/logo.ico" type="image/vnd.microsoft.icon">
+<link href="${base}/statics/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+<link href="${base}/statics/css/bootstrap-theme.min.css" rel="stylesheet" type="text/css" />
+<link href="${base}/statics/css/nav.css" rel="stylesheet" type="text/css" />
+<link rel="shortcut icon" href="${base}/statics/images/logo.ico" type="image/vnd.microsoft.icon">
 <nav class="navbar navbar-default" >
     <div class="nav_label">
            <span style="c">
-        Whatever is worth doing is worth doing well .<img id="search_img" src="/statics/images/search.png"></span>
+        Whatever is worth doing is worth doing well .<img id="search_img" src="${base}/statics/images/search.png"></span>
     </div>
 
     <div id="search_input" class="hidden" >
@@ -32,4 +33,4 @@
         </span>
         </div>
 </nav>
-
+<base id="base" href="${base}">

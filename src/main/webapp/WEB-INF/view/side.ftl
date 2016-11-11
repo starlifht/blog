@@ -1,4 +1,4 @@
-<#macro p flag  params=''>
+<#macro p flag  params>
   <#assign type=flag?string>
 <div class="side">
 
@@ -9,9 +9,9 @@
                 <ul class="drdown-menu show">
                     <li>
                         <#if type == 'all'>
-                            <a name="all" href="/film/date/18/1">全部资源<<</a>
+                            <a name="all" href="${params}/film/date/18/1">全部资源<<</a>
                           <#else >
-                              <a name="all" href="/film/date/18/1">全部资源>></a>
+                              <a name="all" href="${params}/film/date/18/1">全部资源>></a>
 
 
                         </#if>

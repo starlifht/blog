@@ -38,7 +38,8 @@
                 </div>
                 <div class="col-md-10">
                     <a href="${douban.url}" target="_blank"
-                       style="font-weight: bolder;font-size: 23px">${douban.rating?string("0.0")}</a>
+                       style="    font-family: Georgia, serif;    color: #FF4500;
+font-weight: bolder;font-size: 26px">${douban.rating?string("0.0")}</a>
                     （${douban.ratingcount}人评价）
                 </div>
             </div>
@@ -129,7 +130,7 @@
         </div>
         <div style="clear: both;padding-top:30px">
             <p><span class="label label-danger">内容简介</span></p>
-            <span style="text-indent:2em ">
+            <span style="text-indent:2em">
 
             ${douban.summary}
        </span>
@@ -145,10 +146,9 @@
 
 
 <#--<div>${filminfo.content}</div>-->
-    <div class="ds-thread" data-thread-key="${filminfo.id}" data-alt="${douban.subject}"
-         data-url="/film/content/${filminfo.id}"></div>
+    <div class="ds-thread" data-thread-key="${douban.id}" data-alt="${douban.subject}" data-url="${base}/film/content/${douban.id}"></div>
 </div>
-<@side.p flag="sdfs"></@side.p>
+<@side.p flag="${base}" params="${base}"></@side.p>
 
 </body>
 <#include "*/foot.ftl">

@@ -20,17 +20,18 @@ public class FilmService {
     @Autowired
     private FilmInfoMapper filmInfoMapper;
 
-    public HashMap getFilmList(Integer pageNo,Integer pageSize,String label,String title){
+    public HashMap getFilmList(Integer pageNo, Integer pageSize, String label, String title) {
 
-            HashMap hashMap=new HashMap();
-            pageNo = pageNo == null?1:pageNo;
-            pageSize = pageSize == null?10:pageSize;
-            PageHelper.startPage(pageNo, pageSize);
+        HashMap hashMap = new HashMap();
+        pageNo = pageNo == null ? 1 : pageNo;
+        pageSize = pageSize == null ? 10 : pageSize;
+        PageHelper.startPage(pageNo, pageSize);
         List<FilmInfo> list = null;
-       out:if ("date".equals(label)){
-            if (title!=null){
+        out:
+        if ("date".equals(label)) {
+            if (title != null) {
                 try {
-                    list=filmInfoMapper.getAllDateByTitle(URLDecoder.decode(title,"UTF-8"));
+                    list = filmInfoMapper.getAllDateByTitle(URLDecoder.decode(title, "UTF-8"));
                 } catch (UnsupportedEncodingException e) {
                     e.printStackTrace();
                 }
@@ -38,24 +39,28 @@ public class FilmService {
             }
             list = filmInfoMapper.getAllByDate();
         }
-        if ("rating".equals(label)){
-             list = filmInfoMapper.getAllByRating();
+        if ("rating".equals(label)) {
+            list = filmInfoMapper.getAllByRating();
+        }
+        if ("year".equals(label)){
+            list = filmInfoMapper.getAllByYear();
+
         }
 
 
-            //用PageInfo对结果进行包装
-            PageInfo<FilmInfo> page = new PageInfo<FilmInfo>(list);
-            hashMap.put("totalpage",page.getPages());
-            hashMap.put("pageNo",pageNo);
-            hashMap.put("list",list);
-            hashMap.put("pageSize",pageSize);
-            return hashMap;
+        //用PageInfo对结果进行包装
+        PageInfo<FilmInfo> page = new PageInfo<FilmInfo>(list);
+        hashMap.put("totalpage", page.getPages());
+        hashMap.put("pageNo", pageNo);
+        hashMap.put("list", list);
+        hashMap.put("pageSize", pageSize);
+        return hashMap;
     }
 
-    public FilmInfo getContent(Integer id){
+    public FilmInfo getContent(Integer id) {
 
 
-        return filmInfoMapper.selectByPrimaryKey(id);
+        return filmInfoMapper.getContentByDoubanID(id);
 
     }
 }

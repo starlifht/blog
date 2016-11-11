@@ -34,20 +34,23 @@ public class DoubanTest {
         FilmInfo filmInfo=new FilmInfo();
         filmInfo.setTitle("test");
         filmInfo.setId(32434);
-        filmInfo.setOrigin("wwteew");
+        filmInfo.setOrigin("http://www.languangdy.com/other/WEB-DL/1707.html");
         filmInfo.setContent("sdfsfds");
-        filmInfoMapper.insertSelective(filmInfo);
+        System.out.println(filmInfoMapper.insertSelective(filmInfo));
 
     }
     @Test
-    public void getFilm(){
+    public void getGaoQing(){
         jsoupUtil.getGaoQing();
+    }
+    @Test
+    public void getLanGuang(){
+        jsoupUtil.getLanGuang();
     }
     @Test
     public void getContet(){
         jsoupUtil.updateBillboard();
     }
-
     @Test
     public void check(){
         System.out.println(doubanService.checkDouban(26857715));

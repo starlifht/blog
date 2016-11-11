@@ -86,15 +86,14 @@ public class JsoupUtil {
             e.printStackTrace();
         }
     }
-   // @Scheduled(cron = "0 0 */2 * * *")
-    @Scheduled(cron = "0 22 15 * * *")
+    @Scheduled(cron = "0 0 */2 * * *")
+//    @Scheduled(cron = "0 22 15 * * *")
     public  void getGaoQing(){
         // 从 URL 直接加载 HTML 文档
         Document doc = null;
         String title=null;
 
         String url=null;
-        int doubanID = 0;
         try {
             doc= Jsoup.connect(GAOQING_URL).header("User-Agent",USER_AGENT)
                     .timeout(8000).get();
@@ -111,13 +110,15 @@ public class JsoupUtil {
         }
         Iterator<String> iterator=hashSet.iterator();
         while (iterator.hasNext()){
+            int doubanID = 0;
+
             try {
                 url = iterator.next();
                 logger.info(url);
                 Document document = Jsoup.connect(url).header("User-Agent",USER_AGENT)
                         .timeout(5000).get();
                 title = document.select(".article_container > h1").text();
-                Elements elements = document.select("#post_content a[href~=magnet(.+?)]");
+                Elements elements = document.select("#post_content a[href~=magnet(.+?)]");//下载地址
                 Matcher matcher= Params.DoubanIdPattern.matcher(document.getElementById("post_content").text());
 
                 String content="";
@@ -139,6 +140,7 @@ public class JsoupUtil {
                             logger.error("Fail to insert  Douban Info "+doubanID);
                         }else {
                             isDouban=true;
+                            logger.info("Success to insert  Douban Info "+doubanID);
                         }
                     }else {
                         logger.error("Can not find  Douban Info "+doubanID);
@@ -154,8 +156,10 @@ public class JsoupUtil {
                     filmInfo.setLabel("gq");
                     filmInfo.setContent(content);
                     filmInfo.setDouban_id(doubanID);
-                    if(filmInfoMapper.insertSelective(filmInfo)!=1) {
-                        logger.error("film入库失败"+title.split(" ")[1]+url);
+                    if(filmInfoMapper.insertSelective(filmInfo)<=0) {
+                        logger.error("Film insert fail "+title.split(" ")[1]+url);
+                    }else{
+                        logger.info("Film insert success "+title.split(" ")[1]+url);
                     }
                 }
 
@@ -168,7 +172,100 @@ public class JsoupUtil {
 
         }
     }
+    @Scheduled(cron = "0 0 */2 * * *")
+//    @Scheduled(cron = "0 22 15 * * *")
+    public  void getLanGuang(){
+        // 从 URL 直接加载 HTML 文档
+        Document doc = null;
+        String title=null;
 
+        String url=null;
+
+        try {
+            doc= Jsoup.connect("http://www.languangdy.com").header("User-Agent",USER_AGENT)
+                    .timeout(8000).get();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        Elements links = doc.select(".mainleft #post_container a[href~=http://www.languangdy.com/(.+?).html]");
+        LinkedHashSet<String> hashSet=new LinkedHashSet<String>();
+        for (int i=links.size();i>0;i--){
+
+            hashSet.add(links.get(i-1).attr("href"));
+
+        }
+        Iterator<String> iterator=hashSet.iterator();
+        while (iterator.hasNext()){
+            int doubanID = 0;
+            try {
+                url = iterator.next();
+                logger.info(url);
+                Document document = Jsoup.connect(url).header("User-Agent",USER_AGENT)
+                        .timeout(5000).get();
+                title = document.select(".article_container > h1").text();
+                logger.info(title);
+                //下载地址获取
+                Elements elements = document.select(".context .dldiv a[href~=magnet(.+?)]");
+                String content="";
+                if (elements.isEmpty()){
+                    continue;
+                }else{
+
+
+                    for (Element element:elements){
+                        content=content+"<p>"+element.outerHtml()+"</p>";
+                    }
+                }
+                 //豆瓣 ID匹配
+                Matcher matcher= Params.DoubanIdPattern.matcher(document.getElementById("post_content").text());
+
+
+                if (matcher.find()){
+                    doubanID= Integer.parseInt(matcher.group(1));
+                    logger.info(doubanID);
+                }
+
+                boolean isDouban=false;
+                if (!doubanService.checkDouban(doubanID)){
+                    DouBanInfo douBanInfo=doubanService.getDoubanInfo(doubanID);
+                    if (douBanInfo!=null){
+                        if (douBanInfoMapper.insertSelective(douBanInfo)!=1){
+                            logger.error("Fail to insert  Douban "+doubanID);
+                        }else {
+                            isDouban=true;
+                            logger.info("Success to insert Douban "+doubanID);
+                        }
+                    }else {
+                        logger.error("Can not find  Douban Info "+doubanID);
+
+                    }
+                }else {
+                    isDouban=true;
+                }
+                if (isDouban){
+                    FilmInfo filmInfo = new FilmInfo();
+                    filmInfo.setOrigin(url);
+                    filmInfo.setTitle(title);
+                    filmInfo.setLabel("languang");
+                    filmInfo.setContent(content);
+                    filmInfo.setDouban_id(doubanID);
+                    if(filmInfoMapper.insertSelective(filmInfo)<=0) {
+                        logger.error("Film insert fail "+title+url);
+                    }else{
+                        logger.info("Film insert success "+title+url);
+                    }
+                }
+
+
+                TimeUnit.MILLISECONDS.sleep(5000);
+            }catch(Exception e){
+                logger.error("LanGuang|"+url +"|"+e.getMessage());
+                e.printStackTrace();
+            }
+
+        }
+    }
 
     public static void main(String[] args) {
 

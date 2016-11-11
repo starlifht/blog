@@ -10,6 +10,8 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Configurable;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import pojo.DouBanInfo;
 import tools.HttpClientUtil;
@@ -33,7 +35,9 @@ public class DoubanService {
     private  final  String DOUBAN_MOVIE="https://api.douban.com/v2/movie/subject/";
     private  final String USER_AGENT="Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:44.0) Gecko/20100101 Firefox/44.0";
     private  Matcher matcher;
-    private  final String DOUBAN_MOVIE_WEB="https://movie.douban.com/subject/";
+
+    @Value("${douban.subject}")
+    private   String DOUBAN_MOVIE_WEB;
     public static void  main(String[] args){
         new DoubanService().getDoubanInfo(234);
     }

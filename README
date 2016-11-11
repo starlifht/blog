@@ -1,8 +1,6 @@
 java -jar mybatis-generator-core-1.3.2.jar -configfile generator.xml -overwrite
-
-
- mvn mybatis-generator:generate
-
-
+mvn mybatis-generator:generate
+------------必要配置------------
+#SET GLOBAL group_concat_max_len = 1024;
 -----------1105------
 1 豆瓣数据的获取由API改为 html抓取

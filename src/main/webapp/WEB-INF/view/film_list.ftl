@@ -11,7 +11,13 @@
 </head>
 <body>
 <div class="iframe" id="iframe">
-
+    <div style="font-size: smaller;margin-bottom: 20px">
+    <ul class="nav nav-tabs filmlist-tab" role="tablist">
+        <li role="presentation"  name="date" data-toggle="tab"><a onclick="window.location.href='${base}/film/date/18/1';" href="#">默认排序</a></li>
+        <li role="presentation" name="rating" data-toggle="tab"><a onclick="window.location.href='${base}/film/rating/18/1';" href="#">评分排序</a></li>
+        <li role="presentation" name="year" data-toggle="tab"><a onclick="window.location.href='${base}/film/year/18/1'" href="#">年份排序</a></li>
+    </ul>
+    </div>
 <#--<table class="table table-striped" id="film_list">-->
     <#--<thead><td onclick="location.href='/film/date/17/1'">更新时间</td>-->
     <#--<td onclick="location.href='/film/rating/17/1'">豆瓣</td>-->
@@ -31,7 +37,7 @@
             <#--<td>${douban.year}</td>-->
             <#--<td>${douban.country?split("/")[0]}</td>-->
             <#--<td>-->
-                <div class="media" onclick="location.href='/film/content/${filmlist.id}'" >
+                <div class="media" onclick="location.href='${base}/film/content/${douban.id}'" >
                     <div class="media-left">
                         <a href="#">
                             <img class="media-object img-rounded" src="${douban.images?replace('lpst','spst')}" alt="...">
@@ -64,11 +70,11 @@
 
 </div>
     <div class="page">
-    <@pager.p url='film/${label}' pageno=pageNo totalpage=totalpage pagesize=pageSize></@pager.p>
+    <@pager.p url="${base}/film/${label}" pageno=pageNo totalpage=totalpage pagesize=pageSize></@pager.p>
 
     </div>
 </div>
-<@side.p flag="sdfs"></@side.p>
+<@side.p flag="${base}" params="${base}"></@side.p>
 
 
 

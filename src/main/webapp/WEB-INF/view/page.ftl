@@ -5,13 +5,13 @@
 <nav>
     <ul class="pagination">
             <li>
-                <a href="/${url}/${size}/1">
+                <a href="${url}/${size}/1">
                     <span>首页</span>
                 </a>
             </li>
             <#if ipage gt 1>
             <li>
-                <a href="/${url}/${size}/${ipage - 1}" aria-label=" Previous">
+                <a href="${url}/${size}/${ipage - 1}" aria-label=" Previous">
                 <span aria-hidden="true">&laquo;</span> </a>
                 </li>
             <#else>
@@ -22,17 +22,17 @@
 
 
         <#if ipage-3 gte 1>
-            <li><a href="/${url}/${size}/${ipage - 3}">${ipage-3}</a></li>
+            <li><a href="${url}/${size}/${ipage - 3}">${ipage-3}</a></li>
         </#if>
         <#if ipage-2 gte 1>
-            <li><a href="/${url}/${size}/${ipage - 2}">${ipage-2}</a></li>
+            <li><a href="${url}/${size}/${ipage - 2}">${ipage-2}</a></li>
         </#if>
         <#if ipage-1 gte 1>
-            <li><a href="/${url}/${size}/${ipage - 1}">${ipage-1}</a></li>
+            <li><a href="${url}/${size}/${ipage - 1}">${ipage-1}</a></li>
         </#if>
         <li class="active"><a href="/${url}/${size}/${ipage }">${ipage}</a></li>
         <#if ipage+1 lte totalpage>
-            <li><a href="/${url}/${size}/${ipage +1}">${ipage+1}</a></li>
+            <li><a href="${url}/${size}/${ipage +1}">${ipage+1}</a></li>
         </#if>
         <#if ipage+2 lte totalpage>
             <li><a href="/${url}/${size}/${ipage +2}">${ipage+2}</a></li>
@@ -43,7 +43,7 @@
 
         <#if ipage lt totalpage>
         <li>
-            <a href="/${url}/${size}/${ipage + 1}" aria-label="Next" >
+            <a href="${url}/${size}/${ipage + 1}" aria-label="Next" >
             <span aria-hidden="true">&raquo;</span> </a>
         <#else>
         <li class="disabled">
@@ -52,7 +52,7 @@
 
         </#if>
         <li>
-            <a href="/${url}/${size}/${totalpage}">
+            <a href="${url}/${size}/${totalpage}">
                 <span>尾页</span>
             </a>
         </li>

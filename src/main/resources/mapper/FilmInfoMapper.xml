@@ -38,16 +38,30 @@
     *
     from film JOIN  douban on film.douban_id=douban.id where film.id = #{id,jdbcType=INTEGER}
   </select>
+  <select id="getContentByDoubanID" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+SELECT GROUP_CONCAT(content SEPARATOR '') as content,id,url,rating,country,genres,year,subject,aka,datetime,summary,images,casts,directors,ratingcount,releasedate,runtime,imdb FROM
+(SELECT  film.content,douban.* from film join douban on film.douban_id=douban.id where film.douban_id=#{douban_id,jdbcType=INTEGER}) AS abc
+group by abc.id;
+  </select>
   <select id="getIDByDoubanID" resultType="java.lang.Integer" parameterType="java.lang.Integer" >
     select
     id
-    from film WHERE douban_id= #{douban_id,jdbcType=INTEGER}
+    from film WHERE douban_id= #{douban_id,jdbcType=INTEGER} limit 1
   </select>
   <select id="getAllByDate" resultMap="BaseResultMap">
-    select * from film JOIN  douban on film.douban_id=douban.id ORDER BY film.datetime DESC
+   SELECT abc.datetime,douban.id,douban.images,douban.year,douban.genres,douban.country,douban.subject,douban.rating FROM  (select  * from film GROUP BY douban_id) AS abc
+    JOIN  douban on abc.douban_id=douban.id  ORDER BY abc.datetime DESC
   </select>
   <select id="getAllByRating" resultMap="BaseResultMap">
-    select * from film JOIN  douban on film.douban_id=douban.id ORDER BY douban.rating DESC
+   SELECT abc.datetime,douban.id,douban.images,douban.year,douban.genres,douban.country,douban.subject,douban.rating
+   FROM  (select  * from film GROUP BY douban_id) AS abc
+    JOIN  douban on abc.douban_id=douban.id  ORDER BY douban.rating DESC
+  </select>
+  <select id="getAllByYear" resultMap="BaseResultMap">
+
+   SELECT abc.datetime,douban.id,douban.images,douban.year,douban.genres,douban.country,douban.subject,douban.rating
+   FROM  (select  * from film GROUP BY douban_id) AS abc
+    JOIN  douban on abc.douban_id=douban.id  ORDER BY douban.year DESC
   </select>
   <select id="getAllDateByTitle"  resultMap="BaseResultMap" parameterType="java.lang.String" >
     select * from film JOIN  douban on film.douban_id=douban.id
@@ -124,11 +138,12 @@
     </trim>
     ON DUPLICATE KEY UPDATE
     <if test="content != null" >
-     content= #{content,jdbcType=VARCHAR},
+
+     content=#{content,jdbcType=VARCHAR}
     </if>
-    <if test="origin != null" >
-      origin= #{origin,jdbcType=VARCHAR}
-    </if>
+    <!--<if test="origin != null" >-->
+      <!--origin= #{origin,jdbcType=VARCHAR}-->
+    <!--</if>-->
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="pojo.FilmInfo" >
     update film
