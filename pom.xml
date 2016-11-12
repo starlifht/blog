@@ -10,7 +10,7 @@
 
   <properties>
     <log4j.version>2.5</log4j.version>
-    <spring.version>4.2.2.RELEASE</spring.version>
+    <spring.version>4.3.3.RELEASE</spring.version>
   </properties>
   <dependencies>
     <dependency>
@@ -141,7 +141,7 @@
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
-      <version>4.9</version>
+      <version>4.12</version>
 
     </dependency>
     <!--<dependency>-->
@@ -204,7 +204,7 @@
         <artifactId>tomcat-maven-plugin</artifactId>
         <version>1.1</version>
         <configuration>
-          <url>http://172.27.29.22:9999/manager/text</url>
+          <url>http://172.27.29.22:5466/manager/text</url>
           <!--<url>http://127.0.0.1:8080/manager/text</url>-->
           <server>myserver</server>
           <path>/blog</path>

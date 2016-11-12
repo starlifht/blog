@@ -10,7 +10,6 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import pojo.DouBanInfo;
@@ -36,7 +35,7 @@ public class DoubanService {
     private  final String USER_AGENT="Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:44.0) Gecko/20100101 Firefox/44.0";
     private  Matcher matcher;
 
-    @Value("${douban.subject}")
+    @Value("#{configProperties['douban.subject']}")
     private   String DOUBAN_MOVIE_WEB;
     public static void  main(String[] args){
         new DoubanService().getDoubanInfo(234);
@@ -87,8 +86,12 @@ public class DoubanService {
             douBanInfo.setUrl(DOUBAN_MOVIE_WEB+doubanID);
             douBanInfo.setSubject(document.select("#content span[property=v:itemreviewed]").first().text());
             douBanInfo.setYear(Integer.valueOf(document.select("#content h1 .year").first().text().replace("(","").replace(")","")));
-            douBanInfo.setRating(Float.valueOf(document.select("strong[property=v:average").text()));//rating
-            douBanInfo.setRatingcount(Integer.valueOf(document.select("span[property=v:votes]").text()));//votes
+            String rating=document.select("strong[property=v:average").text();
+            if (!rating.equals("")){
+                douBanInfo.setRating(Float.valueOf(rating));//rating
+                douBanInfo.setRatingcount(Integer.valueOf(document.select("span[property=v:votes]").text()));//votes
+
+            }
             douBanInfo.setImages(document.select("img[rel=v:image]").first().attr("src"));//picture
             douBanInfo.setSummary(document.select("span[property=v:summary]").first().text().trim());//summary
             Element element=document.getElementById("info");

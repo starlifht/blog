@@ -48,7 +48,7 @@ public class DoubanTest {
         jsoupUtil.getLanGuang();
     }
     @Test
-    public void getContet(){
+    public void getBillboard(){
         jsoupUtil.updateBillboard();
     }
     @Test

@@ -49,24 +49,27 @@ group by abc.id;
     from film WHERE douban_id= #{douban_id,jdbcType=INTEGER} limit 1
   </select>
   <select id="getAllByDate" resultMap="BaseResultMap">
-   SELECT abc.datetime,douban.id,douban.images,douban.year,douban.genres,douban.country,douban.subject,douban.rating FROM  (select  * from film GROUP BY douban_id) AS abc
+   SELECT abc.datetime,douban.id,douban.images,douban.year,douban.genres,douban.country,douban.subject,douban.rating
+   FROM  (select  * from (select * from film order by datetime DESC ) AS xyz GROUP BY douban_id) AS abc
     JOIN  douban on abc.douban_id=douban.id  ORDER BY abc.datetime DESC
   </select>
   <select id="getAllByRating" resultMap="BaseResultMap">
    SELECT abc.datetime,douban.id,douban.images,douban.year,douban.genres,douban.country,douban.subject,douban.rating
-   FROM  (select  * from film GROUP BY douban_id) AS abc
+   FROM  (select  * from (select * from film order by datetime DESC ) AS xyz GROUP BY douban_id) AS abc
     JOIN  douban on abc.douban_id=douban.id  ORDER BY douban.rating DESC
   </select>
   <select id="getAllByYear" resultMap="BaseResultMap">
 
    SELECT abc.datetime,douban.id,douban.images,douban.year,douban.genres,douban.country,douban.subject,douban.rating
-   FROM  (select  * from film GROUP BY douban_id) AS abc
+   FROM  (select  * from (select * from film order by datetime DESC ) AS xyz GROUP BY douban_id) AS abc
     JOIN  douban on abc.douban_id=douban.id  ORDER BY douban.year DESC
   </select>
   <select id="getAllDateByTitle"  resultMap="BaseResultMap" parameterType="java.lang.String" >
-    select * from film JOIN  douban on film.douban_id=douban.id
-      where douban.subject like  CONCAT('%',#{title},'%') OR douban.aka like  CONCAT('%',#{title},'%') ORDER BY film.datetime DESC
-  </select>
+ SELECT abc.datetime,douban.id,douban.images,douban.year,douban.genres,douban.country,douban.subject,douban.rating
+ FROM  (select  * from film GROUP BY douban_id) AS abc
+    JOIN  douban on abc.douban_id=douban.id  and
+       douban.subject like  CONCAT('%',#{title},'%') OR douban.aka like  CONCAT('%',#{title},'%')
+       ORDER BY abc.datetime DESC  </select>
   <select id="getAllCount" resultType="java.lang.Integer">
     SELECT count(*) FROM film
   </select>

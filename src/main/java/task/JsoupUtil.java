@@ -34,24 +34,21 @@ public class JsoupUtil {
     private FilmInfoMapper filmInfoMapper;
     @Autowired
     private DouBanInfoMapper douBanInfoMapper;
-
     @Autowired
     private DoubanService doubanService;
-
     @Autowired
     private BillboardMapper billboardMapper;
 
-    private final String AIDABAN_URL="http://www.aidaban.net/dianying";
     private final String GAOQING_URL="http://gaoqing.la/";
     private  final String USER_AGENT="Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:44.0) Gecko/20100101 Firefox/44.0";
-
+    private final int TIME_OUT=10000;
     Logger logger= LogManager.getLogger(JsoupUtil.class.getName());
     @Scheduled(cron = "0 46 9 * * *")
     public void updateBillboard(){
         try {
             Document  doc= Jsoup.connect("http://movie.douban.com")
                     .header("User-Agent",USER_AGENT)
-                    .timeout(5000).get();
+                    .timeout(TIME_OUT).get();
             Elements element=doc.select(".billboard-bd tr td a");
             Pattern pattern=Pattern.compile("[0-9]+");
             Matcher matcher;
@@ -74,7 +71,7 @@ public class JsoupUtil {
                             }
                         }
 
-                    logger.info(element1.text());
+                    logger.info(element1.text()+"|"+douban_ID);
                     i++;
                     TimeUnit.MILLISECONDS.sleep(5000);
 
@@ -86,8 +83,8 @@ public class JsoupUtil {
             e.printStackTrace();
         }
     }
-    @Scheduled(cron = "0 0 */2 * * *")
-//    @Scheduled(cron = "0 22 15 * * *")
+//    @Scheduled(cron = "0 0 */2 * * *")
+    @Scheduled(cron = "0 58  11 * * *")
     public  void getGaoQing(){
         // 从 URL 直接加载 HTML 文档
         Document doc = null;
@@ -96,7 +93,7 @@ public class JsoupUtil {
         String url=null;
         try {
             doc= Jsoup.connect(GAOQING_URL).header("User-Agent",USER_AGENT)
-                    .timeout(8000).get();
+                    .timeout(TIME_OUT).get();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -116,7 +113,7 @@ public class JsoupUtil {
                 url = iterator.next();
                 logger.info(url);
                 Document document = Jsoup.connect(url).header("User-Agent",USER_AGENT)
-                        .timeout(5000).get();
+                        .timeout(TIME_OUT).get();
                 title = document.select(".article_container > h1").text();
                 Elements elements = document.select("#post_content a[href~=magnet(.+?)]");//下载地址
                 Matcher matcher= Params.DoubanIdPattern.matcher(document.getElementById("post_content").text());
@@ -172,8 +169,8 @@ public class JsoupUtil {
 
         }
     }
-    @Scheduled(cron = "0 0 */2 * * *")
-//    @Scheduled(cron = "0 22 15 * * *")
+//    @Scheduled(cron = "0 0 */2 * * *")
+    @Scheduled(cron = "0 34 17 * * *")
     public  void getLanGuang(){
         // 从 URL 直接加载 HTML 文档
         Document doc = null;
@@ -183,7 +180,7 @@ public class JsoupUtil {
 
         try {
             doc= Jsoup.connect("http://www.languangdy.com").header("User-Agent",USER_AGENT)
-                    .timeout(8000).get();
+                    .timeout(TIME_OUT).get();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -202,7 +199,7 @@ public class JsoupUtil {
                 url = iterator.next();
                 logger.info(url);
                 Document document = Jsoup.connect(url).header("User-Agent",USER_AGENT)
-                        .timeout(5000).get();
+                        .timeout(TIME_OUT).get();
                 title = document.select(".article_container > h1").text();
                 logger.info(title);
                 //下载地址获取
@@ -211,8 +208,6 @@ public class JsoupUtil {
                 if (elements.isEmpty()){
                     continue;
                 }else{
-
-
                     for (Element element:elements){
                         content=content+"<p>"+element.outerHtml()+"</p>";
                     }
@@ -237,11 +232,12 @@ public class JsoupUtil {
                             logger.info("Success to insert Douban "+doubanID);
                         }
                     }else {
-                        logger.error("Can not find  Douban Info "+doubanID);
+                        logger.error("Can not find  Douban  "+doubanID);
 
                     }
                 }else {
                     isDouban=true;
+                    logger.info("Douban have existed "+doubanID);
                 }
                 if (isDouban){
                     FilmInfo filmInfo = new FilmInfo();
@@ -251,16 +247,16 @@ public class JsoupUtil {
                     filmInfo.setContent(content);
                     filmInfo.setDouban_id(doubanID);
                     if(filmInfoMapper.insertSelective(filmInfo)<=0) {
-                        logger.error("Film insert fail "+title+url);
+                        logger.error("Film insert fail "+title+"|"+url);
                     }else{
-                        logger.info("Film insert success "+title+url);
+                        logger.info("Film insert success "+title+"|"+url);
                     }
                 }
 
 
                 TimeUnit.MILLISECONDS.sleep(5000);
             }catch(Exception e){
-                logger.error("LanGuang|"+url +"|"+e.getMessage());
+                logger.error("LanGuang|"+doubanID+"|"+url +"|"+e.getMessage());
                 e.printStackTrace();
             }
 

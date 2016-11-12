@@ -37,7 +37,7 @@
         <div style="text-align: center;background-color: #99CC66;color: honeydew;height: 25px;line-height: 25px;    -moz-border-radius: 5px;
     -webkit-border-radius: 5px;
     border-radius:5px;">
-            <span >豆瓣电影周排行榜</span></div>
+            <label >豆瓣电影周排行榜</label></div>
         <table class="table table-hover" id="billboard"></table>
 
     </div>

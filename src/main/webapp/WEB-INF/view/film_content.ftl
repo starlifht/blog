@@ -24,7 +24,7 @@
 <div class="iframe">
 
     <div>
-        <div class="doubanInfo" style="float: left;width:70%;margin-top: 30px">
+        <div class="doubanInfo" style="float: left;width:70%;margin-top: 20px">
             <div class="row">
                 <div class="col-md-1">
                     <span class="label label-danger">片名</span>
