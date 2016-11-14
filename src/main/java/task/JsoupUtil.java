@@ -84,7 +84,7 @@ public class JsoupUtil {
         }
     }
 //    @Scheduled(cron = "0 0 */2 * * *")
-    @Scheduled(cron = "0 58  11 * * *")
+    @Scheduled(cron = "0 50 17 * * *")
     public  void getGaoQing(){
         // 从 URL 直接加载 HTML 文档
         Document doc = null;
