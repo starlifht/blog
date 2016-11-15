@@ -18,7 +18,7 @@ import pojo.FilmInfo;
 import service.DoubanService;
 import tools.Params;
 
-import java.io.IOException;
+import java.io.*;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
@@ -83,8 +83,8 @@ public class JsoupUtil {
             e.printStackTrace();
         }
     }
-//    @Scheduled(cron = "0 0 */2 * * *")
-    @Scheduled(cron = "0 50 17 * * *")
+    @Scheduled(cron = "0 0 */2 * * *")
+//    @Scheduled(cron = "0 50 17 * * *")
     public  void getGaoQing(){
         // 从 URL 直接加载 HTML 文档
         Document doc = null;
@@ -125,27 +125,29 @@ public class JsoupUtil {
                 for (Element element:elements){
                     content=content+"<p>"+element.outerHtml()+"</p>";
                 }
+                //匹配 豆瓣 ID ，获取豆瓣信息
+                boolean isDouban=false;
                 if (matcher.find()){
                     doubanID= Integer.parseInt(matcher.group(1));
-                }
-
-                boolean isDouban=false;
-                if (!doubanService.checkDouban(doubanID)){
-                    DouBanInfo douBanInfo=doubanService.getDoubanInfo(doubanID);
-                    if (douBanInfo!=null){
-                        if (douBanInfoMapper.insertSelective(douBanInfo)!=1){
-                            logger.error("Fail to insert  Douban Info "+doubanID);
+                    if (!doubanService.checkDouban(doubanID)){
+                        DouBanInfo douBanInfo=doubanService.getDoubanInfo(doubanID);
+                        if (douBanInfo!=null){
+                            if (douBanInfoMapper.insertSelective(douBanInfo)!=1){
+                                logger.error("Fail to insert  Douban Info "+doubanID);
+                            }else {
+                                isDouban=true;
+                                logger.info("Success to insert  Douban Info "+doubanID);
+                            }
                         }else {
-                            isDouban=true;
-                            logger.info("Success to insert  Douban Info "+doubanID);
+                            logger.error("Can not find  Douban Info "+doubanID);
+
                         }
                     }else {
-                        logger.error("Can not find  Douban Info "+doubanID);
-
+                        isDouban=true;
                     }
-                }else {
-                    isDouban=true;
                 }
+
+                //插入电影信息
                 if (isDouban){
                     FilmInfo filmInfo = new FilmInfo();
                     filmInfo.setOrigin(url);
@@ -169,8 +171,8 @@ public class JsoupUtil {
 
         }
     }
-//    @Scheduled(cron = "0 0 */2 * * *")
-    @Scheduled(cron = "0 34 17 * * *")
+    @Scheduled(cron = "0 0 */2 * * *")
+//    @Scheduled(cron = "0 34 17 * * *")
     public  void getLanGuang(){
         // 从 URL 直接加载 HTML 文档
         Document doc = null;
@@ -215,30 +217,31 @@ public class JsoupUtil {
                  //豆瓣 ID匹配
                 Matcher matcher= Params.DoubanIdPattern.matcher(document.getElementById("post_content").text());
 
+                boolean isDouban=false;
 
                 if (matcher.find()){
                     doubanID= Integer.parseInt(matcher.group(1));
+                    if (!doubanService.checkDouban(doubanID)){
+                        DouBanInfo douBanInfo=doubanService.getDoubanInfo(doubanID);
+                        if (douBanInfo!=null){
+                            if (douBanInfoMapper.insertSelective(douBanInfo)!=1){
+                                logger.error("Fail to insert  Douban "+doubanID);
+                            }else {
+                                isDouban=true;
+                                logger.info("Success to insert Douban "+doubanID);
+                            }
+                        }else {
+                            logger.error("Can not find  Douban  "+doubanID);
+
+                        }
+                    }else {
+                        isDouban=true;
+                        logger.info("Douban have existed "+doubanID);
+                    }
                     logger.info(doubanID);
                 }
 
-                boolean isDouban=false;
-                if (!doubanService.checkDouban(doubanID)){
-                    DouBanInfo douBanInfo=doubanService.getDoubanInfo(doubanID);
-                    if (douBanInfo!=null){
-                        if (douBanInfoMapper.insertSelective(douBanInfo)!=1){
-                            logger.error("Fail to insert  Douban "+doubanID);
-                        }else {
-                            isDouban=true;
-                            logger.info("Success to insert Douban "+doubanID);
-                        }
-                    }else {
-                        logger.error("Can not find  Douban  "+doubanID);
 
-                    }
-                }else {
-                    isDouban=true;
-                    logger.info("Douban have existed "+doubanID);
-                }
                 if (isDouban){
                     FilmInfo filmInfo = new FilmInfo();
                     filmInfo.setOrigin(url);
@@ -265,8 +268,19 @@ public class JsoupUtil {
 
     public static void main(String[] args) {
 
-        Date date=new Date();
-        Calendar calendar=Calendar.getInstance();
-        System.out.println(calendar.get(Calendar.WEEK_OF_YEAR));
+
+        File file=new File("/Users/star/hh");
+        String s="不是啊234sdf";
+        try {
+            OutputStream outputStream=new FileOutputStream(file);
+
+            byte[] bytes=s.getBytes();
+
+            outputStream.write(bytes);
+            outputStream.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
     }}

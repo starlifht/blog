@@ -69,7 +69,8 @@ group by abc.id;
  FROM  (select  * from film GROUP BY douban_id) AS abc
     JOIN  douban on abc.douban_id=douban.id  and
        douban.subject like  CONCAT('%',#{title},'%') OR douban.aka like  CONCAT('%',#{title},'%')
-       ORDER BY abc.datetime DESC  </select>
+       ORDER BY abc.datetime DESC
+</select>
   <select id="getAllCount" resultType="java.lang.Integer">
     SELECT count(*) FROM film
   </select>

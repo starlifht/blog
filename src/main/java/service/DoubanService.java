@@ -81,7 +81,7 @@ public class DoubanService {
 
         try {
             document= Jsoup.connect(DOUBAN_MOVIE_WEB+doubanID).header("User-Agent",USER_AGENT)
-                    .timeout(5000).get();
+                    .timeout(10000).get();
             douBanInfo.setId(doubanID);
             douBanInfo.setUrl(DOUBAN_MOVIE_WEB+doubanID);
             douBanInfo.setSubject(document.select("#content span[property=v:itemreviewed]").first().text());

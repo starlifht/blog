@@ -30,15 +30,15 @@
         <#if ipage-1 gte 1>
             <li><a href="${url}/${size}/${ipage - 1}">${ipage-1}</a></li>
         </#if>
-        <li class="active"><a href="/${url}/${size}/${ipage }">${ipage}</a></li>
+        <li class="active"><a href="${url}/${size}/${ipage }">${ipage}</a></li>
         <#if ipage+1 lte totalpage>
             <li><a href="${url}/${size}/${ipage +1}">${ipage+1}</a></li>
         </#if>
         <#if ipage+2 lte totalpage>
-            <li><a href="/${url}/${size}/${ipage +2}">${ipage+2}</a></li>
+            <li><a href="${url}/${size}/${ipage +2}">${ipage+2}</a></li>
         </#if>
         <#if ipage+3 lte totalpage>
-            <li><a href="/${url}/${size}/${ipage +3}">${ipage+3}</a></li>
+            <li><a href="${url}/${size}/${ipage +3}">${ipage+3}</a></li>
         </#if>
 
         <#if ipage lt totalpage>

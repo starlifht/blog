@@ -5,16 +5,14 @@
     <div id="sidebar navbar"  class="sidebar">
         <ul>
             <li class="drdown" >
-                <a href="#" data-toggle="drdown">最新电影<i class="icon-arrow"></i></a>
+                <a href="#" data-toggle="drdown">WE ARE ANYWHERE<i class="icon-arrow"></i></a>
                 <ul class="drdown-menu show">
                     <li>
-                        <#if type == 'all'>
-                            <a name="all" href="${params}/film/date/18/1">全部资源<<</a>
-                          <#else >
-                              <a name="all" href="${params}/film/date/18/1">全部资源>></a>
-
-
-                        </#if>
+                        <#--<#if type == 'all'>-->
+                            <#--<a name="all" href="${params}/film/date/18/1">全部资源<<</a>-->
+                          <#--<#else >-->
+                              <a name="all" href="${params}/film/date/18/1">首页</a>
+                        <#--</#if>-->
                     </li>
 
                 </ul>
