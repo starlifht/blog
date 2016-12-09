@@ -11,7 +11,7 @@
                         <#--<#if type == 'all'>-->
                             <#--<a name="all" href="${params}/film/date/18/1">全部资源<<</a>-->
                           <#--<#else >-->
-                              <a name="all" href="${params}/film/date/18/1">首页</a>
+                              <a name="all" href="${params}/film/date/18/1">返回首页</a>
                         <#--</#if>-->
                     </li>
 

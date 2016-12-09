@@ -39,8 +39,7 @@ public class JsoupUtil {
     @Autowired
     private BillboardMapper billboardMapper;
 
-    private final String GAOQING_URL="http://gaoqing.la/";
-    private  final String USER_AGENT="Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:44.0) Gecko/20100101 Firefox/44.0";
+    private final String USER_AGENT="Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:44.0) Gecko/20100101 Firefox/44.0";
     private final int TIME_OUT=10000;
     Logger logger= LogManager.getLogger(JsoupUtil.class.getName());
     @Scheduled(cron = "0 46 9 * * *")
@@ -66,12 +65,16 @@ public class JsoupUtil {
                     billboardMapper.insertSelective(billboard);
                     DouBanInfo douBanInfo=doubanService.getDoubanInfo(douban_ID);
                         if (douBanInfo!=null){
-                            if (douBanInfoMapper.insertSelective(douBanInfo)!=1){
-                                logger.error("Fail to insert  Douban Info "+douban_ID);
+                            int status=douBanInfoMapper.insertSelective(douBanInfo);
+                            if (status==1){//1 插入成功 2  更新duplicated key
+                                logger.info("Success to insert douban "+element1.text()+"|"+douban_ID);
+                            }else if (status==2){
+                                logger.info("Success to update douban "+element1.text()+"|"+douban_ID);
+                            }else {
+                                logger.error("Fail to insert or  update douban "+element1.text()+"|"+douban_ID);
+
                             }
                         }
-
-                    logger.info(element1.text()+"|"+douban_ID);
                     i++;
                     TimeUnit.MILLISECONDS.sleep(5000);
 
@@ -83,7 +86,7 @@ public class JsoupUtil {
             e.printStackTrace();
         }
     }
-    @Scheduled(cron = "0 0 */2 * * *")
+    @Scheduled(cron = "0 0 8-22/1 * * *")
 //    @Scheduled(cron = "0 50 17 * * *")
     public  void getGaoQing(){
         // 从 URL 直接加载 HTML 文档
@@ -92,7 +95,7 @@ public class JsoupUtil {
 
         String url=null;
         try {
-            doc= Jsoup.connect(GAOQING_URL).header("User-Agent",USER_AGENT)
+            doc= Jsoup.connect("http://gaoqing.la/").header("User-Agent",USER_AGENT)
                     .timeout(TIME_OUT).get();
         } catch (IOException e) {
             e.printStackTrace();
@@ -155,10 +158,15 @@ public class JsoupUtil {
                     filmInfo.setLabel("gq");
                     filmInfo.setContent(content);
                     filmInfo.setDouban_id(doubanID);
-                    if(filmInfoMapper.insertSelective(filmInfo)<=0) {
-                        logger.error("Film insert fail "+title.split(" ")[1]+url);
-                    }else{
-                        logger.info("Film insert success "+title.split(" ")[1]+url);
+                    int status =filmInfoMapper.insertSelective(filmInfo);
+                    if (status==1){
+                        logger.info("Film insert success "+title+"|"+url);
+
+                    }else if(status==2){
+                        logger.info("Film update success "+title+"|"+url);
+                    }else {
+                        logger.error("Film insert or update fail "+title+"|"+url);
+
                     }
                 }
 
@@ -171,7 +179,7 @@ public class JsoupUtil {
 
         }
     }
-    @Scheduled(cron = "0 0 */2 * * *")
+    @Scheduled(cron = "0 0 8-22/1 * * *")
 //    @Scheduled(cron = "0 34 17 * * *")
     public  void getLanGuang(){
         // 从 URL 直接加载 HTML 文档
@@ -249,11 +257,19 @@ public class JsoupUtil {
                     filmInfo.setLabel("languang");
                     filmInfo.setContent(content);
                     filmInfo.setDouban_id(doubanID);
-                    if(filmInfoMapper.insertSelective(filmInfo)<=0) {
-                        logger.error("Film insert fail "+title+"|"+url);
-                    }else{
+                    int status =filmInfoMapper.insertSelective(filmInfo);
+                    if (status==1){
                         logger.info("Film insert success "+title+"|"+url);
+
+                    }else if(status==2){
+                        logger.info("Film update success "+title+"|"+url);
+                    }else {
+                        logger.error("Film insert or update fail "+title+"|"+url);
+
                     }
+
+
+
                 }
 
 
@@ -283,4 +299,5 @@ public class JsoupUtil {
             e.printStackTrace();
         }
 
-    }}
+    }
+}

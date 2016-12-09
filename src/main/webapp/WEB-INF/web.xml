@@ -19,23 +19,24 @@
      classpath:applicationContext.xml
     </param-value>
   </context-param>
-  <!--&lt;!&ndash; log4j2-begin &ndash;&gt;-->
-  <!--<listener>-->
-    <!--<listener-class>org.apache.logging.log4j.web.Log4jServletContextListener</listener-class>-->
-  <!--</listener>-->
+
+  <!-- spring security -->
   <!--<filter>-->
-    <!--<filter-name>log4jServletFilter</filter-name>-->
-    <!--<filter-class>org.apache.logging.log4j.web.Log4jServletFilter</filter-class>-->
+    <!--<filter-name>springSecurityFilterChain</filter-name>-->
+    <!--<filter-class>org.springframework.web.filter.DelegatingFilterProxy-->
+    <!--</filter-class>-->
   <!--</filter>-->
+
   <!--<filter-mapping>-->
-    <!--<filter-name>log4jServletFilter</filter-name>-->
+    <!--<filter-name>springSecurityFilterChain</filter-name>-->
     <!--<url-pattern>/*</url-pattern>-->
-    <!--<dispatcher>REQUEST</dispatcher>-->
-    <!--<dispatcher>FORWARD</dispatcher>-->
-    <!--<dispatcher>INCLUDE</dispatcher>-->
-    <!--<dispatcher>ERROR</dispatcher>-->
   <!--</filter-mapping>-->
-  <!-- log4j2-end -->
+
+  <!--<context-param>-->
+    <!--<param-name>contextConfigLocation</param-name>-->
+    <!--<param-value>classpath:applicationContext-security.xml</param-value>-->
+  <!--</context-param>-->
+  <!--encode-->
   <filter>
     <filter-name>CharacterFilter</filter-name>
     <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>

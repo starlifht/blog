@@ -1,5 +1,6 @@
 package com.test;
 
+import dao.DouBanInfoMapper;
 import dao.FilmInfoMapper;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -7,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
+import pojo.DouBanInfo;
 import pojo.FilmInfo;
 import service.DoubanService;
 import task.JsoupUtil;
@@ -28,7 +30,8 @@ public class DoubanTest {
 
     @Autowired
     private JsoupUtil jsoupUtil;
-
+    @Autowired
+    private DouBanInfoMapper douBanInfoMapper;
     @Test
     public void addFilmInfo(){
         FilmInfo filmInfo=new FilmInfo();
@@ -38,6 +41,13 @@ public class DoubanTest {
         filmInfo.setContent("sdfsfds");
         System.out.println(filmInfoMapper.insertSelective(filmInfo));
 
+    }
+    @Test
+    public void  setDoubanService(){
+        DouBanInfo douBanInfo=new DouBanInfo();
+        douBanInfo.setId(6872936);
+        douBanInfo.setRatingcount(9999);
+        System.out.println(douBanInfoMapper.insertSelective(douBanInfo));
     }
     @Test
     public void getGaoQing(){
