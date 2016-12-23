@@ -39,7 +39,7 @@ function getBillboard(){
         success: function (data, status) {
             this;
             if (status == "success") {
-                 var list=data.data;
+                var list=data.data;
                 var innerhtml="";
                 for (var i=1;i<=list.length;i++){
                     var filmtitle='';
@@ -50,8 +50,6 @@ function getBillboard(){
                     }
                     innerhtml=innerhtml+"<tr><td><small>"+i+"</small></td>" +filmtitle
                         + "<span>"+list[i-1].rating.toFixed(1)+"</span></td></tr>";
-
-
                 }
                 $('#billboard').html(innerhtml);
             }}

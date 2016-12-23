@@ -42,7 +42,7 @@ public class JsoupUtil {
     private final String USER_AGENT="Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:44.0) Gecko/20100101 Firefox/44.0";
     private final int TIME_OUT=10000;
     Logger logger= LogManager.getLogger(JsoupUtil.class.getName());
-    @Scheduled(cron = "0 46 9 * * *")
+    @Scheduled(cron = "0 30 8 * * *")
     public void updateBillboard(){
         try {
             Document  doc= Jsoup.connect("http://movie.douban.com")
@@ -87,7 +87,6 @@ public class JsoupUtil {
         }
     }
     @Scheduled(cron = "0 0 8-22/1 * * *")
-//    @Scheduled(cron = "0 50 17 * * *")
     public  void getGaoQing(){
         // 从 URL 直接加载 HTML 文档
         Document doc = null;
@@ -126,7 +125,7 @@ public class JsoupUtil {
                     continue;
                 }
                 for (Element element:elements){
-                    content=content+"<p>"+element.outerHtml()+"</p>";
+                    content=content+joinDownload(element.text(),element.attr("href"));
                 }
                 //匹配 豆瓣 ID ，获取豆瓣信息
                 boolean isDouban=false;
@@ -180,7 +179,6 @@ public class JsoupUtil {
         }
     }
     @Scheduled(cron = "0 0 8-22/1 * * *")
-//    @Scheduled(cron = "0 34 17 * * *")
     public  void getLanGuang(){
         // 从 URL 直接加载 HTML 文档
         Document doc = null;
@@ -213,13 +211,14 @@ public class JsoupUtil {
                 title = document.select(".article_container > h1").text();
                 logger.info(title);
                 //下载地址获取
-                Elements elements = document.select(".context .dldiv a[href~=magnet(.+?)]");
+                Elements elements = document.select(".context a[href~=magnet(.+?)]");
                 String content="";
                 if (elements.isEmpty()){
                     continue;
                 }else{
                     for (Element element:elements){
-                        content=content+"<p>"+element.outerHtml()+"</p>";
+
+                        content=content+joinDownload(element.text(),element.attr("href"));
                     }
                 }
                  //豆瓣 ID匹配
@@ -280,6 +279,10 @@ public class JsoupUtil {
             }
 
         }
+    }
+
+    private String  joinDownload(String downloadName,String downloadUrl){
+        return "<p><a href=\""+downloadUrl+"\">"+downloadName+"</a></p>";
     }
 
     public static void main(String[] args) {

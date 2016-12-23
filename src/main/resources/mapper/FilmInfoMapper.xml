@@ -40,7 +40,9 @@
   </select>
   <select id="getContentByDoubanID" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
 SELECT GROUP_CONCAT(content SEPARATOR '') as content,id,url,rating,country,genres,year,subject,aka,datetime,summary,images,casts,directors,ratingcount,releasedate,runtime,imdb FROM
-(SELECT  film.content,douban.* from film join douban on film.douban_id=douban.id where film.douban_id=#{douban_id,jdbcType=INTEGER}) AS abc
+(SELECT * FROM
+(SELECT  film.content,film.label,douban.* from film join douban on film.douban_id=douban.id where film.douban_id=#{douban_id,jdbcType=INTEGER} ORDER BY film.datetime desc)
+AS edf GROUP BY label) AS abc
 group by abc.id;
   </select>
   <select id="getIDByDoubanID" resultType="java.lang.Integer" parameterType="java.lang.Integer" >

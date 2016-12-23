@@ -4,10 +4,10 @@
 <#include  "*/nav.ftl">
 <#import "*/side.ftl" as side>
 <#import "*/page.ftl" as pager>
-    <title>最新影视</title>
-    <style>
+    <title>最新影视|电影|高清|蓝光|1080P|720P|迅雷|BT|磁力链接|下载</title>
+    <meta name="description" content="每天关注提供720p高清、1080p高清、蓝光原盘高清、高清3d高清、高清mv最新热门bt种子磁力链迅雷下载网站，是下载了解高清电影天堂！"/>
+    <meta name="keywords" content="电影天堂、高清电影下载、1080p高清电影下载、高清电影、720p、1080p、蓝光原盘、磁力链、电影下载"/>
 
-    </style>
 </head>
 <body>
 <div class="iframe" id="iframe">

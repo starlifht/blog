@@ -14,7 +14,8 @@
         h1 {
             text-align: center;
         }
-        .doubanInfo > div{
+
+        .doubanInfo > div {
             margin-bottom: 10px;
 
         }
@@ -22,8 +23,8 @@
 </head>
 <body>
 <div class="iframe">
-    <#--<button type="button" class="btn btn-link" onclick="window.location.href='${base}'">返回首页</button>-->
-    <div>
+<#--<button type="button" class="btn btn-link" onclick="window.location.href='${base}'">返回首页</button>-->
+
         <div class="doubanInfo" style="float: left;width:70%;margin-top: 20px">
             <div class="row">
                 <div class="col-md-1">
@@ -58,14 +59,7 @@ font-weight: bolder;font-size: 26px">${douban.rating?string("0.0")}</a>
                     <span>${douban.casts} </span>
                 </div>
             </div>
-            <#--<div class="row">-->
-                <#--<div class="col-md-1">-->
-                    <#--<span class="label label-default">年份</span>-->
-                <#--</div>-->
-                <#--<div class="col-md-10">-->
-                    <#--<span>   ${douban.year} </span>-->
-                <#--</div>-->
-            <#--</div>-->
+
             <div class="row">
                 <div class="col-md-1">
                     <span class="label label-primary">上映</span>
@@ -98,18 +92,17 @@ font-weight: bolder;font-size: 26px">${douban.rating?string("0.0")}</a>
                     <span>   ${douban.genres} </span>
                 </div>
             </div>
-            <#if douban.aka!="">
-                <div class="row">
-                    <div class="col-md-1">
-                        <span class="label label-info">别名</span>
-                    </div>
-                    <div class="col-md-10">
-                        <span>   ${douban.aka} </span>
-                    </div>
+        <#if douban.aka!="">
+            <div class="row">
+                <div class="col-md-1">
+                    <span class="label label-info">别名</span>
                 </div>
+                <div class="col-md-10">
+                    <span>   ${douban.aka} </span>
+                </div>
+            </div>
 
-            </#if>
-
+        </#if>
 
 
             <div class="row">
@@ -137,16 +130,16 @@ font-weight: bolder;font-size: 26px">${douban.rating?string("0.0")}</a>
         </div>
         <div style="padding-top:30px">
             <p>
-                <span class="label label-primary" style="margin-bottom: 30px">下载地址</span></p>
-            <span style="text-indent:2em">${filminfo.content}</span>
+                <span class="label label-primary" style="margin-bottom: 30px">下载地址</span>
+            </p>
+            <div style="text-indent:2em">${filminfo.content}</div>
 
 
         </div>
-    </div>
 
 
-<#--<div>${filminfo.content}</div>-->
-    <div class="ds-thread" data-thread-key="${douban.id}" data-alt="${douban.subject}" data-url="${base}/film/content/${douban.id}"></div>
+<div class="ds-thread" data-thread-key="${douban.id}" data-alt="${douban.subject}" data-url="${base}/film/content/${douban.id}"></div>
+
 </div>
 <@side.p flag="${base}" params="${base}"></@side.p>
 

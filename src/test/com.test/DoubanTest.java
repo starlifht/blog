@@ -65,5 +65,10 @@ public class DoubanTest {
     public void check(){
         System.out.println(doubanService.checkDouban(26857715));
     }
+    @Test
+    public void  getFilmContent(){
+        FilmInfo filmInfo=filmInfoMapper.getContentByDoubanID(26416603);
+        System.out.println(filmInfo.getContent());
+    }
 
 }
