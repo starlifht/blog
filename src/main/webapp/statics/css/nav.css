@@ -91,6 +91,7 @@ li{
 .iframe{
     float: left;
     width: 75%;
+    min-width: 900px;
     right: 0;
     height: 100%;
     max-right: 40px;

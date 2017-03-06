@@ -24,103 +24,105 @@
 <body>
 <div class="iframe">
 <#--<button type="button" class="btn btn-link" onclick="window.location.href='${base}'">返回首页</button>-->
-
-        <div class="doubanInfo" style="float: left;width:70%;margin-top: 20px">
-            <div class="row">
-                <div class="col-md-1">
-                    <span class="label label-danger">片名</span>
-                </div>
-                <div class="col-md-10">
-                    <span style="font-weight: bolder;font-size: 30px;color: #0f0f0f">${douban.subject}</span></div>
+<div class="rows">
+    <div class="doubanInfo col-md-8" >
+        <div class="row">
+            <div class="col-md-1">
+                <span class="label label-danger">片名</span>
             </div>
-            <div class="row">
-                <div class="col-md-1">
-                    <span class="label label-success">豆瓣</span>
-                </div>
-                <div class="col-md-10">
-                    <a href="${douban.url}" target="_blank"
-                       style="    font-family: Georgia, serif;    color: #FF4500;
+            <div class="col-md-10">
+                <span style="font-weight: bolder;font-size: 30px;color: #0f0f0f">${douban.subject}</span></div>
+        </div>
+        <div class="row">
+            <div class="col-md-1">
+                <span class="label label-success">豆瓣</span>
+            </div>
+            <div class="col-md-10">
+                <a href="${douban.url}" target="_blank"
+                   style="    font-family: Georgia, serif;    color: #FF4500;
 font-weight: bolder;font-size: 26px">${douban.rating?string("0.0")}</a>
-                    （${douban.ratingcount}人评价）
-                </div>
+                （${douban.ratingcount}人评价）
             </div>
-            <div class="row">
-                <div class="col-md-1">
-                    <span class="label label-warning">导演</span>
-                </div>
-                <div class="col-md-10">
-                    <span>${douban.directors} </span></div>
+        </div>
+        <div class="row">
+            <div class="col-md-1">
+                <span class="label label-warning">导演</span>
             </div>
-            <div class="row">
-                <div class="col-md-1">
-                    <span class="label label-default">演员</span>
-                </div>
-                <div class="col-md-10">
-                    <span>${douban.casts} </span>
-                </div>
+            <div class="col-md-10">
+                <span>${douban.directors} </span></div>
+        </div>
+        <div class="row">
+            <div class="col-md-1">
+                <span class="label label-default">演员</span>
             </div>
+            <div class="col-md-10">
+                <span>${douban.casts} </span>
+            </div>
+        </div>
 
-            <div class="row">
-                <div class="col-md-1">
-                    <span class="label label-primary">上映</span>
-                </div>
-                <div class="col-md-10">
-                    <span> ${douban.releasedate} </span>
-                </div>
+        <div class="row">
+            <div class="col-md-1">
+                <span class="label label-primary">上映</span>
             </div>
-            <div class="row">
-                <div class="col-md-1">
-                    <span class="label label-default">时长</span>
-                </div>
-                <div class="col-md-10">
-                    <span>  ${douban.runtime}  </span>
-                </div>
+            <div class="col-md-10">
+                <span> ${douban.releasedate} </span>
             </div>
-            <div class="row">
-                <div class="col-md-1">
-                    <span class="label label-default">国家</span>
-                </div>
-                <div class="col-md-10">
-                    <span> ${douban.country}   </span>
-                </div>
+        </div>
+        <div class="row">
+            <div class="col-md-1">
+                <span class="label label-default">时长</span>
             </div>
-            <div class="row">
-                <div class="col-md-1">
-                    <span class="label label-default">类型</span>
-                </div>
-                <div class="col-md-10">
-                    <span>   ${douban.genres} </span>
-                </div>
+            <div class="col-md-10">
+                <span>  ${douban.runtime}  </span>
             </div>
-        <#if douban.aka!="">
-            <div class="row">
-                <div class="col-md-1">
-                    <span class="label label-info">别名</span>
-                </div>
-                <div class="col-md-10">
-                    <span>   ${douban.aka} </span>
-                </div>
+        </div>
+        <div class="row">
+            <div class="col-md-1">
+                <span class="label label-default">国家</span>
             </div>
+            <div class="col-md-10">
+                <span> ${douban.country}   </span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-1">
+                <span class="label label-default">类型</span>
+            </div>
+            <div class="col-md-10">
+                <span>   ${douban.genres} </span>
+            </div>
+        </div>
+    <#if douban.aka!="">
+        <div class="row">
+            <div class="col-md-1">
+                <span class="label label-info">别名</span>
+            </div>
+            <div class="col-md-10">
+                <span>   ${douban.aka} </span>
+            </div>
+        </div>
 
-        </#if>
+    </#if>
 
 
-            <div class="row">
-                <div class="col-md-1">
-                    <span class="label label-danger">IMDB</span>
-                </div>
-                <div class="col-md-10">
+        <div class="row">
+            <div class="col-md-1">
+                <span class="label label-danger">IMDB</span>
+            </div>
+            <div class="col-md-10">
                     <span><a target="_blank" href="http://www.imdb.com/title/${douban.imdb}">${douban.imdb}</a>
                     </span>
-                </div>
             </div>
-
-
         </div>
 
-        <div style="float:right;width: 300px;">
-            <img class="media-object img-rounded" src="${filminfo.douBanInfo.images}">
-        </div>
+
+    </div>
+
+    <div class="col-md-2">
+        <img class="media-object img-rounded" src="${filminfo.douBanInfo.images}">
+    </div>
+</div>
+
         <div style="clear: both;padding-top:30px">
             <p><span class="label label-danger">内容简介</span></p>
             <span style="text-indent:2em">
