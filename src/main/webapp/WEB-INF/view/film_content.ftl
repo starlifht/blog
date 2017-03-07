@@ -24,8 +24,8 @@
 <body>
 <div class="iframe">
 <#--<button type="button" class="btn btn-link" onclick="window.location.href='${base}'">返回首页</button>-->
-<div class="rows">
-    <div class="doubanInfo col-md-8" >
+<div >
+    <div class="doubanInfo" style="float:left;width: 65%" >
         <div class="row">
             <div class="col-md-1">
                 <span class="label label-danger">片名</span>
@@ -118,7 +118,7 @@ font-weight: bolder;font-size: 26px">${douban.rating?string("0.0")}</a>
 
     </div>
 
-    <div class="col-md-2">
+    <div style="float: left;width: 15%;margin-left: 20px">
         <img class="media-object img-rounded" src="${filminfo.douBanInfo.images}">
     </div>
 </div>

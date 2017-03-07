@@ -23,7 +23,7 @@
     <#--<td onclick="location.href='/film/rating/17/1'">豆瓣</td>-->
     <#--<td>年份</td>-->
     <#--<td>国家</td><td>电影名称</td><td>类型</td></thead>-->
-<div >
+<div style="margin: auto">
     <#list list as filmlist>
         <#--<tr >-->
             <#assign douban=filmlist.douBanInfo/>
@@ -37,7 +37,7 @@
             <#--<td>${douban.year}</td>-->
             <#--<td>${douban.country?split("/")[0]}</td>-->
             <#--<td>-->
-                <div class="media" onclick="location.href='${base}/film/content/${douban.id}'" >
+                <div class="media " onclick="location.href='${base}/film/content/${douban.id}'" >
                     <div class="media-left">
                         <a href="#">
                             <img class="media-object img-rounded" src="${douban.images?replace('lpst','spst')}" alt="...">

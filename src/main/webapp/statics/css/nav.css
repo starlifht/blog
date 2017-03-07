@@ -23,8 +23,9 @@ li{
 }
 
 .media{
-    float:left;width: 330px;
+    float:left;
     margin: auto;
+    width: 25%;
     height: 180px;
     /*border: 1px gray solid;*/
     cursor: pointer;
@@ -90,8 +91,7 @@ li{
 }
 .iframe{
     float: left;
-    width: 75%;
-    min-width: 900px;
+    width: 80%;
     right: 0;
     height: 100%;
     max-right: 40px;
@@ -104,10 +104,10 @@ li{
 }
 
 .side {
-    float: right;
+    float: left;
     width: 15%;
     height: 100%;
-    margin-right: 40px;
+    margin-left: 20px;
 }
 
 
